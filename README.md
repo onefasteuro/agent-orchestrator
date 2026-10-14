@@ -1,6 +1,6 @@
 # Agentic SDD orchestration: planning package
 
-Version 0.4, 14 October 2026. Planning only. P0 stays open until an authorized feasibility spike supplies evidence. Nothing here authorizes installation, execution or the spike.
+Version 0.5, 14 October 2026. Planning package with P0 closed on spike evidence (`spike/2026-10-14-p0b.md`). Nothing here authorizes installation or implementation.
 
 ## Agent fan-out
 
@@ -36,7 +36,7 @@ Yellow: writes product code. Blue: read-only. Grey: control plane. Dotted lines 
 
 ## Workflow
 
-Target workflow once P6 is complete. Nothing is installed today. Commands below are documented Orca and Claude Code commands, checked on 14 October 2026; the combined flow is untested (N-11, P0b).
+Target workflow once P6 is complete. Nothing is installed today. Every Orca command below was exercised in the P0b spike on 14 October 2026; the packaged entrypoint and automation are still to be built (P1 to P6).
 
 ### One-time setup, per machine or repository
 
@@ -55,7 +55,7 @@ Target workflow once P6 is complete. Nothing is installed today. Commands below 
 ### Start a feature
 
 1. Pick the integration checkout. Any checkout on a feature branch works, including the primary one Orca opened, as long as it is clean and you note its base SHA (W-1, W-2). A separate Orca worktree is preferable when the primary checkout carries local changes or you run more than one feature; create it in the Orca app from the intended base branch. Sidebar parentage does not set the Git base. The headless equivalent is `orca worktree create --repo id:<repoId> --name feat-<name> --base-branch <intended-base> --json`; without `--base-branch` Orca uses the repository's configured base ref. Either way, confirm the SHA afterwards with `git rev-parse HEAD` in the new checkout.
-2. Open a terminal in that worktree and start the coordinator. The `--agent` flag applies the entrypoint's system prompt, tools and model to the main session:
+2. Open an Orca terminal in that worktree and start the coordinator there. It must be an Orca terminal, because every orchestration command needs the terminal's identity (K-20). The `--agent` flag applies the entrypoint's system prompt, tools and model to the main session:
    ```sh
    claude --agent sdd-orchestrator
    ```
@@ -87,7 +87,11 @@ orca terminal create --worktree path:<abs-task-worktree> --title implementer --c
 orca terminal wait --terminal <handle> --for tui-idle --timeout-ms 60000 --json
 orca orchestration worker-start --task <taskId> --worktree path:<abs-task-worktree> --terminal <handle> --json
 ```
-Codex specialists use `worker-start --agent codex` with the validated read-only launch recipe from the role map.
+Codex specialists are launched the same way with an explicit sandbox, because Orca otherwise pre-fills its bypass flag (K-21):
+```sh
+orca terminal create --worktree path:<abs-review-checkout> --title reviewer --command 'codex --sandbox read-only --model gpt-6-astra -c model_reasoning_effort="high"' --json
+```
+Codex may stop on an update prompt or a workspace-trust prompt before it is idle; `terminal wait` reports these as `blockedReason`.
 
 ### How results flow back
 

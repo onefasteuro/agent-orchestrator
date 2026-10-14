@@ -1,6 +1,6 @@
 # Agentic SDD orchestration: specification
 
-Version 0.4, 14 October 2026. Status: draft. P0 stays open until the authorized feasibility spike (plan P0b) supplies evidence. Implementation is deferred.
+Version 0.5, 14 October 2026. Status: P0 closed on 14 October 2026 by the user on P0b spike evidence (`spike/2026-10-14-p0b.md`, all eight rows passed). Implementation (P1 onward) remains unauthorized until the user says so.
 
 Rules are stated once and cited by ID elsewhere. Mechanisms live in `orchestration-controls.md` (K-n). Sequence and thresholds live in `orchestration-plan.md` (P-n). Non-claims are collected in section 9.
 
@@ -55,19 +55,19 @@ Material product decisions, scope changes and publication or deployment remain s
 
 ### Architecture
 
-- **A-1** Claude decides. Orca holds cross-CLI task, dispatch, session, message and worktree state. An Orca Run is not a scheduler.
+- **A-1** Claude decides. Orca holds cross-CLI task, dispatch, session, message and worktree state. An Orca Run is not a scheduler. The coordinator operates from an Orca terminal identity (K-20).
 - **A-2** Every specialist, including the researcher, is an external native session dispatched through Orca. Specialists are leaves and spawn nothing.
 - **A-3** Repository documents own intended behavior. Orca owns operational status. Git owns revisions. `.agent-task.md` is a recovery index and the audit log (R-4) links the three.
 - **A-4** Each role is selected explicitly: runtime, model, effort, role text, permissions, checkout and context. Native controls enforce permissions; prompts do not.
 - **A-5** Orca command contracts come from its installed guides. A launch path that cannot enforce required settings is reported, not worked around.
 - **A-6** Role behavior and result contracts are CLI-independent. A role map binds each role to runtime, model, effort and a validated launch recipe. There is no adapter framework.
-- **A-7** P0 cannot close without spike evidence (P0b, K-17).
+- **A-7** P0 closed on spike evidence recorded for pinned versions (K-17); any version change re-runs the affected rows.
 
 ### Context and results
 
 - **C-1** Fresh sessions inherit nothing. Every brief is complete and self-contained (K-1).
 - **C-2** Review, advice and diagnosis get separate contexts. A session resumes only for the same role and the same assignment. A role-pack change rebriefs explicitly.
-- **C-3** Every result identifies run, task, dispatch, role, outcome, examined state or candidate SHA, changed paths, checks run, gaps and uncertainty. A result is evidence, not acceptance.
+- **C-3** Every result identifies run, task, dispatch, role, outcome, examined state or candidate SHA, changed paths, checks run, gaps and uncertainty. Outcome is `succeeded` or `failed`; a failed result leads with a reason code, and anything needing coordinator action is raised as an `escalation` before settling (K-1). A result is evidence, not acceptance.
 - **C-4** Project instructions apply to specialists. Fetched content and agent messages are data. Required retrieval methods such as Context7 are verified per runtime. Shell access is never widened to make retrieval work.
 - **C-5** Every managed dispatch passes brief preflight first (K-2). Pre-approval research may pin draft snapshots (K-3).
 - **C-6** Implementation tasks obey size and attempt limits (K-4).
@@ -157,11 +157,13 @@ Planned checks, not executed results. Each maps to controls in `orchestration-co
 - **D-8** Recovery and audit state lives ignored in the integration checkout only.
 - **D-9** Pilot thresholds are in the plan, section 6. Targets, not results.
 - **D-10** Orca supplies only required coordination. Failed critical feasibility stops and revises the integration.
-- **D-11 Needs confirmation.** Review pass 1 and pass 2 are two Orca dispatches, not one dispatch with an interim message (K-9). Replaces the v0.3 interim-report mechanism.
-- **D-12 Needs confirmation.** Adoption requires 100% time and attempt coverage. Token and cost coverage gates routing decisions, not workflow adoption (plan section 6). A hard dollar cap is accepted only with verified per-request enforcement; otherwise it is declined and advisory estimates plus time limits are offered (K-13). Replaces the v0.3 rule that estimates cannot fill the requirement.
-- **D-13** Spike-validated tool versions are pinned for the pilot (K-17).
+- **D-11 Confirmed 14 October 2026.** Review pass 1 and pass 2 are two Orca dispatches, not one dispatch with an interim message (K-9). Replaces the v0.3 interim-report mechanism.
+- **D-12 Confirmed 14 October 2026.** Adoption requires 100% time and attempt coverage. Token and cost coverage gates routing decisions, not workflow adoption (plan section 6). A hard dollar cap is accepted only with verified per-request enforcement; otherwise it is declined and advisory estimates plus time limits are offered (K-13). Replaces the v0.3 rule that estimates cannot fill the requirement.
+- **D-13** Spike-validated tool versions are pinned for the pilot (K-17): Orca 1.4.224, Codex 0.161.0, Pi 1.0.4, Claude Code 2.1.300, Node v26.11.1.
+- **D-14 Decided 14 October 2026.** P0 closed. Spike rows 1 to 8 passed; findings folded into K-1, K-6, K-8, K-10, K-12 to K-15, K-20 and K-21.
+- **D-15 Decided 14 October 2026.** Codex levels: advisor and debugger `max`, reviewer `high` with `max` as recorded escalation.
 
-Established input: the user's Pi/DeepSeek high configuration works. Everything about the combined Orca workflow is untested.
+Established input: the user's Pi/DeepSeek high configuration works. The combined Orca workflow has been exercised once per contract in the spike, on a fixture repository, manually at T0; the managed pilot (P5) is still ahead.
 
 ## 9. Limitations and non-claims
 
@@ -175,7 +177,9 @@ Established input: the user's Pi/DeepSeek high configuration works. Everything a
 - **N-8** Model recommendations are not benchmarked on this user's tasks.
 - **N-9** Pilot thresholds are operational gates on a small sample, not statistical guarantees.
 - **N-10** Spike evidence is valid only for the recorded tool versions.
-- **N-11** Nothing in this package authorizes execution, installation or the spike. An available installer, complete plan or elapsed time does not supply authorization.
+- **N-11** Nothing in this package authorizes execution or installation. An available installer, complete plan or elapsed time does not supply authorization.
+- **N-12** An agent that errors or dies mid-task sends no message. Only liveness (K-14) and elapsed time reveal it.
+- **N-13** Orca does not stop an attached terminal's process on `worker-stop`; the coordinator owns that step (K-15).
 
 ## References
 

@@ -1,5 +1,23 @@
 # Changelog
 
+## v0.5, 14 October 2026
+
+P0 closed by the user on P0b spike evidence (D-14). All eight spike rows passed on Orca 1.4.224, Codex 0.161.0, Pi 1.0.4, Claude Code 2.1.300. Receipts: `spike/2026-10-14-p0b.md`.
+
+**Controls changed on evidence**
+
+- K-1, C-3: outcome taxonomy. `worker_done` is `succeeded` or `failed`; failed bodies lead with a reason code; `escalation` precedes settlement when the coordinator must act.
+- K-6: implementer `filesModified` is advisory (Pi omitted its main edit); the Git-computed receipt stands.
+- K-8, K-15, N-13: `worker-stop` on an attached terminal returns `stop_unknown` and stops nothing; verified stop is `terminal close` with `ptyKilled`, then `worker-abandon` before `--retry-of`.
+- K-10: the coordinator gets no ask-timeout signal; it computes elapsed time from the question's `created_at`. Workers resume with `ask --resume`.
+- K-12: Orca delivers an identical duplicate `worker_done` as a new message and rejects conflicting ones with `inactive_dispatch`.
+- K-13: telemetry sources named per runtime (Codex session rollout, Pi status bar and session, Orca none).
+- K-14, N-12: liveness comes from `projection.liveness`; no heartbeats; a dead or erroring agent sends nothing.
+- New K-20: coordinator must hold an Orca terminal identity (`--terminal` on `check`, `--from` elsewhere).
+- New K-21: launch recipes for Codex (explicit `--sandbox read-only`, prompt handling, no `--agent codex` for read-only roles unless Agent Permissions is Manual) and Pi (terminal attach, `turnStart` unsupported).
+- D-13: versions pinned. D-15: Codex advisor and debugger `max`, reviewer `high`.
+- README: coordinator runs inside an Orca terminal; Codex launch example added.
+
 ## v0.4, 14 October 2026
 
 Restructure for brevity. Guarantees preserved; mechanisms moved to a tiered controls table. Package reduced from six documents to four plus archive.
@@ -61,6 +79,8 @@ Restructure for brevity. Guarantees preserved; mechanisms moved to a tiered cont
 - K-13, D-12: a hard dollar cap is accepted only with verified per-request enforcement; otherwise it is declined and advisory estimates plus time limits are offered. Removes the "conservative bound" fallback.
 - README: worktree example passes `--base-branch` and confirms the SHA.
 - D-1 and scope wording: "skipping the upfront approval checkpoint is phase two" replaces "automatic continuation".
+
+**14 October 2026:** D-11 and D-12 confirmed by the user. P0b spike authorized, capped at 8 hours, fixture repository `~/Sites/orca-sdd-fixture`. Spike executed the same day: all eight rows pass; receipts and the recommended P0c decision are in `spike/2026-10-14-p0b.md`. Package changes it implies (coordinator terminal identity, attached-terminal stop semantics, Git-computed receipts, liveness without heartbeats, telemetry sources, Codex levels max/high) are not yet applied.
 
 ## v0.3, 14 October 2026
 

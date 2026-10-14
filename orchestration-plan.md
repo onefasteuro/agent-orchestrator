@@ -1,6 +1,6 @@
 # Agentic SDD orchestration: plan
 
-Version 0.4, 14 October 2026. Status: planning only. Neither implementation nor the spike is authorized by this document.
+Version 0.5, 14 October 2026. Status: P0 closed 14 October 2026 (D-14). Next package is P1, which needs explicit implementation authorization.
 
 `orchestration-spec.md` holds requirements and invariants. `orchestration-controls.md` holds mechanisms. This document holds sequence, the spike checklist, pilot thresholds and open inputs.
 
@@ -50,8 +50,8 @@ Verify ignore rules before the first run. Task writers never own feature docs, r
 | Step | Deliverable | Entry | Exit evidence |
 | --- | --- | --- | --- |
 | P0a | Settled assumptions and spike checklist | Documentation | D-1 fixed; checklist agreed; no feasibility claimed |
-| P0b | Orca feasibility spike | Scoped authorization, disposable repo | Every row in section 5 recorded as pass, fail or inconclusive within 8 hours; versions pinned (K-17) |
-| P0c | Feasibility decision | P0b evidence | All essential rows pass, or P0 stays open and the integration is revised |
+| P0b | Orca feasibility spike | Scoped authorization, disposable repo | Done 14 October 2026: eight of eight rows pass, versions pinned (K-17), receipts in `spike/2026-10-14-p0b.md` |
+| P0c | Feasibility decision | P0b evidence | Done 14 October 2026: P0 closed (D-14), findings folded into v0.5 controls |
 | P1 | Brief validator, ownership gate, audit writer, usage recorder, fake-worker harness | P0 closed, implementation authorized | Invalid briefs rejected; events correlated; missing telemetry detected; harness exercises K-2, K-5, K-6, K-7, K-11, K-12, K-14 |
 | P2 | Entrypoint, workflow, five prompts, launch recipes, review and spec-drift gates | P1 | AC-1, AC-2, AC-10 observed; remaining ACs covered by harness or explicit scenario |
 | P3 | One real Pi task end to end | P2 | Preflight, gate, candidate, two-pass review, integration; correct model and identities; usage recorded |
@@ -60,9 +60,9 @@ Verify ignore rules before the first run. Task writers never own feature docs, r
 | P6 | Installer and operator docs | Stable P1 to P5 | AC-13; lifecycle rechecked with freshly installed entrypoints |
 | P7 | Adoption decision | P5, P6 | Thresholds met, limitations listed, adopt or revise |
 
-## 5. Spike checklist
+## 5. Spike checklist (executed)
 
-Maximum one working day, start and end recorded. Manual receipts suffice (T0). Record versions, sanitized evidence and pass, fail or inconclusive per row.
+Run on 14 October 2026; all rows passed. Kept here as the re-validation set for K-17: a tool or model version change re-runs the affected rows before further managed dispatch.
 
 | Question | Required observation |
 | --- | --- |
@@ -94,7 +94,6 @@ An unplanned intervention is any human action needed to rescue or correct ordina
 
 ## 7. Open inputs
 
-- Before the spike: disposable repository, exact installed clients, verified Pi invocation, agreed checklist, scoped authorization.
+- Before P1: explicit implementation authorization; agree the fake-worker harness scope (K-18).
 - Before the pilot: ten-task sample, required checks, calibration inventory, integration convention, time and attempt budget, any dollar cap.
-- Confirm D-11 (two dispatches for review) and D-12 (telemetry decoupled from adoption).
 - After evidence: parallel writers, debugger ownership transfer, other platforms, routing changes.
