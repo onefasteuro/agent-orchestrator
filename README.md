@@ -113,6 +113,10 @@ Deliveries are FIFO and replayable, which is why one `worker_done` per dispatch 
 - **Resume:** open the same integration worktree, run `claude --agent sdd-orchestrator`, and say "Resume the run for [feature]; reconcile first." The coordinator reconciles recovery index, audit log, Orca and Git before any new dispatch (R-2).
 - **Cancel:** tell the coordinator to cancel. It stops new dispatch, stops workers through Orca and reports any uncertain state (R-3). Closing the coordinator terminal does not stop workers or remove worktrees.
 
+## Utilities
+
+`tools/` holds the P1 utilities (brief validator, ownership gate, audit log, usage recorder, liveness decision, recovery index, fake-worker harness). One CLI, no dependencies: `node tools/sdd.mjs <command>`; tests with `npm test`. See `tools/README.md`.
+
 ## Read in this order
 
 1. [Specification](orchestration-spec.md): objective, roles, modes, invariants, lifecycle, acceptance scenarios, decisions, limitations.

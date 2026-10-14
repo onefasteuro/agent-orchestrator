@@ -18,6 +18,8 @@ P0 closed by the user on P0b spike evidence (D-14). All eight spike rows passed 
 - D-13: versions pinned. D-15: Codex advisor and debugger `max`, reviewer `high`.
 - README: coordinator runs inside an Orca terminal; Codex launch example added.
 
+**14 October 2026, later:** P1 authorized (D-16) and delivered. `tools/sdd.mjs` with brief-validate, gate, audit (append, verify, segment, classify), usage (codex, pi, coverage), liveness, recovery index and fake-worker commands; 29 tests pass. See `tools/README.md`.
+
 ## v0.4, 14 October 2026
 
 Restructure for brevity. Guarantees preserved; mechanisms moved to a tiered controls table. Package reduced from six documents to four plus archive.

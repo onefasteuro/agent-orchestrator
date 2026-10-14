@@ -1,0 +1,11 @@
+{
+  "name": "orca-sdd-tools",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "P1 utilities for the agentic SDD orchestration package: brief validator, ownership gate, audit writer, usage recorder, fake-worker harness. No dependencies.",
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "node --test tools/test/"
+  }
+}

@@ -1,6 +1,6 @@
 # Agentic SDD orchestration: specification
 
-Version 0.5, 14 October 2026. Status: P0 closed on 14 October 2026 by the user on P0b spike evidence (`spike/2026-10-14-p0b.md`, all eight rows passed). Implementation (P1 onward) remains unauthorized until the user says so.
+Version 0.5, 14 October 2026. Status: P0 closed on 14 October 2026 by the user on P0b spike evidence (`spike/2026-10-14-p0b.md`, all eight rows passed). P1 authorized 14 October 2026 (D-16); P2 onward remains unauthorized until the user says so.
 
 Rules are stated once and cited by ID elsewhere. Mechanisms live in `orchestration-controls.md` (K-n). Sequence and thresholds live in `orchestration-plan.md` (P-n). Non-claims are collected in section 9.
 
@@ -162,6 +162,7 @@ Planned checks, not executed results. Each maps to controls in `orchestration-co
 - **D-13** Spike-validated tool versions are pinned for the pilot (K-17): Orca 1.4.224, Codex 0.161.0, Pi 1.0.4, Claude Code 2.1.300, Node v26.11.1.
 - **D-14 Decided 14 October 2026.** P0 closed. Spike rows 1 to 8 passed; findings folded into K-1, K-6, K-8, K-10, K-12 to K-15, K-20 and K-21.
 - **D-15 Decided 14 October 2026.** Codex levels: advisor and debugger `max`, reviewer `high` with `max` as recorded escalation.
+- **D-16 Decided 14 October 2026.** P1 implementation authorized: brief validator, ownership gate, audit writer, usage recorder, fake-worker harness, as ordinary files under `tools/` in this repository, Node ESM with no dependencies, tested with `node --test`. No scheduling logic. Packaging into the role pack is P6.
 
 Established input: the user's Pi/DeepSeek high configuration works. The combined Orca workflow has been exercised once per contract in the spike, on a fixture repository, manually at T0; the managed pilot (P5) is still ahead.
 
