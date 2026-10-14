@@ -34,6 +34,69 @@ flowchart TD
 
 Yellow: writes product code. Blue: read-only. Grey: control plane. Dotted lines are the Q-1 to Q-4 advice loop; the advisor runs while the implementer is paused.
 
+## Workflow
+
+Target workflow once P6 is complete. Nothing is installed today. Commands below are documented Orca and Claude Code commands, checked on 14 October 2026; the combined flow is untested (N-11, P0b).
+
+### One-time setup, per machine or repository
+
+1. Register the repository in Orca if it is not already open there:
+   ```sh
+   orca repo add --path /abs/path/to/repo --json
+   ```
+2. Install Orca's skills into the participating agents. Drop `--local` for a global install:
+   ```sh
+   orca skills install --skill orca-cli --skill orchestration --local
+   ```
+3. Install the SDD pack (installer delivered in P6; invocation to be named then). It places `sdd-orchestrator.md` in `.claude/agents/` and the role pack in `.agents/orca-sdd/` at the chosen scope (I-1 to I-3).
+4. In Orca settings, set Agent Permissions to Manual so native permission controls stay in force (A-4, A-5).
+5. Commit the pack and project instructions. Fresh worktrees contain only committed content (W-2).
+
+### Start a feature
+
+1. In Orca, create the integration worktree for the feature from an explicit base ref and note the resolved base SHA. Sidebar parentage does not set the Git base (W-2).
+   ```sh
+   orca worktree create --repo id:<repoId> --name feat-<name> --json
+   ```
+2. Open a terminal in that worktree and start the coordinator. The `--agent` flag applies the entrypoint's system prompt, tools and model to the main session:
+   ```sh
+   claude --agent sdd-orchestrator
+   ```
+3. Give it the goal. Two prompt shapes:
+
+   Planning-only (M-1):
+   > Plan this feature in planning-only mode. Goal: [outcome]. Constraints: [list]. References: [tickets, docs]. Research unknowns, draft the feature spec, plan, task boundaries and acceptance checks, then stop and return open decisions. Do not implement, install or dispatch implementation workers.
+
+   Full lifecycle (M-2):
+   > Deliver this feature. Goal: [outcome]. Constraints: [list]. References: [tickets, docs]. Produce or validate the feature spec and plan, then pause for my approval before any implementation.
+
+### What the coordinator does from there
+
+No further user action until the approval pause or a blocker.
+
+1. Loads the live Orca contract and checks state:
+   ```sh
+   orca skills get orchestration --full
+   orca status --json
+   orca orchestration run-create --objective "<feature outcome>" --json
+   ```
+2. Researches unknowns through Orca (K-3), writes or validates the feature spec and plan, and splits the work into bounded tasks (K-4).
+3. M-1: returns the documents and stops. M-2: presents the documents and waits for one approval (D-1), then records it.
+4. Per task: `task-create`, task worktree from the accepted SHA, brief preflight (K-2), `worker-start`, ownership gate (K-7), candidate commit (K-6), two-pass review (K-9), integration (W-4).
+
+Pi is launched with the user's tested command and then attached, because Orca's per-worker model and effort overrides do not cover Pi:
+```sh
+orca terminal create --worktree path:<abs-task-worktree> --title implementer --command '<tested Pi DeepSeek command>' --json
+orca terminal wait --terminal <handle> --for tui-idle --timeout-ms 60000 --json
+orca orchestration worker-start --task <taskId> --worktree path:<abs-task-worktree> --terminal <handle> --json
+```
+Codex specialists use `worker-start --agent codex` with the validated read-only launch recipe from the role map.
+
+### Resume or cancel
+
+- **Resume:** open the same integration worktree, run `claude --agent sdd-orchestrator`, and say "Resume the run for [feature]; reconcile first." The coordinator reconciles recovery index, audit log, Orca and Git before any new dispatch (R-2).
+- **Cancel:** tell the coordinator to cancel. It stops new dispatch, stops workers through Orca and reports any uncertain state (R-3). Closing the coordinator terminal does not stop workers or remove worktrees.
+
 ## Read in this order
 
 1. [Specification](orchestration-spec.md): objective, roles, modes, invariants, lifecycle, acceptance scenarios, decisions, limitations.
