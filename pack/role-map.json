@@ -1,0 +1,68 @@
+{
+  "schema_version": "1",
+  "pack_version": "0.5",
+  "notes": "Bindings per role (A-6, K-21). Runtime, model and effort were confirmed in the P0b spike on 14 October 2026 for codex and pi; the claude researcher binding was verified by the AC-10 run on 14 October 2026. Change a binding here and in launch-recipes.md together; the role prompt and result contract do not change.",
+  "coordinator": {
+    "runtime": "claude",
+    "model": "claude-opus-5-5",
+    "effort": "high",
+    "entrypoint": "entrypoint/sdd-orchestrator.md",
+    "requires": "Orca terminal identity (K-20)"
+  },
+  "roles": {
+    "researcher": {
+      "runtime": "claude",
+      "model": "claude-sonnet-5-5",
+      "effort": "high",
+      "prompt": "roles/researcher.md",
+      "permission_recipe": "claude-read-only",
+      "checkout": "existing integration or task checkout, no writing ownership (W-3)",
+      "retrieval": ["context7"],
+      "progress_interval_minutes": 15,
+      "alternate": { "runtime": "codex", "model": "gpt-6-astra", "effort": "high", "permission_recipe": "codex-read-only", "status": "verified in spike row 3" }
+    },
+    "implementer": {
+      "runtime": "pi",
+      "model": "ollama-cloud/deepseek-v4.1-flash",
+      "effort": "high",
+      "prompt": "roles/implementer.md",
+      "permission_recipe": "pi-terminal-attach",
+      "checkout": "own task worktree from the accepted base (W-1, W-2)",
+      "progress_interval_minutes": 20,
+      "limits": { "session_minutes": 90, "attempts": 3, "max_files": 5, "max_lines": 300 }
+    },
+    "advisor": {
+      "runtime": "codex",
+      "model": "gpt-6-astra",
+      "effort": "max",
+      "prompt": "roles/advisor.md",
+      "permission_recipe": "codex-read-only",
+      "checkout": "the paused implementer's task worktree, dirty state labelled (W-3)",
+      "progress_interval_minutes": 15
+    },
+    "reviewer": {
+      "runtime": "codex",
+      "model": "gpt-6-astra",
+      "effort": "high",
+      "escalation_effort": "max",
+      "prompt": "roles/reviewer.md",
+      "permission_recipe": "codex-read-only",
+      "checkout": "clean detached checkout at the candidate SHA (W-3, K-9)",
+      "progress_interval_minutes": 15
+    },
+    "debugger": {
+      "runtime": "codex",
+      "model": "gpt-6-astra",
+      "effort": "max",
+      "prompt": "roles/debugger.md",
+      "permission_recipe": "codex-read-only",
+      "checkout": "clean detached checkout at the candidate SHA, or the paused task worktree when the failure only reproduces there",
+      "progress_interval_minutes": 15
+    }
+  },
+  "permission_recipes": {
+    "codex-read-only": "codex --sandbox read-only --model <model> -c model_reasoning_effort=\"<effort>\"",
+    "pi-terminal-attach": "<user's tested Pi command, verbatim>; attach with worker-start --terminal",
+    "claude-read-only": "claude --model <model> --effort <effort> --permission-mode dontAsk --allowedTools \"Read,Grep,Glob,Bash(orca *),mcp__context7__*\" --disallowedTools \"Edit,Write,NotebookEdit,Bash(git *)\""
+  }
+}

@@ -1,0 +1,55 @@
+{
+  "schema_version": "1",
+  "identity": { "brief_id": "brief_<feature>_<task>_<attempt>", "role": "implementer", "mode": "M-2" },
+  "objective": {
+    "outcome": "One observable outcome, in one sentence.",
+    "ac_ids": ["AC-1"],
+    "exclusions": ["What this task must not do."],
+    "expected_result": "A handoff with the named checks passing.",
+    "size_exception": null
+  },
+  "context": {
+    "feature_spec": { "path": "specs/<feature>/spec.md", "baseline": "approved", "revision": "<40-hex commit>", "sha256": "<64-hex>" },
+    "feature_plan": { "path": "specs/<feature>/plan.md", "baseline": "approved", "revision": "<40-hex commit>", "sha256": "<64-hex>" },
+    "role_pack_hash": "<64-hex>",
+    "instructions": ["AGENTS.md"],
+    "evidence": [],
+    "predecessor_conclusions": []
+  },
+  "workspace": {
+    "repository": "/abs/path/to/repo",
+    "integration_checkout": "/abs/path/to/integration-checkout",
+    "worker_checkout": "/abs/path/to/task-worktree",
+    "base_sha": "<40-hex commit>",
+    "candidate_sha": null,
+    "dirty_state": null,
+    "assigned_paths": ["src/example.mjs"],
+    "new_paths": [],
+    "protected_paths": []
+  },
+  "execution": {
+    "runtime": "pi",
+    "model": "ollama-cloud/deepseek-v4.1-flash",
+    "effort": "high",
+    "permission_recipe": "pi-terminal-attach",
+    "readiness": { "setup_complete": true },
+    "limits": { "session_minutes": 90, "attempts": 3, "max_files": 5, "max_lines": 300 },
+    "retrieval": []
+  },
+  "validation": {
+    "checks": [{ "name": "unit", "command": "npm test", "expected": "all tests pass" }],
+    "estimate": { "files": 1, "lines": 20 },
+    "generated_paths": [],
+    "scratch_paths": [],
+    "fixture_only": true
+  },
+  "delivery": {
+    "result_fields": ["outcome", "changed_paths", "checks_run", "answers_received", "uncertainty"],
+    "reply_route": "orca run inbox via the injected preamble",
+    "usage_source": "pi-status-bar",
+    "budget_ref": "<feature>-budget",
+    "escalation_rule": "after two failed attempts, or before any decision the brief does not settle",
+    "recovery_ref": ".agent-task.md",
+    "audit_ref": ".agents/orca-sdd/runs/<feature>/events.jsonl"
+  }
+}

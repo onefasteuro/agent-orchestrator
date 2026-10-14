@@ -1,13 +1,46 @@
 // Thin git helpers. Every call is explicit about the repository it touches.
 
 import { execFileSync } from 'node:child_process';
+import { realpathSync } from 'node:fs';
+import { resolve as resolvePath } from 'node:path';
+
+// Hardening: a worker with shell access can edit the shared .git/config of a
+// worktree or add in-tree attributes that change what diff reports. Ignore
+// system and global config entirely, and override the repo-local keys that
+// influence diff output, hooks and path quoting. Diff commands additionally pass
+// --no-ext-diff and --no-textconv.
+export const HARDENED_CONFIG = [
+  '-c', 'core.hooksPath=/dev/null',
+  '-c', 'diff.external=',
+  '-c', 'diff.noprefix=false',
+  '-c', 'diff.renames=true',
+  '-c', 'core.quotePath=false',
+  '-c', 'core.attributesFile=/dev/null',
+  '-c', 'core.excludesFile=/dev/null',
+  '-c', 'core.fsmonitor=false',
+  '-c', 'core.sshCommand=/bin/false',
+  '-c', 'protocol.allow=never',
+];
+export const HARDENED_ENV = { ...process.env, GIT_CONFIG_NOSYSTEM: '1', GIT_CONFIG_GLOBAL: '/dev/null', GIT_TERMINAL_PROMPT: '0', GIT_EXTERNAL_DIFF: '', GIT_PAGER: 'cat', PAGER: 'cat' };
 
 export function git(repo, args, opts = {}) {
-  return execFileSync('git', ['-C', repo, ...args], {
+  return execFileSync('git', ['-C', repo, ...HARDENED_CONFIG, ...args], {
     encoding: opts.binary ? 'buffer' : 'utf8',
     stdio: ['ignore', 'pipe', 'pipe'],
     maxBuffer: 64 * 1024 * 1024,
+    env: HARDENED_ENV,
   });
+}
+
+// The checkout must be a worktree of the repository named in the brief, not an
+// arbitrary directory whose .git file points elsewhere.
+export function assertWorktreeOf(checkout, repository) {
+  const a = tryGit(checkout, ['rev-parse', '--git-common-dir']);
+  const b = tryGit(repository, ['rev-parse', '--git-common-dir']);
+  if (!a.ok || !b.ok) return { ok: false, reason: 'not a git checkout' };
+  const ca = realpathSync(resolvePath(checkout, a.out.trim()));
+  const cb = realpathSync(resolvePath(repository, b.out.trim()));
+  return ca === cb ? { ok: true } : { ok: false, reason: `checkout belongs to ${ca}, not ${cb}` };
 }
 
 export function tryGit(repo, args, opts) {
@@ -43,7 +76,7 @@ export function readAtRevision(repo, revision, path) {
 // Name-status with rename detection, NUL separated so paths with spaces survive.
 // Returns [{status, score, oldPath, path}].
 export function diffNameStatus(repo, base, candidate) {
-  const out = git(repo, ['diff', '--name-status', '-z', '-M', '--no-color', base, candidate]);
+  const out = git(repo, ['diff', '--name-status', '-z', '-M', '--no-color', '--no-ext-diff', '--no-textconv', base, candidate]);
   const parts = out.split('\0').filter((p, i, a) => !(i === a.length - 1 && p === ''));
   const entries = [];
   for (let i = 0; i < parts.length; ) {
@@ -61,7 +94,7 @@ export function diffNameStatus(repo, base, candidate) {
 
 // Raw diff exposes mode changes and submodule entries (mode 160000).
 export function diffRaw(repo, base, candidate) {
-  const out = git(repo, ['diff', '--raw', '-z', '--no-color', '--no-renames', base, candidate]);
+  const out = git(repo, ['diff', '--raw', '-z', '--no-color', '--no-renames', '--no-ext-diff', '--no-textconv', base, candidate]);
   const parts = out.split('\0').filter((p, i, a) => !(i === a.length - 1 && p === ''));
   const entries = [];
   for (let i = 0; i < parts.length; ) {
@@ -74,7 +107,7 @@ export function diffRaw(repo, base, candidate) {
 }
 
 export function numstat(repo, base, candidate) {
-  const out = git(repo, ['diff', '--numstat', '-z', '-M', base, candidate]);
+  const out = git(repo, ['diff', '--numstat', '-z', '-M', '--no-ext-diff', '--no-textconv', base, candidate]);
   const lines = out.split('\0').filter(Boolean);
   const result = [];
   for (let i = 0; i < lines.length; i++) {

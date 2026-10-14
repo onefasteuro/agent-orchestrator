@@ -20,6 +20,8 @@ P0 closed by the user on P0b spike evidence (D-14). All eight spike rows passed 
 
 **14 October 2026, later:** P1 authorized (D-16) and delivered. `tools/sdd.mjs` with brief-validate, gate, audit (append, verify, segment, classify), usage (codex, pi, coverage), liveness, recovery index and fake-worker commands; 29 tests pass. See `tools/README.md`.
 
+**14 October 2026, later:** P2 authorized (D-17) and delivered. Role pack under `pack/`: entrypoint, workflow, role map, launch recipes (Codex, Pi, Claude all verified), five role prompts, templates. AC-1, AC-2, AC-10 observed on the fixture. `sdd pack-hash` and `sdd brief-render` added to the tools; gate hardened against worker-reachable Git metadata (`.gitattributes`, `.gitignore` protected; diff-suppressed changes flagged; checkout identity verified); 32 tests pass.
+
 ## v0.4, 14 October 2026
 
 Restructure for brevity. Guarantees preserved; mechanisms moved to a tiered controls table. Package reduced from six documents to four plus archive.

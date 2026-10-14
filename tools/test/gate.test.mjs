@@ -106,3 +106,25 @@ test('W-3: leftover uncommitted changes after the candidate commit are reported'
   assert.equal(r.receipt.cleanliness.clean, false);
   assert.ok(r.violations.some((v) => v.path === 'stray.txt'));
 });
+
+test('hardening: repo-local diff.external and in-tree attributes cannot alter the gate', () => {
+  const { repo, base, brief } = fresh();
+  git(repo, ['config', 'diff.external', '/bin/false']);
+  git(repo, ['config', 'core.hooksPath', '/nonexistent']);
+  writeFileSync(join(repo, 'src/math.mjs'), 'export const changed = true;\n');
+  const r = runGate({ repo, brief, baseSha: base });
+  assert.equal(r.ok, true, JSON.stringify(r.violations));
+  assert.deepEqual(r.receipt.changed_paths.map((c) => c.path), ['src/math.mjs']);
+  writeFileSync(join(repo, '.gitattributes'), '*.mjs -diff\n');
+  const r2 = runGate({ repo, brief, baseSha: base });
+  assert.ok(r2.violations.some((v) => v.path === '.gitattributes' && /protected/.test(v.reason)), '.gitattributes is protected');
+  assert.ok(r2.violations.some((v) => v.path === 'src/math.mjs' && /diff-suppressed/.test(v.reason)), 'suppressed line counts are flagged, not counted as zero');
+});
+
+test('hardening: a checkout that is not a worktree of the named repository is refused', () => {
+  const { repo, base, brief } = fresh();
+  const other = makeRepo().repo;
+  const r = runGate({ repo: other, brief, baseSha: base });
+  assert.equal(r.ok, false);
+  assert.ok(/checkout identity/.test(r.violations[0].reason));
+});

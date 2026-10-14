@@ -5,7 +5,7 @@
 
 import { readFileSync } from 'node:fs';
 import { briefHash, hashBytes, hashObject } from './canonical.mjs';
-import { diffNameStatus, diffRaw, numstat, workingState, readAtRevision, resolveCommit, git } from './git.mjs';
+import { diffNameStatus, diffRaw, numstat, workingState, readAtRevision, resolveCommit, git, assertWorktreeOf } from './git.mjs';
 import { DEFAULT_PROTECTED, normalizeRepoPath, isProtected, isAllowed } from './paths.mjs';
 
 function norm(list) {
@@ -39,6 +39,8 @@ export function runGate({ repo, brief, baseSha, candidateSha = null, ignoredBase
   const allow = allowlistFromBrief(brief);
   const violations = [];
   const changed = [];
+  const identity = assertWorktreeOf(repo, brief.workspace.repository || repo);
+  if (!identity.ok) return { ok: false, violations: [{ path: null, reason: `checkout identity: ${identity.reason}` }], receipt: null };
   const base = resolveCommit(repo, baseSha);
   if (!base) return { ok: false, violations: [{ path: null, reason: `base ${baseSha} does not resolve` }], receipt: null };
   let cand = null;
@@ -91,6 +93,7 @@ export function runGate({ repo, brief, baseSha, candidateSha = null, ignoredBase
   for (const p of unexpectedIgnored) violations.push({ path: p, reason: 'unexpected ignored artifact not in setup baseline' });
 
   // Size against limits, excluding disclosed generated and scratch paths.
+  for (const s of stats) if (s.binary && !isAllowed(s.path, allow.generated) && !isAllowed(s.path, allow.scratch)) violations.push({ path: s.path, reason: 'binary or diff-suppressed change; line count unavailable, declare it as generated or remove it' });
   const sized = stats.filter((s) => !isAllowed(s.path, allow.generated) && !isAllowed(s.path, allow.scratch));
   const size = {
     files: new Set(sized.map((s) => s.path)).size,
@@ -131,7 +134,7 @@ export function runGate({ repo, brief, baseSha, candidateSha = null, ignoredBase
 }
 
 function diffNameStatusWorkingTree(repo, base) {
-  const out = git(repo, ['diff', '--name-status', '-z', '-M', '--no-color', base]);
+  const out = git(repo, ['diff', '--name-status', '-z', '-M', '--no-color', '--no-ext-diff', '--no-textconv', base]);
   const parts = out.split('\0').filter((p, i, a) => !(i === a.length - 1 && p === ''));
   const entries = [];
   for (let i = 0; i < parts.length; ) {
@@ -144,7 +147,7 @@ function diffNameStatusWorkingTree(repo, base) {
 }
 
 function numstatWorkingTree(repo, base) {
-  const out = git(repo, ['diff', '--numstat', '-z', '-M', base]);
+  const out = git(repo, ['diff', '--numstat', '-z', '-M', '--no-ext-diff', '--no-textconv', base]);
   const lines = out.split('\0').filter(Boolean);
   const result = [];
   for (let i = 0; i < lines.length; i++) {
@@ -152,7 +155,7 @@ function numstatWorkingTree(repo, base) {
     if (!m) continue;
     let path = m[3];
     if (path === '') path = lines[++i] + ' -> ' + lines[++i];
-    result.push({ added: m[1] === '-' ? 0 : Number(m[1]), deleted: m[2] === '-' ? 0 : Number(m[2]), path });
+    result.push({ added: m[1] === '-' ? 0 : Number(m[1]), deleted: m[2] === '-' ? 0 : Number(m[2]), path, binary: m[1] === '-' });
   }
   return result;
 }

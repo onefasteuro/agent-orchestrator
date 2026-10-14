@@ -14,6 +14,8 @@
 //   sdd liveness --projection '<json>' --role <role> [--last-progress <iso>] [--pending-question <iso>]
 //   sdd recovery-write --checkout <integration> --json '<fields>'
 //   sdd recovery-read --checkout <integration>
+//   sdd pack-hash --dir <pack>
+//   sdd brief-render --brief <brief.json> --role-file <roles/x.md> [--spec-excerpt <file>] [--plan-excerpt <file>] [--out <prompt.txt>]
 //   sdd fake-worker --scenario <name> --repo <checkout> --brief <brief.json> --task <id> --dispatch <id> [--audit <file>]
 
 import { readFileSync } from 'node:fs';
@@ -24,6 +26,8 @@ import { parseCodexRollout, parsePiStatusBar, coverage } from './lib/usage.mjs';
 import { decideLiveness } from './lib/liveness.mjs';
 import { writeIndex, readIndex } from './lib/recovery.mjs';
 import { runScenario, SCENARIOS } from './lib/fake-worker.mjs';
+import { packHash, renderPrompt } from './lib/render.mjs';
+import { briefHash } from './lib/canonical.mjs';
 
 function parseArgs(argv) {
   const args = { _: [] };
@@ -96,13 +100,21 @@ try {
     }
     case 'recovery-write': { need(args, ['checkout', 'json']); out({ ok: true, index: writeIndex(args.checkout, JSON.parse(args.json)) }); }
     case 'recovery-read': { need(args, ['checkout']); out({ ok: true, index: readIndex(args.checkout) }); }
+    case 'pack-hash': { need(args, ['dir']); out({ ok: true, ...packHash(args.dir) }); }
+    case 'brief-render': {
+      need(args, ['brief', 'role-file']);
+      const brief = loadBrief(args.brief);
+      const r = renderPrompt({ roleText: readFileSync(args['role-file'], 'utf8'), brief, briefHash: briefHash(brief), featureSpecExcerpt: args['spec-excerpt'] ? readFileSync(args['spec-excerpt'], 'utf8') : '', featurePlanExcerpt: args['plan-excerpt'] ? readFileSync(args['plan-excerpt'], 'utf8') : '' });
+      if (args.out) { const { writeFileSync } = await import('node:fs'); writeFileSync(args.out, r.prompt, 'utf8'); }
+      out({ ok: true, prompt_hash: r.prompt_hash, brief_hash: briefHash(brief), bytes: Buffer.byteLength(r.prompt), out: args.out || null, prompt: args.out ? undefined : r.prompt });
+    }
     case 'fake-worker': {
       need(args, ['scenario', 'repo', 'brief', 'task', 'dispatch']);
       if (!SCENARIOS.includes(args.scenario)) out({ ok: false, error: `scenario must be one of ${SCENARIOS.join(', ')}` }, 2);
       out({ ok: true, ...runScenario(args.scenario, { repo: args.repo, brief: loadBrief(args.brief), task_id: args.task, dispatch_id: args.dispatch, auditFile: args.audit || null }) });
     }
     default:
-      out({ ok: false, error: `unknown command ${cmd || '(none)'}`, commands: ['brief-validate', 'gate', 'audit-append', 'audit-verify', 'audit-segment', 'audit-classify', 'usage-codex', 'usage-pi', 'usage-coverage', 'liveness', 'recovery-write', 'recovery-read', 'fake-worker'] }, 2);
+      out({ ok: false, error: `unknown command ${cmd || '(none)'}`, commands: ['brief-validate', 'gate', 'audit-append', 'audit-verify', 'audit-segment', 'audit-classify', 'usage-codex', 'usage-pi', 'usage-coverage', 'liveness', 'recovery-write', 'recovery-read', 'pack-hash', 'brief-render', 'fake-worker'] }, 2);
   }
 } catch (err) {
   out({ ok: false, error: String(err.message || err) }, 2);

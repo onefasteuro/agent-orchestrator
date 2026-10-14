@@ -13,6 +13,8 @@ export const DEFAULT_PROTECTED = [
   '.githooks/',
   '.git/',
   '.gitmodules',
+  '.gitattributes',
+  '.gitignore',
   'AGENTS.md',
   'CLAUDE.md',
 ];

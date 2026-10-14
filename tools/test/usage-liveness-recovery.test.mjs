@@ -96,3 +96,22 @@ test('K-5: a feature document change invalidates the pinned identity', async () 
   const after = hashBytes(readFileSync(join(repo, 'specs/feature-a/spec.md')));
   assert.notEqual(before, after, 'queued briefs pinned to the old hash must be revalidated');
 });
+
+test('K-1: prompt rendering is deterministic and the pack hash changes with content', async () => {
+  const { renderPrompt, packHash } = await import('../lib/render.mjs');
+  const { mkdtempSync, writeFileSync, mkdirSync } = await import('node:fs');
+  const { join } = await import('node:path');
+  const { tmpdir } = await import('node:os');
+  const { repo, base } = makeRepo();
+  const brief = makeBrief({ repo, base });
+  const a = renderPrompt({ roleText: '# role\n', brief, briefHash: 'h' });
+  const b = renderPrompt({ roleText: '# role\n', brief, briefHash: 'h' });
+  assert.equal(a.prompt_hash, b.prompt_hash);
+  assert.ok(a.prompt.includes('ASSIGNED PATHS') && a.prompt.includes('src/math.mjs') && a.prompt.includes('npm test'));
+  const dir = mkdtempSync(join(tmpdir(), 'sdd-pack-'));
+  mkdirSync(join(dir, 'roles'));
+  writeFileSync(join(dir, 'roles/x.md'), 'one');
+  const h1 = packHash(dir).hash;
+  writeFileSync(join(dir, 'roles/x.md'), 'two');
+  assert.notEqual(packHash(dir).hash, h1);
+});
