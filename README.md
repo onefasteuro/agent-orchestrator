@@ -54,10 +54,7 @@ Target workflow once P6 is complete. Nothing is installed today. Commands below 
 
 ### Start a feature
 
-1. In Orca, create the integration worktree for the feature from an explicit base ref and note the resolved base SHA. Sidebar parentage does not set the Git base (W-2).
-   ```sh
-   orca worktree create --repo id:<repoId> --name feat-<name> --json
-   ```
+1. Pick the integration checkout. Any checkout on a feature branch works, including the primary one Orca opened, as long as it is clean and you note its base SHA (W-1, W-2). A separate Orca worktree is preferable when the primary checkout carries local changes or you run more than one feature; create it in the Orca app from the intended base branch. Sidebar parentage does not set the Git base. The headless equivalent is `orca worktree create --repo id:<repoId> --name feat-<name> --json`.
 2. Open a terminal in that worktree and start the coordinator. The `--agent` flag applies the entrypoint's system prompt, tools and model to the main session:
    ```sh
    claude --agent sdd-orchestrator
@@ -91,6 +88,21 @@ orca terminal wait --terminal <handle> --for tui-idle --timeout-ms 60000 --json
 orca orchestration worker-start --task <taskId> --worktree path:<abs-task-worktree> --terminal <handle> --json
 ```
 Codex specialists use `worker-start --agent codex` with the validated read-only launch recipe from the role map.
+
+### How results flow back
+
+All specialist traffic goes through Orca's Run inbox. Nothing is passed by file or shared conversation (C-1, A-2).
+
+| Direction | Mechanism |
+| --- | --- |
+| Coordinator to worker | `worker-start` injects Orca's preamble (task and dispatch IDs, reporting commands) followed by the full role text and brief. A later nudge uses `send --to dispatch:<id>`, which the worker only sees when it runs `check` at a checkpoint. |
+| Worker done | Exactly one `send --type worker_done --task-id --dispatch-id --outcome succeeded\|failed` with the C-3 result fields in the body. For the implementer this is a handoff, not a candidate (L-1). |
+| Worker question | `ask --to <coordinator> --question ... --timeout-ms ...` blocks the worker. Timeout leaves it pending (Q-3). |
+| Coordinator reads | `check --wait --types worker_done,escalation,question` returns the oldest unacknowledged delivery. The coordinator validates it against the expected dispatch and candidate (R-2), acts, then `check --ack <deliveryId>`. |
+| Coordinator answers | `reply --id <messageId> --body ...` to the original question after the advisor dispatch is read directly with `worker-show` and `worker-read` (K-10). |
+| Code | Never in a message. The implementer leaves changes in its task worktree; the coordinator inspects, stages and commits the candidate SHA (K-6). Reviewers read that SHA in their own detached checkout. |
+
+Deliveries are FIFO and replayable, which is why one `worker_done` per dispatch and identity checks before acceptance matter (K-12, N-5).
 
 ### Resume or cancel
 

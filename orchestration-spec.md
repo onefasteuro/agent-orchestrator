@@ -158,7 +158,7 @@ Planned checks, not executed results. Each maps to controls in `orchestration-co
 - **D-9** Pilot thresholds are in the plan, section 6. Targets, not results.
 - **D-10** Orca supplies only required coordination. Failed critical feasibility stops and revises the integration.
 - **D-11 Needs confirmation.** Review pass 1 and pass 2 are two Orca dispatches, not one dispatch with an interim message (K-9). Replaces the v0.3 interim-report mechanism.
-- **D-12 Needs confirmation.** Adoption requires 100% time and attempt coverage. Token and cost coverage gates routing decisions, not workflow adoption (plan section 6). Replaces the v0.3 rule that estimates cannot fill the requirement.
+- **D-12 Needs confirmation.** Adoption requires 100% time and attempt coverage. Token and cost coverage gates routing decisions, not workflow adoption (plan section 6). A user dollar cap is enforced only where telemetry allows; otherwise it is refused or replaced by a stated conservative bound (K-13). Replaces the v0.3 rule that estimates cannot fill the requirement.
 - **D-13** Spike-validated tool versions are pinned for the pilot (K-17).
 
 Established input: the user's Pi/DeepSeek high configuration works. Everything about the combined Orca workflow is untested.

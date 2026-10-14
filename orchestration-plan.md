@@ -84,7 +84,7 @@ Isolated non-production repository. Automated checks, manual observations and un
 | --- | --- |
 | Sample | Ten completed tasks: four small features, three bug fixes, three integration or regression tasks, all meeting approved ACs |
 | Integrity | Zero lost work, duplicate accepted results or accepted ownership violations |
-| Recovery drills | Three restarts, two ask timeouts, one cancellation during active implementation, one spec-change drill, one stalled-worker drill, one human takeover; all recover with complete accounting |
+| Recovery drills | Three restarts, two ask timeouts, one cancellation during active implementation, one spec-change drill, one stalled-worker drill, one worker-waiting-on-ask drill that must not trigger a stall, one human takeover, one integration revert followed by repair where the full feature must be present in the final integrated SHA; all recover with complete accounting |
 | Reviewer calibration | Per K-19: at least four of five seeded defects caught, every critical or high seed caught, at most one false positive across five controls |
 | Human intervention | At most two unplanned interventions across the ten ordinary tasks; approvals, drills and calibration counted separately |
 | Usage coverage | 100% of dispatches and coordinator sessions have time and attempt records. Token or cost telemetry is recorded where the runtime exposes it; gaps are listed and block cost-based routing claims, not adoption (D-12) |
