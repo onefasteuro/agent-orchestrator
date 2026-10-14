@@ -1,6 +1,6 @@
 # Agentic SDD orchestration: specification
 
-Version 0.5, 14 October 2026. Status: P0 closed on 14 October 2026 by the user on P0b spike evidence (`spike/2026-10-14-p0b.md`, all eight rows passed). P1 and P2 authorized 14 October 2026 (D-16, D-17); P3 onward remains unauthorized until the user says so.
+Version 0.5, 14 October 2026. Status: P0 closed on 14 October 2026 by the user on P0b spike evidence (`spike/2026-10-14-p0b.md`, all eight rows passed). P1 to P3 authorized 14 October 2026 (D-16 to D-18); P4 onward remains unauthorized until the user says so.
 
 Rules are stated once and cited by ID elsewhere. Mechanisms live in `orchestration-controls.md` (K-n). Sequence and thresholds live in `orchestration-plan.md` (P-n). Non-claims are collected in section 9.
 
@@ -162,6 +162,7 @@ Planned checks, not executed results. Each maps to controls in `orchestration-co
 - **D-13** Spike-validated tool versions are pinned for the pilot (K-17): Orca 1.4.224, Codex 0.161.0, Pi 1.0.4, Claude Code 2.1.300, Node v26.11.1.
 - **D-14 Decided 14 October 2026.** P0 closed. Spike rows 1 to 8 passed; findings folded into K-1, K-6, K-8, K-10, K-12 to K-15, K-20 and K-21.
 - **D-15 Decided 14 October 2026.** Codex levels: advisor and debugger `max`, reviewer `high` with `max` as recorded escalation.
+- **D-18 Decided 14 October 2026.** P3 authorized: one real implementation task (`mean()` in the fixture) through preflight, Pi dispatch, ownership gate, candidate commit, two-pass Codex review, integration and acceptance, with audit and usage records. The user's "proceed" after the AC-2 documents counts as the single delivery approval for that task.
 - **D-17 Decided 14 October 2026.** P2 authorized: role pack drafted under `pack/` in this repository (entrypoint, workflow, role map, launch recipes, five role prompts, templates), installed to `.agents/orca-sdd/` only in P6.
 - **D-16 Decided 14 October 2026.** P1 implementation authorized: brief validator, ownership gate, audit writer, usage recorder, fake-worker harness, as ordinary files under `tools/` in this repository, Node ESM with no dependencies, tested with `node --test`. No scheduling logic. Packaging into the role pack is P6.
 

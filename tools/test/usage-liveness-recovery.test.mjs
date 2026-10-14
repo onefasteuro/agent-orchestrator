@@ -115,3 +115,13 @@ test('K-1: prompt rendering is deterministic and the pack hash changes with cont
   writeFileSync(join(dir, 'roles/x.md'), 'two');
   assert.notEqual(packHash(dir).hash, h1);
 });
+
+test('K-13: a usage event may cover several dispatches of one session', () => {
+  const f = join(mkdtempSync(join(tmpdir(), 'sdd-cov2-')), 'events.jsonl');
+  append(f, { event_type: 'dispatch_started', run_id: 'r', task_id: 't1', dispatch_id: 'p1', runtime: 'codex' });
+  append(f, { event_type: 'dispatch_started', run_id: 'r', task_id: 't2', dispatch_id: 'p2', runtime: 'codex' });
+  append(f, { event_type: 'usage_recorded', run_id: 'r', dispatch_id: 'p2', covers_dispatches: ['p1', 'p2'], measurement_status: 'actual', elapsed_seconds: 90, tokens: { input: 1 } });
+  const cov = coverage(readLog(f).events);
+  assert.equal(cov.with_tokens, 2);
+  assert.deepEqual(cov.missing_usage, []);
+});

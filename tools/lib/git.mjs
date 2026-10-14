@@ -1,7 +1,8 @@
 // Thin git helpers. Every call is explicit about the repository it touches.
 
 import { execFileSync } from 'node:child_process';
-import { realpathSync } from 'node:fs';
+import { realpathSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { resolve as resolvePath } from 'node:path';
 
 // Hardening: a worker with shell access can edit the shared .git/config of a
@@ -32,6 +33,37 @@ export function git(repo, args, opts = {}) {
   });
 }
 
+// In-tree .gitattributes can assign clean filters and diff drivers that run
+// during a working-tree diff; .git/info/attributes and .git/config are shared by
+// every worktree and reachable by an unsandboxed worker. The gate fails closed
+// when any of them differs from base or from a recorded baseline.
+export function metadataDrift(repo, base, baseline = {}) {
+  const problems = [];
+  const tracked = tryGit(repo, ['ls-tree', '-r', '--name-only', base]);
+  const attrAtBase = new Set((tracked.ok ? tracked.out.split('\n') : []).filter((p) => p === '.gitattributes' || p.endsWith('/.gitattributes')));
+  const onDisk = tryGit(repo, ['ls-files', '-z', '--others', '--cached', '--', '.gitattributes', '**/.gitattributes', '*/.gitattributes']);
+  const names = new Set([...attrAtBase, ...(onDisk.ok ? onDisk.out.split('\0').filter(Boolean) : [])]);
+  for (const name of names) {
+    const atBase = readAtRevision(repo, base, name);
+    let onTree = null;
+    try { onTree = readFileSync(resolvePath(repo, name)); } catch { onTree = null; }
+    const same = (atBase === null && onTree === null) || (atBase !== null && onTree !== null && Buffer.compare(atBase, onTree) === 0);
+    if (!same) problems.push({ path: name, reason: 'attributes file differs from base; diff output cannot be trusted' });
+  }
+  const common = tryGit(repo, ['rev-parse', '--git-common-dir']);
+  if (common.ok) {
+    const dir = resolvePath(repo, common.out.trim());
+    for (const [file, key] of [['info/attributes', 'info_attributes_sha256'], ['config', 'config_sha256']]) {
+      let bytes = null;
+      try { bytes = readFileSync(resolvePath(dir, file)); } catch { bytes = null; }
+      const actual = bytes ? createHash('sha256').update(bytes).digest('hex') : null;
+      if (baseline[key] !== undefined && baseline[key] !== actual) problems.push({ path: `.git/${file}`, reason: `differs from the recorded baseline (expected ${String(baseline[key]).slice(0, 12)}, actual ${String(actual).slice(0, 12)})` });
+      if (file === 'info/attributes' && baseline[key] === undefined && actual !== null) problems.push({ path: '.git/info/attributes', reason: 'present but no baseline recorded; record one at setup or remove it' });
+    }
+  }
+  return problems;
+}
+
 // The checkout must be a worktree of the repository named in the brief, not an
 // arbitrary directory whose .git file points elsewhere.
 export function assertWorktreeOf(checkout, repository) {
@@ -54,29 +86,33 @@ export function tryGit(repo, args, opts) {
 export const SHA_RE = /^[0-9a-f]{40}$/;
 
 export function resolveCommit(repo, ref) {
-  const r = tryGit(repo, ['rev-parse', '--verify', '--quiet', `${ref}^{commit}`]);
+  if (typeof ref !== 'string' || ref.startsWith('-') || /\s/.test(ref)) return null;
+  const r = tryGit(repo, ['rev-parse', '--verify', '--quiet', '--end-of-options', `${ref}^{commit}`]);
   return r.ok ? r.out.trim() : null;
 }
 
 export function isAncestor(repo, ancestor, descendant) {
-  const r = tryGit(repo, ['merge-base', '--is-ancestor', ancestor, descendant]);
+  if (!SHA_RE.test(ancestor) || !SHA_RE.test(descendant)) return false;
+  const r = tryGit(repo, ['merge-base', '--is-ancestor', '--end-of-options', ancestor, descendant]);
   return r.ok;
 }
 
 export function pathExistsAtRevision(repo, revision, path) {
-  const r = tryGit(repo, ['cat-file', '-e', `${revision}:${path}`]);
+  if (!SHA_RE.test(revision) || path.startsWith('-')) return false;
+  const r = tryGit(repo, ['cat-file', '-e', '--end-of-options', `${revision}:${path}`]);
   return r.ok;
 }
 
 export function readAtRevision(repo, revision, path) {
-  const r = tryGit(repo, ['show', `${revision}:${path}`], { binary: true });
+  if (!SHA_RE.test(revision) || path.startsWith('-')) return null;
+  const r = tryGit(repo, ['show', '--no-color', '--end-of-options', `${revision}:${path}`], { binary: true });
   return r.ok ? r.out : null;
 }
 
 // Name-status with rename detection, NUL separated so paths with spaces survive.
 // Returns [{status, score, oldPath, path}].
 export function diffNameStatus(repo, base, candidate) {
-  const out = git(repo, ['diff', '--name-status', '-z', '-M', '--no-color', '--no-ext-diff', '--no-textconv', base, candidate]);
+  const out = git(repo, ['diff', '--name-status', '-z', '-M', '--no-color', '--no-ext-diff', '--no-textconv', '--end-of-options', base, candidate, '--']);
   const parts = out.split('\0').filter((p, i, a) => !(i === a.length - 1 && p === ''));
   const entries = [];
   for (let i = 0; i < parts.length; ) {
@@ -94,7 +130,7 @@ export function diffNameStatus(repo, base, candidate) {
 
 // Raw diff exposes mode changes and submodule entries (mode 160000).
 export function diffRaw(repo, base, candidate) {
-  const out = git(repo, ['diff', '--raw', '-z', '--no-color', '--no-renames', '--no-ext-diff', '--no-textconv', base, candidate]);
+  const out = git(repo, ['diff', '--raw', '-z', '--no-color', '--no-renames', '--no-ext-diff', '--no-textconv', '--end-of-options', base, candidate, '--']);
   const parts = out.split('\0').filter((p, i, a) => !(i === a.length - 1 && p === ''));
   const entries = [];
   for (let i = 0; i < parts.length; ) {
@@ -107,7 +143,7 @@ export function diffRaw(repo, base, candidate) {
 }
 
 export function numstat(repo, base, candidate) {
-  const out = git(repo, ['diff', '--numstat', '-z', '-M', '--no-ext-diff', '--no-textconv', base, candidate]);
+  const out = git(repo, ['diff', '--numstat', '-z', '-M', '--no-ext-diff', '--no-textconv', '--end-of-options', base, candidate, '--']);
   const lines = out.split('\0').filter(Boolean);
   const result = [];
   for (let i = 0; i < lines.length; i++) {
@@ -140,7 +176,8 @@ export function workingState(repo) {
 }
 
 export function isSymlinkAtRevision(repo, revision, path) {
-  const r = tryGit(repo, ['ls-tree', '-z', revision, '--', path]);
+  if (!SHA_RE.test(revision)) return false;
+  const r = tryGit(repo, ['ls-tree', '-z', '--end-of-options', revision, '--', path]);
   if (!r.ok || !r.out) return false;
   return r.out.startsWith('120000');
 }

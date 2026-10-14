@@ -5,7 +5,7 @@
 
 import { readFileSync } from 'node:fs';
 import { briefHash, hashBytes, hashObject } from './canonical.mjs';
-import { diffNameStatus, diffRaw, numstat, workingState, readAtRevision, resolveCommit, git, assertWorktreeOf } from './git.mjs';
+import { diffNameStatus, diffRaw, numstat, workingState, readAtRevision, resolveCommit, git, assertWorktreeOf, metadataDrift } from './git.mjs';
 import { DEFAULT_PROTECTED, normalizeRepoPath, isProtected, isAllowed } from './paths.mjs';
 
 function norm(list) {
@@ -35,7 +35,7 @@ function classify(path, kind, allow) {
 }
 
 // Inspect base..candidate (committed) or base..working tree (handoff).
-export function runGate({ repo, brief, baseSha, candidateSha = null, ignoredBaseline = [] }) {
+export function runGate({ repo, brief, baseSha, candidateSha = null, ignoredBaseline = [], metadataBaseline = {} }) {
   const allow = allowlistFromBrief(brief);
   const violations = [];
   const changed = [];
@@ -43,6 +43,8 @@ export function runGate({ repo, brief, baseSha, candidateSha = null, ignoredBase
   if (!identity.ok) return { ok: false, violations: [{ path: null, reason: `checkout identity: ${identity.reason}` }], receipt: null };
   const base = resolveCommit(repo, baseSha);
   if (!base) return { ok: false, violations: [{ path: null, reason: `base ${baseSha} does not resolve` }], receipt: null };
+  const drift = metadataDrift(repo, base, metadataBaseline);
+  if (drift.length) return { ok: false, violations: drift.map((d) => ({ ...d, reason: 'metadata: ' + d.reason })), receipt: null };
   let cand = null;
   if (candidateSha) {
     cand = resolveCommit(repo, candidateSha);
@@ -134,7 +136,7 @@ export function runGate({ repo, brief, baseSha, candidateSha = null, ignoredBase
 }
 
 function diffNameStatusWorkingTree(repo, base) {
-  const out = git(repo, ['diff', '--name-status', '-z', '-M', '--no-color', '--no-ext-diff', '--no-textconv', base]);
+  const out = git(repo, ['diff', '--name-status', '-z', '-M', '--no-color', '--no-ext-diff', '--no-textconv', '--end-of-options', base, '--']);
   const parts = out.split('\0').filter((p, i, a) => !(i === a.length - 1 && p === ''));
   const entries = [];
   for (let i = 0; i < parts.length; ) {
@@ -147,7 +149,7 @@ function diffNameStatusWorkingTree(repo, base) {
 }
 
 function numstatWorkingTree(repo, base) {
-  const out = git(repo, ['diff', '--numstat', '-z', '-M', '--no-ext-diff', '--no-textconv', base]);
+  const out = git(repo, ['diff', '--numstat', '-z', '-M', '--no-ext-diff', '--no-textconv', '--end-of-options', base, '--']);
   const lines = out.split('\0').filter(Boolean);
   const result = [];
   for (let i = 0; i < lines.length; i++) {

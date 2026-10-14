@@ -98,7 +98,10 @@ export function coverage(events) {
   for (const e of events) {
     if (e.event_type === 'dispatch_started' && e.dispatch_id) dispatches.set(e.dispatch_id, { dispatch_id: e.dispatch_id, runtime: e.runtime || null, usage: null });
   }
-  for (const e of events) if (e.event_type === 'usage_recorded' && dispatches.has(e.dispatch_id)) dispatches.get(e.dispatch_id).usage = e;
+  for (const e of events) {
+    if (e.event_type !== 'usage_recorded') continue;
+    for (const d of [e.dispatch_id, ...(e.covers_dispatches || [])]) if (dispatches.has(d)) dispatches.get(d).usage = e;
+  }
   const rows = [...dispatches.values()];
   return {
     dispatches: rows.length,

@@ -1,0 +1,135 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_mean_T1_a2",
+  "role": "implementer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "src/math.mjs exports mean(values) per the feature spec, with tests for AC-1 to AC-6 in test/math.test.mjs.",
+  "ac_ids": [
+   "AC-1",
+   "AC-2",
+   "AC-3",
+   "AC-4",
+   "AC-5",
+   "AC-6",
+   "AC-7",
+   "AC-8",
+   "AC-9"
+  ],
+  "exclusions": [
+   "Do not fix, skip or edit the existing clamp test or clamp function (OD-4).",
+   "Do not touch package.json, scripts/, .githooks/, AGENTS.md or src/generated.mjs.",
+   "No new dependencies, no lockfile."
+  ],
+  "expected_result": "A handoff where `node --test --test-name-pattern=\"^mean\" test/` reports every mean test ok and `# fail 0`, and `npm test` reports exactly one not ok: clamp respects upper bound (known baseline limitation, report it, do not count it as a pass)."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/mean/spec.md",
+   "baseline": "approved",
+   "revision": "cf12747186a901fad2779a20be822f536bd0a95f",
+   "sha256": "8cf46782c533e0c72599e7086e99dad511b7c6d95418154400c82af5427535e3"
+  },
+  "feature_plan": {
+   "path": "specs/mean/plan.md",
+   "baseline": "approved",
+   "revision": "cf12747186a901fad2779a20be822f536bd0a95f",
+   "sha256": "fa1f26210af7ff0c6bb1f4842e65c32285421c43b9a0c4744b93068fddf0c3f1"
+  },
+  "role_pack_hash": "912b2f217303b6fb8d2bff664313f6fae6dd6afabbd4b4239452dfa3273f403d",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "specs/mean/spec.md (Design, Behaviour B-1 to B-7, Acceptance criteria, Decisions OD-1 to OD-6)",
+   "specs/mean/plan.md (Design: order of operations, Tasks T1)"
+  ],
+  "predecessor_conclusions": [
+   "OD-1: mean([]) throws RangeError.",
+   "OD-2 and OD-5: non-arrays (including typed arrays) and arrays with any non-finite or non-number element throw TypeError.",
+   "OD-3: plain reduce sum then divide by length.",
+   "OD-4: the existing test 'clamp respects upper bound' fails on the base commit and must keep failing; report it as a known baseline failure.",
+   "OD-6: src/generated.mjs is written by the pre-commit hook during the coordinator's commit; you never create or edit it.",
+   "Test names must start with 'mean' so --test-name-pattern=\"^mean\" isolates them.",
+   "Only permitted edit to an existing line in test/math.test.mjs: extend the import on line 3 to include mean."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/task-1",
+  "base_sha": "cf12747186a901fad2779a20be822f536bd0a95f",
+  "candidate_sha": null,
+  "dirty_state": null,
+  "assigned_paths": [
+   "src/math.mjs",
+   "test/math.test.mjs"
+  ],
+  "new_paths": [],
+  "protected_paths": [
+   "scripts/",
+   "package.json",
+   "src/generated.mjs"
+  ]
+ },
+ "execution": {
+  "runtime": "pi",
+  "model": "ollama-cloud/deepseek-v4.1-flash",
+  "effort": "high",
+  "permission_recipe": "pi-terminal-attach",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 90,
+   "attempts": 3,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "mean tests",
+    "command": "node --test --test-name-pattern=\"^mean\" test/",
+    "expected": "every mean test reports ok and the summary shows # fail 0"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "exactly one not ok: 'clamp respects upper bound' (known baseline); all mean tests and the two other baseline tests ok"
+   },
+   {
+    "name": "additive change",
+    "command": "git diff --unified=0 HEAD -- src/math.mjs",
+    "expected": "no removed lines"
+   }
+  ],
+  "estimate": {
+   "files": 2,
+   "lines": 60
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "changed paths as git status shows them",
+   "each required check with its result line",
+   "questions asked and answers received, with any timeout",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (ask for questions, worker_done once)",
+  "usage_source": "pi-status-bar",
+  "budget_ref": "mean-T1: one session, 3 attempts",
+  "escalation_rule": "ask the coordinator before any decision the brief does not settle, after two failed attempts at the same problem, or if a required path is outside your allowlist",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl"
+ }
+}

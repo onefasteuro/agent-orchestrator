@@ -1,0 +1,121 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_mean_T1_review_p2",
+  "role": "reviewer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "Pass-2 review of candidate 1f1e1d939d0e: reconcile your persisted pass-1 findings with the implementer report, gate receipts, coordinator check results and plan rationale now provided. Resolve AC-8 using the gate receipts.",
+  "ac_ids": [
+   "AC-1",
+   "AC-2",
+   "AC-3",
+   "AC-4",
+   "AC-5",
+   "AC-6",
+   "AC-7",
+   "AC-8",
+   "AC-9"
+  ],
+  "exclusions": [
+   "No edits.",
+   "Do not retract a pass-1 finding because the implementer says it is fine; only the code or checks can retract it."
+  ],
+  "expected_result": "Final combined report: per-criterion verdicts, findings kept or retracted with the reason, new findings if any, checks run, remaining uncertainty."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/mean/spec.md",
+   "baseline": "approved",
+   "revision": "cf12747186a901fad2779a20be822f536bd0a95f",
+   "sha256": "8cf46782c533e0c72599e7086e99dad511b7c6d95418154400c82af5427535e3"
+  },
+  "feature_plan": {
+   "path": "specs/mean/plan.md",
+   "baseline": "approved",
+   "revision": "cf12747186a901fad2779a20be822f536bd0a95f",
+   "sha256": "fa1f26210af7ff0c6bb1f4842e65c32285421c43b9a0c4744b93068fddf0c3f1"
+  },
+  "role_pack_hash": "912b2f217303b6fb8d2bff664313f6fae6dd6afabbd4b4239452dfa3273f403d",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "Your own pass-1 report (persisted by the coordinator as review_pass_one_recorded): Completed independent pass-1 review of candidate 1f1e1d939d0e1fa814f131374b592c332a332f4c against base cf12747186a901fad2779a20be822f536bd0a95f, confirmed HEAD and pinned spec SHA-256, read the full diff and touched files and tests, and made no changes.\nPer-criterion verdicts: AC-1 satisfied (src/math.mjs:11,23; test/math.test.mjs:17-19); AC-2 satisfied (src/math.mjs:23; test/math.test.mjs:21-23); AC-3 satisfied (src/math.mjs:23; test/math.test.mjs:25-28); AC-4 satisfied (src/math.mjs:15-16; test/math.test.mjs:30-32); AC-5 satisfied (src/math.mjs:12-20; test/math.test.mjs:34-43); AC-6 satisfied (src/math.mjs:18-23; test/math.test.mjs:45-50); AC-7 satisfied for pass 1 (src/math.mjs:1-9 and test/math.test.mjs:5-15 unchanged, only existing-line edit is test/math.test.mjs:3); AC-8 not determinable in full because working-tree and candidate sdd gate receipts are unavailable under pass-1 restrictions, though candidate scope and dependency constraints are satisfied (only src/math.mjs:11-24, test/math.test.mjs:3,17-50 and declared generated src/generated.mjs:1 changed, package.json:1-10 unchanged, no new lockfile and node_modules absent); AC-9 satisfied (test/math.test.mjs:5-50, sole expected baseline failure at line 14); findings: none.\nChecks actually run: git rev-parse HEAD returned the exact candidate SHA; node --test --test-name-pattern=\"^mean\" test/ exited 0 with all six named mean tests marked success and result lines \"pass 6\", \"fail 0\"; npm test exited 1 with result lines \"pass 8\", \"fail 1\" and sole failure \"clamp respects upper bound\" (15 !== 10), an accepted OD-4 limitation rather than a passing suite; both required git diff --unified=0 commands exited 0, src/math.mjs had no removed content lines and test/math.test.mjs removed only the old import at line 3; full diff/name-status showed exactly the three allowed paths and git status --short was empty; remaining uncertainty is AC-8 gate-receipt and historical hook/implementer attribution verification plus the separate pass-2 review, with no blocked required candidate checks."
+  ],
+  "predecessor_conclusions": [
+   "Implementer self-report (worker_done, dispatch ctx_a0456852e78e): Implemented mean(values) by appending it to src/math.mjs and added six node:test cases to test/math.test.mjs, all named with the mean prefix; the only change to an existing test line is extending the import on line 3. Claimed checks: mean tests pass 6 fail 0; npm test pass 8 fail 1 with the single failure 'clamp respects upper bound'; src/math.mjs diff additions only (numstat 15 0). No questions asked. Its filesModified payload listed only test/math.test.mjs (it omitted src/math.mjs); the coordinator's Git-computed receipt is authoritative.",
+   "Gate receipt on the candidate (Git-computed): changed [[\"A\", \"src/generated.mjs\", [\"generated\"]], [\"M\", \"src/math.mjs\", [\"assigned\"]], [\"M\", \"test/math.test.mjs\", [\"assigned\"]]]; size files 2, lines 52, generated_files 1, within limits; working tree clean after commit; protected document hashes match the pinned spec and plan. Working-tree gate before the commit: changed src/math.mjs and test/math.test.mjs only, 2 files 52 lines.",
+   "Coordinator checks on the candidate: node --test --test-name-pattern=\"^mean\" test/ -> pass 6 fail 0; npm test -> pass 8 fail 1 with only 'clamp respects upper bound' failing; git diff --unified=0 base..candidate -- src/math.mjs -> 0 removed lines; test/math.test.mjs -> the only removed line is the old import.",
+   "Plan rationale (specs/mean/plan.md): one task because code and tests are about 30 to 50 lines; tests named with the mean prefix so the pattern isolates them from the clamp baseline; error messages are not part of the contract (tests assert the constructor only)."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T1",
+  "base_sha": "cf12747186a901fad2779a20be822f536bd0a95f",
+  "candidate_sha": "1f1e1d939d0e1fa814f131374b592c332a332f4c",
+  "dirty_state": null,
+  "assigned_paths": [],
+  "new_paths": [],
+  "protected_paths": []
+ },
+ "execution": {
+  "runtime": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "permission_recipe": "codex-read-only",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 30,
+   "attempts": 1,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "mean tests",
+    "command": "node --test --test-name-pattern=\"^mean\" test/",
+    "expected": "pass 6, fail 0"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "pass 8, fail 1; only 'clamp respects upper bound' fails"
+   }
+  ],
+  "estimate": {
+   "files": 0,
+   "lines": 0
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "candidate SHA inspected",
+   "pass number",
+   "per-criterion verdicts with file and line",
+   "findings kept, retracted or added, each with reason",
+   "checks run with result lines",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (worker_done once)",
+  "usage_source": "codex-session-rollout",
+  "budget_ref": "mean-T1-review",
+  "escalation_rule": "BLOCKED_CONTEXT if HEAD is not the candidate SHA",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl",
+  "pass": 2
+ }
+}

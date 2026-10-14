@@ -55,10 +55,14 @@ The trust dialog on a new directory defaults to "No, exit": send Up then Enter (
 
 ```sh
 ORCA terminal create --worktree path:<abs-checkout> --title researcher \
-  --command 'claude --model claude-sonnet-5-5 --effort high --permission-mode dontAsk --allowedTools "Read,Grep,Glob,Bash(orca *),mcp__context7__*" --disallowedTools "Edit,Write,NotebookEdit,Bash(git *)"' --json
+  --command 'claude --model claude-sonnet-5-5 --effort high --permission-mode dontAsk --allowedTools "Read,Grep,Glob,Bash(orca status:*),Bash(orca orchestration send:*),Bash(orca orchestration ask:*),Bash(orca orchestration check:*),mcp__context7__*" --disallowedTools "Edit,Write,NotebookEdit,Bash(git:*),Bash(orca terminal:*),Bash(orca worktree:*),Bash(orca orchestration worker-start:*),Bash(orca orchestration dispatch:*),Bash(orca orchestration run-create:*),Bash(orca orchestration task-create:*)"' --json
 ```
 
-`dontAsk` denies every call that is not pre-approved, so only reads, Context7 and `orca` commands run. `Edit` in the deny list covers all built-in file writers. Without `--effort` the session ran at medium. Verified: the status line shows the model and effort, Context7 resolved and queried documentation inside the restriction, and `worker_done` was delivered with the right task and dispatch IDs (`turnStart` is `unsupported` for Claude, as for Pi). Orca's `worker-start --agent claude` pre-fills `--dangerously-skip-permissions` and is not acceptable for this role.
+`dontAsk` denies every call that is not pre-approved, so only reads, Context7 and the three reporting commands (`send`, `ask`, `check`) run. Never allow `Bash(orca *)` or `Bash(orca orchestration *)`: `orca terminal create --command` is arbitrary command execution and `worker-start` would let a leaf spawn agents (A-2). Rule syntax is `Bash(prefix:*)`. `Edit` in the deny list covers all built-in file writers. Without `--effort` the session ran at medium. Verified: the status line shows the model and effort, Context7 resolved and queried documentation inside the restriction, and `worker_done` was delivered with the right task and dispatch IDs (`turnStart` is `unsupported` for Claude, as for Pi). Orca's `worker-start --agent claude` pre-fills `--dangerously-skip-permissions` and is not acceptable for this role.
+
+## Review checkouts
+
+Orca only attaches terminals to worktrees it created (the repository setting `externalWorktreeVisibility` defaults to hide). Create the review worktree through Orca from the task branch, then `git checkout --detach <candidate SHA>` inside it. Verify HEAD and cleanliness before dispatch.
 
 ## Stopping and retrying (K-8, K-15)
 

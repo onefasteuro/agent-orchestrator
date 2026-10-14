@@ -1,0 +1,409 @@
+# Role: implementer
+
+You are the implementer for one bounded task. You are the only process allowed to write product code in this task checkout. Everything you need is in the TASK block that follows the Orca preamble; nothing else from the coordinator's conversation reaches you.
+
+## Your boundary
+
+- Edit only the paths listed under ASSIGNED PATHS and NEW PATHS. Every other path is off limits, including tests you were not assigned, the feature spec and plan, `AGENTS.md`, `CLAUDE.md`, anything under `.agents/`, `.claude/`, `.githooks/`, `.git/`, and `.agent-task.md`.
+- Do not run `git add`, `git commit`, `git stash`, `git checkout`, `git reset`, or change Git configuration or hooks. The coordinator stages and commits your work after an ownership check (K-6).
+- Do not install dependencies, change lockfiles, or touch configuration unless the TASK block names those paths.
+- Do not create or read secrets. Setup uses fixtures only.
+- Do not spawn other agents or start new tasks.
+
+## How to work
+
+1. Read the TASK block fully: objective, acceptance criteria, assigned paths, invariants, required checks, limits.
+2. Before editing, run `orca orchestration check --terminal <your handle> --json` once to pick up any coordinator follow-up.
+3. Make the change. Keep it inside the size limits in the brief (default five files, 300 changed lines, one 30 to 90 minute session). If the task needs a path outside your allowlist, stop and ask (step 5); do not create it.
+4. Run every check named under REQUIRED CHECKS exactly as written. Record the actual output line that shows the result.
+5. When you need a decision you cannot make from the brief, or after two failed attempts at the same problem, ask the coordinator one bounded question with the `ask` command from your preamble, including the files involved, what you tried and what you observed. Then stop editing. If the ask times out, do not re-ask: resume the same question with `--resume <message_id>` as the preamble says, and keep waiting. Do not edit until the answer arrives.
+6. Check for coordinator follow-ups at natural checkpoints (before a new file, after a test run) and once more right before you finish.
+
+## Hand-off
+
+Send exactly one `worker_done` from your own terminal, with `--task-id` and `--dispatch-id` from the preamble, and `--outcome succeeded` only if every required check passed. Otherwise `--outcome failed`, and start the body with one reason code: `BLOCKED_CONTEXT`, `BLOCKED_PERMISSION`, `CHECKS_FAILED`, `CHECKS_UNAVAILABLE`, `OUT_OF_BUDGET`, `CANCELLED`, `OTHER`.
+
+The body must contain, in this order:
+
+1. Changed paths, exactly as `git status --porcelain` shows them (the coordinator recomputes this from Git, so be accurate).
+2. Each required check with its result line.
+3. Any question you asked, the answer you received, and whether a timeout happened first.
+4. Remaining uncertainty, limitations, and anything you could not verify.
+
+Append `--files-modified` with the real paths. After `worker_done`, stop and idle. Do not poll, do not start new work, do not exit the shell.
+
+Your result is evidence. It is not acceptance; the coordinator decides that after the ownership gate, review and integration.
+
+=== TASK ===
+MODE: M-2   ROLE: implementer   BRIEF: brief_mean_T1_a2 hash a754ed1b43c3ca114000f5000773f52cf16aadc7c548f603b396b1448bc6c04d
+RUNTIME: pi ollama-cloud/deepseek-v4.1-flash effort high   PERMISSIONS: pi-terminal-attach
+
+OBJECTIVE
+src/math.mjs exports mean(values) per the feature spec, with tests for AC-1 to AC-6 in test/math.test.mjs.
+Acceptance criteria: AC-1, AC-2, AC-3, AC-4, AC-5, AC-6, AC-7, AC-8, AC-9
+Exclusions: Do not fix, skip or edit the existing clamp test or clamp function (OD-4).; Do not touch package.json, scripts/, .githooks/, AGENTS.md or src/generated.mjs.; No new dependencies, no lockfile.
+Expected result: A handoff where `node --test --test-name-pattern="^mean" test/` reports every mean test ok and `# fail 0`, and `npm test` reports exactly one not ok: clamp respects upper bound (known baseline limitation, report it, do not count it as a pass).
+
+WORKSPACE
+Repository: /Users/oliverharoun/Sites/orca-sdd-fixture
+Your checkout: /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/task-1
+Base commit: cf12747186a901fad2779a20be822f536bd0a95f
+
+ASSIGNED PATHS (the only paths you may change)
+- src/math.mjs
+- test/math.test.mjs
+NEW PATHS (you may create exactly these)
+- (none)
+PROTECTED (never change): feature spec and plan, AGENTS.md, CLAUDE.md, .agents/, .claude/, .githooks/, .git/, .gitignore, .gitattributes, .agent-task.md, plus scripts/, package.json, src/generated.mjs
+
+RULES AND CONTEXT
+Project instructions: AGENTS.md
+Relevant decisions and predecessor conclusions:
+- OD-1: mean([]) throws RangeError.
+- OD-2 and OD-5: non-arrays (including typed arrays) and arrays with any non-finite or non-number element throw TypeError.
+- OD-3: plain reduce sum then divide by length.
+- OD-4: the existing test 'clamp respects upper bound' fails on the base commit and must keep failing; report it as a known baseline failure.
+- OD-6: src/generated.mjs is written by the pre-commit hook during the coordinator's commit; you never create or edit it.
+- Test names must start with 'mean' so --test-name-pattern="^mean" isolates them.
+- Only permitted edit to an existing line in test/math.test.mjs: extend the import on line 3 to include mean.
+Evidence available in your checkout: specs/mean/spec.md (Design, Behaviour B-1 to B-7, Acceptance criteria, Decisions OD-1 to OD-6), specs/mean/plan.md (Design: order of operations, Tasks T1)
+
+FEATURE SPEC (specs/mean/spec.md at cf12747186a901fad2779a20be822f536bd0a95f, sha256 8cf46782c533e0c72599e7086e99dad511b7c6d95418154400c82af5427535e3)
+commit cf12747186a901fad2779a20be822f536bd0a95f
+Author: Oliver Haroun <onefasteuro@gmail.com>
+Date:   Wed Oct 14 19:27:01 2026 -0400
+
+    specs/mean: approved feature spec and plan (D-18)
+
+diff --git a/specs/mean/plan.md b/specs/mean/plan.md
+new file mode 100644
+index 0000000..ef957cc
+--- /dev/null
++++ b/specs/mean/plan.md
+@@ -0,0 +1,77 @@
++# mean: plan
++
++Status: approved 2026-10-14 (D-18). Pinned with `specs/mean/spec.md` in every brief once approved.
++
++## Design
++
++Interface, appended to `src/math.mjs` after `clamp`:
++
++```js
++export function mean(values) { /* returns number */ }
++```
++
++Order of operations (per the settled decisions OD-1, OD-2, OD-3, OD-5 in `spec.md`):
++
++1. If `!Array.isArray(values)`, throw `TypeError`.
++2. If `values.length === 0`, throw `RangeError`.
++3. For each element, if `typeof v !== 'number' || !Number.isFinite(v)`, throw `TypeError`. (`Number.isFinite` alone already rejects non-numbers; the explicit form is acceptable either way.)
++4. Return `values.reduce((sum, v) => sum + v, 0) / values.length`.
++
++Invariants:
++
++- Pure function: no mutation of `values`, no module state, no I/O.
++- `add` and `clamp` text unchanged; `mean` is appended, not interleaved.
++- Error messages are not part of the contract; tests assert the error constructor only (`assert.throws(fn, RangeError)` / `TypeError`), so wording can change without breaking AC-4 or AC-5.
++
++Decisions already made and why:
++
++- One task, not two: implementation and tests are about 30 to 50 changed lines across two files, well inside K-4, and splitting would put tests and code in separate candidates with no independent value.
++- Tests live in the existing `test/math.test.mjs` (as requested) and use the existing `node:test` runner, so no dependency or script change is needed.
++- Test names start with `mean` so `--test-name-pattern="^mean"` isolates them from the known `clamp` failure.
++
++## Tasks
++
++| Task | Outcome | Acceptance criteria | Assigned paths | New paths | Depends on | Checks | Exception |
++| --- | --- | --- | --- | --- | --- | --- | --- |
++| T1 | `mean` implemented in `src/math.mjs` with tests in `test/math.test.mjs` | AC-1 to AC-9 | `src/math.mjs`, `test/math.test.mjs` | none | none | `node --test --test-name-pattern="^mean" test/` expects all `mean` tests `ok` and `# fail 0`; `npm test` expects exactly one `not ok` (`clamp respects upper bound`) per OD-4; `git diff --unified=0 <base> <candidate> -- src/math.mjs` shows no `-` lines | none |
++
++Expected size: 2 files, under 60 changed lines, one session well under 90 minutes.
++
++T1 brief specifics:
++
++- `validation.generated_paths: ["src/generated.mjs"]` (OD-6). The pre-commit hook writes and re-stages it during the coordinator's candidate commit; the implementer never touches it. The gate classifies it as `generated`, so both the working-tree gate and the post-commit gate (K-7) accept it.
++- The brief states the expected baseline: `clamp respects upper bound` fails before and after T1; the implementer must not fix, skip or edit it, and must report it as a known baseline failure, not as a pass.
++
++Dependencies are real ordering only. There are no dependent tasks.
++
++## Integration
++
++- Base: the accepted integrated SHA of `main` at dispatch time (observed `9e3a1407eb88ed4a1494b84eca432fe03b2d087f` from the ref file on 2026-10-14; re-read with `git rev-parse` at dispatch, never assumed).
++- Task worktree and branch: `task-1` created through Orca from that base (delivery mode only).
++- Candidate: coordinator commit on `task-1` after the ownership gate passes on the working tree and again on the commit (K-6, K-7).
++- Review: clean detached checkout at the candidate SHA, two passes (blind, then informed) per K-9.
++- Integration: fast-forward `main` to the candidate if `main` has not moved; otherwise a single merge. Then on the integrated SHA run: `node --test --test-name-pattern="^mean" test/`, `npm test`, and the AC-7 diff check.
++
++## Verification matrix
++
++| AC | Task | Check | Evidence location |
++| --- | --- | --- | --- |
++| AC-1 | T1 | `node --test --test-name-pattern="^mean" test/`, test `mean returns the arithmetic mean` | Integration check output in the run's audit log (`acceptance_recorded`) |
++| AC-2 | T1 | same command, `mean of a single element is that element` | same |
++| AC-3 | T1 | same command, `mean handles negative and fractional values` | same |
++| AC-4 | T1 | same command, `mean throws RangeError on empty array` | same |
++| AC-5 | T1 | same command, `mean throws TypeError on invalid input` | same |
++| AC-6 | T1 | same command, `mean does not mutate its input` | same |
++| AC-7 | T1 | `git diff --unified=0` on both files; reviewer pass 1 and pass 2 | Diff output in audit log; review reports |
++| AC-8 | T1 | `sdd gate` receipts (working tree and candidate) | `candidate_created` event |
++| AC-9 | T1 | `npm test` on the integrated SHA | Integration check output; the `clamp` failure listed as a limitation, not a pass |
++
++## Risks and open decisions
++
++Product decisions OD-1 to OD-6 are settled in `spec.md`. Process risks found during plan review:
++
++- R-1, pre-commit hook writes outside the allowlist. Resolved by OD-6: `src/generated.mjs` is a declared generated path in the T1 brief. `src/generated.mjs` was not present in the working tree on 2026-10-14; the gate accepts it whether the hook adds or modifies it.
++- R-2, baseline test failure (OD-4). AGENTS.md says to run `npm test` before reporting completion; it is expected to fail on `clamp` regardless of T1. The implementer brief states the expected baseline (see T1 brief specifics).
++- R-3, coordinator identity and tooling not verified. Shell access was denied in the planning session and again in this delivery session, so `ORCA status --json` (K-20), the role-pack hash, `sdd recovery-read`, `git status`, `git rev-parse` and `npm test` have not been run. Delivery cannot pass the approval record or any dispatch until they succeed.
++- R-4, tools path mismatch. Resolved: the entrypoint now resolves `<pack>/tools` before `<pack>/../tools`, and the tools exist at `.agents/orca-sdd/tools/sdd.mjs`.
++- R-5, existing spike worktrees. Branches `spike-codex-ro` and `spike-pi-impl` and their worktrees exist. They do not affect T1 but the task worktree name must not collide with them.
+diff --git a/specs/mean/spec.md b/specs/mean/spec.md
+new file mode 100644
+index 0000000..8b166b2
+--- /dev/null
++++ b/specs/mean/spec.md
+@@ -0,0 +1,65 @@
++# mean: specification
++
++Status: approved 2026-10-14 (user instruction "commit and push then proceed", recorded as D-18 in the orchestration package). Open decisions OD-1 to OD-6 were settled by the user on 2026-10-14 (see Decisions). Revision and hash are pinned in every brief once approved; any edit creates new identities (K-5).
++
++Repository base observed: `main` at `9e3a1407eb88ed4a1494b84eca432fe03b2d087f` (read from `.git/refs/heads/main`; not yet confirmed with `git rev-parse`). The earlier planning draft observed `3a0a153046b40218bd958a6c4337a54d1d481104`; the reflog shows one commit since then, titled "Update pack: tools path, Claude recipe". Its file list was not inspected (no shell access); `src/math.mjs`, `test/math.test.mjs` and `package.json` were re-read on 2026-10-14 and still match this specification's assumptions.
++
++## Goal
++
++Callers of `src/math.mjs` get a `mean(values)` function that returns the arithmetic mean of a non-empty array of numbers, so averaging no longer has to be hand-written at each call site. The change is additive: the existing `add` and `clamp` functions and their tests keep their current behaviour.
++
++## Behaviour
++
++1. B-1: `src/math.mjs` exports a named function `mean` taking one parameter, `values`.
++2. B-2: For a non-empty array of finite numbers, `mean(values)` returns the sum of the elements divided by the number of elements.
++3. B-3: For a single-element array, `mean([x])` returns `x`.
++4. B-4: For an empty array, `mean([])` throws a `RangeError` (OD-1).
++5. B-5: For input that is not a plain array (`Array.isArray` is false, which includes typed arrays and array-likes), or an array containing an element that is not a finite number (including `NaN`, `Infinity`, strings, `null`, `undefined`), `mean` throws a `TypeError` (OD-2, OD-5).
++6. B-6: `mean` does not mutate its input array.
++7. B-7: Summation is plain left-to-right floating-point addition, then one division by the length; results are subject to normal IEEE 754 rounding (OD-3).
++
++## Non-goals
++
++- No support for iterables, array-likes or typed arrays; they are rejected per B-5 (OD-5).
++- No weighted, geometric, harmonic or trimmed means; no median or mode.
++- No compensated (Kahan or Neumaier) summation and no protection against intermediate overflow to `Infinity` for very large values (OD-3).
++- No fix to the existing `clamp` upper-bound defect (see Constraints and OD-4).
++- No changes to `package.json`, `.githooks/`, `AGENTS.md` or `scripts/`.
++
++## Constraints
++
++- No new dependencies: `package.json` unchanged, no lockfile created, no `node_modules/` required. Tests use only `node:test` and `node:assert/strict`, as today.
++- `add` and `clamp` in `src/math.mjs` stay byte-identical; changes to that file are additions only.
++- Existing test cases in `test/math.test.mjs` stay byte-identical. The only permitted edit to existing lines is extending the import on line 3 to include `mean`.
++- Changed paths are limited to `src/math.mjs` and `test/math.test.mjs` (AGENTS.md: do not edit files outside the task's paths). The only other path allowed in a candidate is `src/generated.mjs`, written and re-staged by the repository's pre-commit hook (`.githooks/pre-commit` runs `scripts/format.mjs`); it is declared as an expected hook-generated path in the task brief, is never edited by the implementer, and lands on `main` with the candidate (OD-6).
++- ES module syntax, consistent with `"type": "module"` and the existing file style (two-space indent, single quotes, semicolons).
++- Known baseline limitation (OD-4): `clamp` contains a deliberate defect (upper bound not applied), so the existing test `clamp respects upper bound` is expected to fail on the base commit and after this feature. It is reported as an accepted limitation and never counted as a passing check. This was established by reading the code; `npm test` has not yet been run on the base.
++
++## Acceptance criteria
++
++| ID | Criterion | How it is checked |
++| --- | --- | --- |
++| AC-1 | `mean` is a named export and returns the arithmetic mean of a multi-element array: `mean([1, 2, 3, 4])` is `2.5` | `node --test --test-name-pattern="^mean" test/`: test `mean returns the arithmetic mean` reports `ok` |
++| AC-2 | Single element returns itself: `mean([7])` is `7` | Same command: test `mean of a single element is that element` reports `ok` |
++| AC-3 | Negative and fractional values: `mean([-1, 1])` is `0`, `mean([0.5, 1.5])` is `1` (exactly representable values, strict equality) | Same command: test `mean handles negative and fractional values` reports `ok` |
++| AC-4 | `mean([])` throws `RangeError` | Same command: test `mean throws RangeError on empty array` reports `ok` |
++| AC-5 | Non-array input (`undefined`, `null`, `'1,2'`, `{ length: 1, 0: 1 }`, `new Float64Array([1, 2])`) and arrays with a non-finite or non-number element (`[1, '2']`, `[1, NaN]`, `[1, Infinity]`, `[1, null]`) throw `TypeError` | Same command: test `mean throws TypeError on invalid input` reports `ok` |
++| AC-6 | Input array is not mutated | Same command: test `mean does not mutate its input` reports `ok` (deep-equal against a copy taken before the call) |
++| AC-7 | `add` and `clamp` unchanged; existing test cases unchanged | `git diff --unified=0 <base> <candidate> -- src/math.mjs` shows no removed lines; `git diff <base> <candidate> -- test/math.test.mjs` shows removals only on the import line; reviewer confirms in both passes |
++| AC-8 | No new dependencies and no out-of-scope paths | `sdd gate` receipts (working tree and candidate): implementer-changed paths are exactly `src/math.mjs` and `test/math.test.mjs`, plus `src/generated.mjs` classified as declared generated on the candidate only; `package.json` unchanged; no lockfile or `node_modules/` |
++| AC-9 | Full suite outcome matches the baseline plus the new tests | `npm test`: every `mean` test and the two passing baseline tests report `ok`; the only `not ok` is `clamp respects upper bound`, reported as an accepted limitation, not a pass |
++
++Every criterion is referenced by task T1 in the plan. No criterion requires anything beyond the local fixtures.
++
++## Decisions
++
++All product decisions from the planning draft were settled by the user on 2026-10-14. No open product decisions remain.
++
++| ID | Question | Decision |
++| --- | --- | --- |
++| OD-1 | What does `mean([])` do? | Throw `RangeError` |
++| OD-2 | How strictly is input validated? | Throw `TypeError` for non-arrays and for any element that is not a finite number |
++| OD-3 | Summation precision and overflow | Plain sum, then divide by the length |
++| OD-4 | Pre-existing `clamp` test failure | Known baseline limitation: AC-9 expects exactly that one `not ok`; it is never reported as a passing check |
++| OD-5 | Are typed arrays accepted? | No: plain arrays only (`Array.isArray`); typed arrays throw `TypeError` |
++| OD-6 | Pre-commit hook writes `src/generated.mjs` | Declare `src/generated.mjs` as an expected hook-generated path in the T1 brief (`validation.generated_paths`); it lands on `main` with the candidate |
+
+
+FEATURE PLAN (specs/mean/plan.md at cf12747186a901fad2779a20be822f536bd0a95f, sha256 fa1f26210af7ff0c6bb1f4842e65c32285421c43b9a0c4744b93068fddf0c3f1)
+commit cf12747186a901fad2779a20be822f536bd0a95f
+Author: Oliver Haroun <onefasteuro@gmail.com>
+Date:   Wed Oct 14 19:27:01 2026 -0400
+
+    specs/mean: approved feature spec and plan (D-18)
+
+diff --git a/specs/mean/plan.md b/specs/mean/plan.md
+new file mode 100644
+index 0000000..ef957cc
+--- /dev/null
++++ b/specs/mean/plan.md
+@@ -0,0 +1,77 @@
++# mean: plan
++
++Status: approved 2026-10-14 (D-18). Pinned with `specs/mean/spec.md` in every brief once approved.
++
++## Design
++
++Interface, appended to `src/math.mjs` after `clamp`:
++
++```js
++export function mean(values) { /* returns number */ }
++```
++
++Order of operations (per the settled decisions OD-1, OD-2, OD-3, OD-5 in `spec.md`):
++
++1. If `!Array.isArray(values)`, throw `TypeError`.
++2. If `values.length === 0`, throw `RangeError`.
++3. For each element, if `typeof v !== 'number' || !Number.isFinite(v)`, throw `TypeError`. (`Number.isFinite` alone already rejects non-numbers; the explicit form is acceptable either way.)
++4. Return `values.reduce((sum, v) => sum + v, 0) / values.length`.
++
++Invariants:
++
++- Pure function: no mutation of `values`, no module state, no I/O.
++- `add` and `clamp` text unchanged; `mean` is appended, not interleaved.
++- Error messages are not part of the contract; tests assert the error constructor only (`assert.throws(fn, RangeError)` / `TypeError`), so wording can change without breaking AC-4 or AC-5.
++
++Decisions already made and why:
++
++- One task, not two: implementation and tests are about 30 to 50 changed lines across two files, well inside K-4, and splitting would put tests and code in separate candidates with no independent value.
++- Tests live in the existing `test/math.test.mjs` (as requested) and use the existing `node:test` runner, so no dependency or script change is needed.
++- Test names start with `mean` so `--test-name-pattern="^mean"` isolates them from the known `clamp` failure.
++
++## Tasks
++
++| Task | Outcome | Acceptance criteria | Assigned paths | New paths | Depends on | Checks | Exception |
++| --- | --- | --- | --- | --- | --- | --- | --- |
++| T1 | `mean` implemented in `src/math.mjs` with tests in `test/math.test.mjs` | AC-1 to AC-9 | `src/math.mjs`, `test/math.test.mjs` | none | none | `node --test --test-name-pattern="^mean" test/` expects all `mean` tests `ok` and `# fail 0`; `npm test` expects exactly one `not ok` (`clamp respects upper bound`) per OD-4; `git diff --unified=0 <base> <candidate> -- src/math.mjs` shows no `-` lines | none |
++
++Expected size: 2 files, under 60 changed lines, one session well under 90 minutes.
++
++T1 brief specifics:
++
++- `validation.generated_paths: ["src/generated.mjs"]` (OD-6). The pre-commit hook writes and re-stages it during the coordinator's candidate commit; the implementer never touches it. The gate classifies it as `generated`, so both the working-tree gate and the post-commit gate (K-7) accept it.
++- The brief states the expected baseline: `clamp respects upper bound` fails before and after T1; the implementer must not fix, skip or edit it, and must report it as a known baseline failure, not as a pass.
++
++Dependencies are real ordering only. There are no dependent tasks.
++
++## Integration
++
++- Base: the accepted integrated SHA of `main` at dispatch time (observed `9e3a1407eb88ed4a1494b84eca432fe03b2d087f` from the ref file on 2026-10-14; re-read with `git rev-parse` at dispatch, never assumed).
++- Task worktree and branch: `task-1` created through Orca from that base (delivery mode only).
++- Candidate: coordinator commit on `task-1` after the ownership gate passes on the working tree and again on the commit (K-6, K-7).
++- Review: clean detached checkout at the candidate SHA, two passes (blind, then informed) per K-9.
++- Integration: fast-forward `main` to the candidate if `main` has not moved; otherwise a single merge. Then on the integrated SHA run: `node --test --test-name-pattern="^mean" test/`, `npm test`, and the AC-7 diff check.
++
++## Verification matrix
++
++| AC | Task | Check | Evidence location |
++| --- | --- | --- | --- |
++| AC-1 | T1 | `node --test --test-name-pattern="^mean" test/`, test `mean returns the arithmetic mean` | Integration check output in the run's audit log (`acceptance_recorded`) |
++| AC-2 | T1 | same command, `mean of a single element is that element` | same |
++| AC-3 | T1 | same command, `mean handles negative and fractional values` | same |
++| AC-4 | T1 | same command, `mean throws RangeError on empty array` | same |
++| AC-5 | T1 | same command, `mean throws TypeError on invalid input` | same |
++| AC-6 | T1 | same command, `mean does not mutate its input` | same |
++| AC-7 | T1 | `git diff --unified=0` on both files; reviewer pass 1 and pass 2 | Diff output in audit log; review reports |
++| AC-8 | T1 | `sdd gate` receipts (working tree and candidate) | `candidate_created` event |
++| AC-9 | T1 | `npm test` on the integrated SHA | Integration check output; the `clamp` failure listed as a limitation, not a pass |
++
++## Risks and open decisions
++
++Product decisions OD-1 to OD-6 are settled in `spec.md`. Process risks found during plan review:
++
++- R-1, pre-commit hook writes outside the allowlist. Resolved by OD-6: `src/generated.mjs` is a declared generated path in the T1 brief. `src/generated.mjs` was not present in the working tree on 2026-10-14; the gate accepts it whether the hook adds or modifies it.
++- R-2, baseline test failure (OD-4). AGENTS.md says to run `npm test` before reporting completion; it is expected to fail on `clamp` regardless of T1. The implementer brief states the expected baseline (see T1 brief specifics).
++- R-3, coordinator identity and tooling not verified. Shell access was denied in the planning session and again in this delivery session, so `ORCA status --json` (K-20), the role-pack hash, `sdd recovery-read`, `git status`, `git rev-parse` and `npm test` have not been run. Delivery cannot pass the approval record or any dispatch until they succeed.
++- R-4, tools path mismatch. Resolved: the entrypoint now resolves `<pack>/tools` before `<pack>/../tools`, and the tools exist at `.agents/orca-sdd/tools/sdd.mjs`.
++- R-5, existing spike worktrees. Branches `spike-codex-ro` and `spike-pi-impl` and their worktrees exist. They do not affect T1 but the task worktree name must not collide with them.
+diff --git a/specs/mean/spec.md b/specs/mean/spec.md
+new file mode 100644
+index 0000000..8b166b2
+--- /dev/null
++++ b/specs/mean/spec.md
+@@ -0,0 +1,65 @@
++# mean: specification
++
++Status: approved 2026-10-14 (user instruction "commit and push then proceed", recorded as D-18 in the orchestration package). Open decisions OD-1 to OD-6 were settled by the user on 2026-10-14 (see Decisions). Revision and hash are pinned in every brief once approved; any edit creates new identities (K-5).
++
++Repository base observed: `main` at `9e3a1407eb88ed4a1494b84eca432fe03b2d087f` (read from `.git/refs/heads/main`; not yet confirmed with `git rev-parse`). The earlier planning draft observed `3a0a153046b40218bd958a6c4337a54d1d481104`; the reflog shows one commit since then, titled "Update pack: tools path, Claude recipe". Its file list was not inspected (no shell access); `src/math.mjs`, `test/math.test.mjs` and `package.json` were re-read on 2026-10-14 and still match this specification's assumptions.
++
++## Goal
++
++Callers of `src/math.mjs` get a `mean(values)` function that returns the arithmetic mean of a non-empty array of numbers, so averaging no longer has to be hand-written at each call site. The change is additive: the existing `add` and `clamp` functions and their tests keep their current behaviour.
++
++## Behaviour
++
++1. B-1: `src/math.mjs` exports a named function `mean` taking one parameter, `values`.
++2. B-2: For a non-empty array of finite numbers, `mean(values)` returns the sum of the elements divided by the number of elements.
++3. B-3: For a single-element array, `mean([x])` returns `x`.
++4. B-4: For an empty array, `mean([])` throws a `RangeError` (OD-1).
++5. B-5: For input that is not a plain array (`Array.isArray` is false, which includes typed arrays and array-likes), or an array containing an element that is not a finite number (including `NaN`, `Infinity`, strings, `null`, `undefined`), `mean` throws a `TypeError` (OD-2, OD-5).
++6. B-6: `mean` does not mutate its input array.
++7. B-7: Summation is plain left-to-right floating-point addition, then one division by the length; results are subject to normal IEEE 754 rounding (OD-3).
++
++## Non-goals
++
++- No support for iterables, array-likes or typed arrays; they are rejected per B-5 (OD-5).
++- No weighted, geometric, harmonic or trimmed means; no median or mode.
++- No compensated (Kahan or Neumaier) summation and no protection against intermediate overflow to `Infinity` for very large values (OD-3).
++- No fix to the existing `clamp` upper-bound defect (see Constraints and OD-4).
++- No changes to `package.json`, `.githooks/`, `AGENTS.md` or `scripts/`.
++
++## Constraints
++
++- No new dependencies: `package.json` unchanged, no lockfile created, no `node_modules/` required. Tests use only `node:test` and `node:assert/strict`, as today.
++- `add` and `clamp` in `src/math.mjs` stay byte-identical; changes to that file are additions only.
++- Existing test cases in `test/math.test.mjs` stay byte-identical. The only permitted edit to existing lines is extending the import on line 3 to include `mean`.
++- Changed paths are limited to `src/math.mjs` and `test/math.test.mjs` (AGENTS.md: do not edit files outside the task's paths). The only other path allowed in a candidate is `src/generated.mjs`, written and re-staged by the repository's pre-commit hook (`.githooks/pre-commit` runs `scripts/format.mjs`); it is declared as an expected hook-generated path in the task brief, is never edited by the implementer, and lands on `main` with the candidate (OD-6).
++- ES module syntax, consistent with `"type": "module"` and the existing file style (two-space indent, single quotes, semicolons).
++- Known baseline limitation (OD-4): `clamp` contains a deliberate defect (upper bound not applied), so the existing test `clamp respects upper bound` is expected to fail on the base commit and after this feature. It is reported as an accepted limitation and never counted as a passing check. This was established by reading the code; `npm test` has not yet been run on the base.
++
++## Acceptance criteria
++
++| ID | Criterion | How it is checked |
++| --- | --- | --- |
++| AC-1 | `mean` is a named export and returns the arithmetic mean of a multi-element array: `mean([1, 2, 3, 4])` is `2.5` | `node --test --test-name-pattern="^mean" test/`: test `mean returns the arithmetic mean` reports `ok` |
++| AC-2 | Single element returns itself: `mean([7])` is `7` | Same command: test `mean of a single element is that element` reports `ok` |
++| AC-3 | Negative and fractional values: `mean([-1, 1])` is `0`, `mean([0.5, 1.5])` is `1` (exactly representable values, strict equality) | Same command: test `mean handles negative and fractional values` reports `ok` |
++| AC-4 | `mean([])` throws `RangeError` | Same command: test `mean throws RangeError on empty array` reports `ok` |
++| AC-5 | Non-array input (`undefined`, `null`, `'1,2'`, `{ length: 1, 0: 1 }`, `new Float64Array([1, 2])`) and arrays with a non-finite or non-number element (`[1, '2']`, `[1, NaN]`, `[1, Infinity]`, `[1, null]`) throw `TypeError` | Same command: test `mean throws TypeError on invalid input` reports `ok` |
++| AC-6 | Input array is not mutated | Same command: test `mean does not mutate its input` reports `ok` (deep-equal against a copy taken before the call) |
++| AC-7 | `add` and `clamp` unchanged; existing test cases unchanged | `git diff --unified=0 <base> <candidate> -- src/math.mjs` shows no removed lines; `git diff <base> <candidate> -- test/math.test.mjs` shows removals only on the import line; reviewer confirms in both passes |
++| AC-8 | No new dependencies and no out-of-scope paths | `sdd gate` receipts (working tree and candidate): implementer-changed paths are exactly `src/math.mjs` and `test/math.test.mjs`, plus `src/generated.mjs` classified as declared generated on the candidate only; `package.json` unchanged; no lockfile or `node_modules/` |
++| AC-9 | Full suite outcome matches the baseline plus the new tests | `npm test`: every `mean` test and the two passing baseline tests report `ok`; the only `not ok` is `clamp respects upper bound`, reported as an accepted limitation, not a pass |
++
++Every criterion is referenced by task T1 in the plan. No criterion requires anything beyond the local fixtures.
++
++## Decisions
++
++All product decisions from the planning draft were settled by the user on 2026-10-14. No open product decisions remain.
++
++| ID | Question | Decision |
++| --- | --- | --- |
++| OD-1 | What does `mean([])` do? | Throw `RangeError` |
++| OD-2 | How strictly is input validated? | Throw `TypeError` for non-arrays and for any element that is not a finite number |
++| OD-3 | Summation precision and overflow | Plain sum, then divide by the length |
++| OD-4 | Pre-existing `clamp` test failure | Known baseline limitation: AC-9 expects exactly that one `not ok`; it is never reported as a passing check |
++| OD-5 | Are typed arrays accepted? | No: plain arrays only (`Array.isArray`); typed arrays throw `TypeError` |
++| OD-6 | Pre-commit hook writes `src/generated.mjs` | Declare `src/generated.mjs` as an expected hook-generated path in the T1 brief (`validation.generated_paths`); it lands on `main` with the candidate |
+
+
+REQUIRED CHECKS
+- mean tests: run `node --test --test-name-pattern="^mean" test/`, expect: every mean test reports ok and the summary shows # fail 0
+- full suite: run `npm test`, expect: exactly one not ok: 'clamp respects upper bound' (known baseline); all mean tests and the two other baseline tests ok
+- additive change: run `git diff --unified=0 HEAD -- src/math.mjs`, expect: no removed lines
+Setup complete: true   Fixtures only, no secrets.
+
+LIMITS
+One session of 90 minutes, 3 attempts in total for this task, at most 5 files and 300 changed lines (estimate: 2 files, 60 lines). Declared generated paths: src/generated.mjs. Scratch: (none).
+
+RESULT
+Send one worker_done with: changed paths as git status shows them, each required check with its result line, questions asked and answers received, with any timeout, remaining uncertainty.
+Escalate when: ask the coordinator before any decision the brief does not settle, after two failed attempts at the same problem, or if a required path is outside your allowlist
+Usage source: pi-status-bar   Budget: mean-T1: one session, 3 attempts

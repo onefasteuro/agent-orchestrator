@@ -63,6 +63,6 @@
   "permission_recipes": {
     "codex-read-only": "codex --sandbox read-only --model <model> -c model_reasoning_effort=\"<effort>\"",
     "pi-terminal-attach": "<user's tested Pi command, verbatim>; attach with worker-start --terminal",
-    "claude-read-only": "claude --model <model> --effort <effort> --permission-mode dontAsk --allowedTools \"Read,Grep,Glob,Bash(orca *),mcp__context7__*\" --disallowedTools \"Edit,Write,NotebookEdit,Bash(git *)\""
+    "claude-read-only": "claude --model <model> --effort <effort> --permission-mode dontAsk --allowedTools \"Read,Grep,Glob,Bash(orca status:*),Bash(orca orchestration send:*),Bash(orca orchestration ask:*),Bash(orca orchestration check:*),mcp__context7__*\" --disallowedTools \"Edit,Write,NotebookEdit,Bash(git:*),Bash(orca terminal:*),Bash(orca worktree:*),Bash(orca orchestration worker-start:*),Bash(orca orchestration dispatch:*),Bash(orca orchestration run-create:*),Bash(orca orchestration task-create:*)\""
   }
 }

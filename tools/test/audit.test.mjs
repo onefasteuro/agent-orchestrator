@@ -48,6 +48,9 @@ test('K-12: identical replay is ignored, conflict is surfaced, stale dispatch is
   const conflict = runScenario('conflict', { repo, brief, task_id: 't1', dispatch_id: 'd1' }).messages[1];
   assert.equal(classifyResult(readLog(f).events, { run_id: 'r1', task_id: 't1', dispatch_id: 'd1', result_hash: conflict.result_hash }), 'conflict');
   append(f, { event_type: 'dispatch_intent', run_id: 'r1', task_id: 't1', dispatch_id: 'd1-retry', brief_id: 'b1' });
+  append(f, { event_type: 'dispatch_started', run_id: 'r1', task_id: 't7', dispatch_id: 'd7', brief_id: 'b7' });
+  append(f, { event_type: 'worker_stopped', run_id: 'r1', task_id: 't7', dispatch_id: 'd7' });
+  assert.equal(classifyResult(readLog(f).events, { run_id: 'r1', task_id: 't7', dispatch_id: 'd7', result_hash: 'late' }), 'stale', 'a stopped dispatch known only from its start receipt is stale');
   append(f, { event_type: 'dispatch_intent', run_id: 'r1', task_id: 't9', dispatch_id: 'd9', brief_id: 'b9' });
   append(f, { event_type: 'dispatch_intent', run_id: 'r1', task_id: 't9', dispatch_id: 'd9-retry', brief_id: 'b9' });
   assert.equal(classifyResult(readLog(f).events, { run_id: 'r1', task_id: 't9', dispatch_id: 'd9', result_hash: 'x' }), 'stale');
@@ -73,4 +76,19 @@ test('K-12: a crash mid-write leaves a partial line that blocks appends until a 
   assert.ok(existsSync(seg));
   append(seg, { event_type: 'error', note: 'continues' });
   assert.equal(readLog(seg).events.length, 2);
+});
+
+test('K-12: intents bound by brief_id and dispatches cited by an acceptance are resolved', () => {
+  const f = logFile();
+  append(f, { event_type: 'dispatch_intent', run_id: 'r', task_ref: 'T1', brief_id: 'b1' });
+  append(f, { event_type: 'dispatch_started', run_id: 'r', task_id: 't1', dispatch_id: 'd1', brief_id: 'b1' });
+  append(f, { event_type: 'result_received', run_id: 'r', task_id: 't1', dispatch_id: 'd1', result_hash: 'h' });
+  append(f, { event_type: 'dispatch_intent', run_id: 'r', task_ref: 'T1-review', brief_id: 'br' });
+  append(f, { event_type: 'dispatch_started', run_id: 'r', task_id: 'tr', dispatch_id: 'dr', brief_id: 'br' });
+  append(f, { event_type: 'result_received', run_id: 'r', task_id: 'tr', dispatch_id: 'dr', result_hash: 'h2' });
+  append(f, { event_type: 'dispatch_intent', run_id: 'r', task_ref: 'T1', brief_id: 'bad' });
+  append(f, { event_type: 'brief_rejected', run_id: 'r', brief_id: 'bad' });
+  append(f, { event_type: 'acceptance_recorded', run_id: 'r', task_id: 't1', dispatch_id: 'd1', review: { pass1_dispatch: 'dr' } });
+  const u = unresolved(readLog(f).events);
+  assert.deepEqual(u, { intent_without_receipt: [], receipt_without_result: [], result_without_acceptance: [] });
 });

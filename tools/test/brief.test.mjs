@@ -97,3 +97,19 @@ test('K-9: reviewer pass 1 must list withheld material', () => {
   const r = makeBrief({ repo, base, role: 'reviewer', overrides: { workspace: { candidate_sha: base, assigned_paths: [] }, delivery: { pass: 1 } } });
   assert.ok(validateShape(r).some((e) => e.field === 'delivery.pass_one_exclusions'));
 });
+
+test('hardening: option-like and case-folded protected paths are rejected', () => {
+  const brief = makeBrief({ repo, base, overrides: { workspace: { assigned_paths: ['-oops'] } } });
+  assert.ok(validateShape(brief).some((e) => /command option/.test(e.message)));
+  const folded = makeBrief({ repo, base, overrides: { workspace: { new_paths: ['Agents.md'] } } });
+  assert.ok(validateShape(folded).some((e) => /protected/.test(e.message)), 'Agents.md is AGENTS.md on a case-insensitive filesystem');
+  const nested = makeBrief({ repo, base, overrides: { workspace: { new_paths: ['src/.gitignore'] } } });
+  assert.ok(validateShape(nested).some((e) => /protected/.test(e.message)), 'nested git control files are protected');
+});
+
+test('K-2: a path cannot be both protected and declared generated or scratch', () => {
+  const both = makeBrief({ repo, base, overrides: { workspace: { protected_paths: ['src/generated.mjs'] }, validation: { generated_paths: ['src/generated.mjs'] } } });
+  assert.ok(validateShape(both).some((e) => e.field === 'validation.generated_paths' && /also protected/.test(e.message)));
+  const hookOut = makeBrief({ repo, base, overrides: { validation: { scratch_paths: ['.agents/orca-sdd/runs/x/'] } } });
+  assert.ok(validateShape(hookOut).some((e) => e.field === 'validation.scratch_paths'));
+});

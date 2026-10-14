@@ -23,6 +23,8 @@ export function normalizeRepoPath(p) {
   if (typeof p !== 'string' || p.length === 0) return { ok: false, reason: 'empty path' };
   if (p.includes('\0')) return { ok: false, reason: 'NUL in path' };
   if (posix.isAbsolute(p) || /^[A-Za-z]:[\\/]/.test(p)) return { ok: false, reason: 'absolute path' };
+  if (p.startsWith('-')) return { ok: false, reason: 'path looks like a command option' };
+  if (/[\u0000-\u001f]/.test(p)) return { ok: false, reason: 'control character in path' };
   const n = posix.normalize(p.replace(/\\/g, '/'));
   if (n === '.' || n.startsWith('../') || n === '..') return { ok: false, reason: 'path escapes the checkout' };
   if (n.split('/').includes('..')) return { ok: false, reason: 'path escapes the checkout' };
@@ -36,8 +38,20 @@ export function matchesRule(path, rule) {
   return path === rule;
 }
 
+// Git control files are protected wherever they appear in the tree.
+export const PROTECTED_BASENAMES = new Set(['.gitattributes', '.gitignore', '.gitmodules', '.git']);
+
+// Case-insensitive and Unicode-normalized comparison: on a case-insensitive or
+// normalization-insensitive filesystem (macOS default) "Agents.md" is AGENTS.md.
+function fold(p) {
+  return p.normalize('NFC').toLowerCase();
+}
+
 export function isProtected(path, protectedRules = DEFAULT_PROTECTED) {
-  return protectedRules.some((r) => matchesRule(path, r));
+  const f = fold(path);
+  if (protectedRules.some((r) => matchesRule(f, fold(r)))) return true;
+  const base = f.split('/').pop();
+  return PROTECTED_BASENAMES.has(base);
 }
 
 export function isAllowed(path, allowRules) {

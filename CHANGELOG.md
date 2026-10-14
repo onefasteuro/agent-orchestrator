@@ -22,6 +22,8 @@ P0 closed by the user on P0b spike evidence (D-14). All eight spike rows passed 
 
 **14 October 2026, later:** P2 authorized (D-17) and delivered. Role pack under `pack/`: entrypoint, workflow, role map, launch recipes (Codex, Pi, Claude all verified), five role prompts, templates. AC-1, AC-2, AC-10 observed on the fixture. `sdd pack-hash` and `sdd brief-render` added to the tools; gate hardened against worker-reachable Git metadata (`.gitattributes`, `.gitignore` protected; diff-suppressed changes flagged; checkout identity verified); 32 tests pass.
 
+**14 October 2026, later:** P3 authorized (D-18) and delivered: `mean()` accepted into the fixture `main` as `1f1e1d9` after Pi implementation, gate, candidate commit, blind and informed Codex review and fast-forward integration. Tools gained `doc-identity`, `metadata-baseline`, fail-closed metadata drift checks, option-injection guards, case-folded protection of Git control files, a validator rule against paths both protected and generated, intent matching by brief id and multi-dispatch usage coverage; 37 tests. Workflow and recipes updated: branch on exit status, hash documents with the tool, review checkouts created through Orca then detached. Two coordinator process violations during P3 are recorded in the receipts with their corrections.
+
 ## v0.4, 14 October 2026
 
 Restructure for brevity. Guarantees preserved; mechanisms moved to a tiered controls table. Package reduced from six documents to four plus archive.

@@ -109,7 +109,14 @@ export function validateShape(brief) {
     }
   }
   if (va.fixture_only !== true) err(errors, 'validation.fixture_only', 'must be true (K-16)');
-  for (const k of ['generated_paths', 'scratch_paths']) if (va[k] !== undefined && !Array.isArray(va[k])) err(errors, `validation.${k}`, 'expected array');
+  for (const k of ['generated_paths', 'scratch_paths']) {
+    if (va[k] !== undefined && !Array.isArray(va[k])) { err(errors, `validation.${k}`, 'expected array'); continue; }
+    for (const p of va[k] || []) {
+      const n = normalizeRepoPath(p);
+      if (!n.ok) { err(errors, `validation.${k}`, `"${p}": ${n.reason}`); continue; }
+      if (isProtected(n.path, protectedRules)) err(errors, `validation.${k}`, `"${p}" is also protected; a path cannot be both protected and declared ${k === 'generated_paths' ? 'generated' : 'scratch'} (protection wins in the gate)`);
+    }
+  }
 
   for (const k of ['result_fields', 'reply_route', 'usage_source', 'escalation_rule', 'recovery_ref', 'audit_ref']) {
     if (k === 'result_fields') { if (!Array.isArray(de[k]) || !de[k].length) err(errors, 'delivery.result_fields', 'expected nonempty array'); }

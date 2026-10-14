@@ -3,7 +3,8 @@
 // exits 0 on ok, 1 on a failed check, 2 on usage or runtime error.
 //
 //   sdd brief-validate <brief.json> [--snapshot-root <dir>] [--skip-repo]
-//   sdd gate --brief <brief.json> --repo <checkout> --base <sha> [--candidate <sha>] [--ignored-baseline <file>]
+//   sdd gate --brief <brief.json> --repo <checkout> --base <sha> [--candidate <sha>] [--ignored-baseline <file>] [--metadata-baseline <json: {config_sha256, info_attributes_sha256}>]
+//   sdd metadata-baseline --repo <checkout>        (prints the json to record at setup)
 //   sdd audit-append --log <events.jsonl> --type <event_type> [--json '<fields>'] [--allow-custom]
 //   sdd audit-verify --log <events.jsonl>
 //   sdd audit-segment --log <events.jsonl> --new <events-2.jsonl> --reason <text>
@@ -14,6 +15,7 @@
 //   sdd liveness --projection '<json>' --role <role> [--last-progress <iso>] [--pending-question <iso>]
 //   sdd recovery-write --checkout <integration> --json '<fields>'
 //   sdd recovery-read --checkout <integration>
+//   sdd doc-identity --repo <checkout> --revision <sha> --path <file> [--baseline approved|draft]
 //   sdd pack-hash --dir <pack>
 //   sdd brief-render --brief <brief.json> --role-file <roles/x.md> [--spec-excerpt <file>] [--plan-excerpt <file>] [--out <prompt.txt>]
 //   sdd fake-worker --scenario <name> --repo <checkout> --brief <brief.json> --task <id> --dispatch <id> [--audit <file>]
@@ -66,7 +68,8 @@ try {
     case 'gate': {
       need(args, ['brief', 'repo', 'base']);
       const ignoredBaseline = args['ignored-baseline'] ? readFileSync(args['ignored-baseline'], 'utf8').split('\n').filter(Boolean) : [];
-      const r = runGate({ repo: args.repo, brief: loadBrief(args.brief), baseSha: args.base, candidateSha: args.candidate || null, ignoredBaseline });
+      const metadataBaseline = args['metadata-baseline'] ? JSON.parse(readFileSync(args['metadata-baseline'], 'utf8')) : {};
+      const r = runGate({ repo: args.repo, brief: loadBrief(args.brief), baseSha: args.base, candidateSha: args.candidate || null, ignoredBaseline, metadataBaseline });
       out(r, r.ok ? 0 : 1);
     }
     case 'audit-append': {
@@ -100,6 +103,25 @@ try {
     }
     case 'recovery-write': { need(args, ['checkout', 'json']); out({ ok: true, index: writeIndex(args.checkout, JSON.parse(args.json)) }); }
     case 'recovery-read': { need(args, ['checkout']); out({ ok: true, index: readIndex(args.checkout) }); }
+    case 'metadata-baseline': {
+      need(args, ['repo']);
+      const { execFileSync } = await import('node:child_process');
+      const { createHash } = await import('node:crypto');
+      const { resolve } = await import('node:path');
+      const dir = resolve(args.repo, execFileSync('git', ['-C', args.repo, 'rev-parse', '--git-common-dir'], { encoding: 'utf8' }).trim());
+      const h = (f) => { try { return createHash('sha256').update(readFileSync(resolve(dir, f))).digest('hex'); } catch { return null; } };
+      out({ ok: true, config_sha256: h('config'), info_attributes_sha256: h('info/attributes') });
+    }
+    case 'doc-identity': {
+      need(args, ['repo', 'revision', 'path']);
+      const { readAtRevision, resolveCommit } = await import('./lib/git.mjs');
+      const { hashBytes } = await import('./lib/canonical.mjs');
+      const rev = resolveCommit(args.repo, args.revision);
+      if (!rev) out({ ok: false, error: `revision ${args.revision} does not resolve` }, 1);
+      const bytes = readAtRevision(args.repo, rev, args.path);
+      if (!bytes) out({ ok: false, error: `${args.path} not present at ${rev.slice(0, 12)}` }, 1);
+      out({ ok: true, path: args.path, baseline: args.baseline || 'approved', revision: rev, sha256: hashBytes(bytes), bytes: bytes.length });
+    }
     case 'pack-hash': { need(args, ['dir']); out({ ok: true, ...packHash(args.dir) }); }
     case 'brief-render': {
       need(args, ['brief', 'role-file']);
@@ -114,7 +136,7 @@ try {
       out({ ok: true, ...runScenario(args.scenario, { repo: args.repo, brief: loadBrief(args.brief), task_id: args.task, dispatch_id: args.dispatch, auditFile: args.audit || null }) });
     }
     default:
-      out({ ok: false, error: `unknown command ${cmd || '(none)'}`, commands: ['brief-validate', 'gate', 'audit-append', 'audit-verify', 'audit-segment', 'audit-classify', 'usage-codex', 'usage-pi', 'usage-coverage', 'liveness', 'recovery-write', 'recovery-read', 'pack-hash', 'brief-render', 'fake-worker'] }, 2);
+      out({ ok: false, error: `unknown command ${cmd || '(none)'}`, commands: ['brief-validate', 'gate', 'audit-append', 'audit-verify', 'audit-segment', 'audit-classify', 'usage-codex', 'usage-pi', 'usage-coverage', 'liveness', 'recovery-write', 'recovery-read', 'doc-identity', 'pack-hash', 'brief-render', 'metadata-baseline', 'fake-worker'] }, 2);
   }
 } catch (err) {
   out({ ok: false, error: String(err.message || err) }, 2);

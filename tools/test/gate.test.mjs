@@ -1,6 +1,6 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { writeFileSync, mkdirSync, renameSync, symlinkSync } from 'node:fs';
+import { writeFileSync, mkdirSync, renameSync, symlinkSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { makeRepo, makeBrief, git } from './helpers.mjs';
 import { runGate } from '../lib/gate.mjs';
@@ -117,8 +117,11 @@ test('hardening: repo-local diff.external and in-tree attributes cannot alter th
   assert.deepEqual(r.receipt.changed_paths.map((c) => c.path), ['src/math.mjs']);
   writeFileSync(join(repo, '.gitattributes'), '*.mjs -diff\n');
   const r2 = runGate({ repo, brief, baseSha: base });
-  assert.ok(r2.violations.some((v) => v.path === '.gitattributes' && /protected/.test(v.reason)), '.gitattributes is protected');
-  assert.ok(r2.violations.some((v) => v.path === 'src/math.mjs' && /diff-suppressed/.test(v.reason)), 'suppressed line counts are flagged, not counted as zero');
+  assert.equal(r2.ok, false);
+  assert.ok(r2.violations.some((v) => v.path === '.gitattributes' && /metadata:/.test(v.reason)), 'attribute drift fails the gate closed before any diff is trusted');
+  rmSync(join(repo, '.gitattributes'));
+  const r3 = runGate({ repo, brief, baseSha: base });
+  assert.equal(r3.ok, true, 'gate recovers once the attributes file is restored: ' + JSON.stringify(r3.violations));
 });
 
 test('hardening: a checkout that is not a worktree of the named repository is refused', () => {
@@ -127,4 +130,19 @@ test('hardening: a checkout that is not a worktree of the named repository is re
   const r = runGate({ repo: other, brief, baseSha: base });
   assert.equal(r.ok, false);
   assert.ok(/checkout identity/.test(r.violations[0].reason));
+});
+
+test('hardening: in-tree .gitattributes drift or a changed shared config fails the gate closed', () => {
+  const { repo, base, brief } = fresh();
+  writeFileSync(join(repo, 'src/math.mjs'), 'export const changed = true;\n');
+  mkdirSync(join(repo, 'src/sub'), { recursive: true });
+  writeFileSync(join(repo, 'src/sub/.gitattributes'), '* filter=evil\n');
+  const r = runGate({ repo, brief, baseSha: base });
+  assert.equal(r.ok, false);
+  assert.ok(r.violations.some((v) => /metadata:/.test(v.reason) && v.path === 'src/sub/.gitattributes'), JSON.stringify(r.violations));
+  rmSync(join(repo, 'src/sub'), { recursive: true });
+  const okRun = runGate({ repo, brief, baseSha: base, metadataBaseline: { config_sha256: 'not-the-real-hash' } });
+  assert.ok(okRun.violations.some((v) => v.path === '.git/config'), 'config baseline mismatch is a violation');
+  const clean = runGate({ repo, brief, baseSha: base });
+  assert.equal(clean.ok, true, JSON.stringify(clean.violations));
 });

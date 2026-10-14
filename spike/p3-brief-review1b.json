@@ -1,0 +1,138 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_mean_T1_review_p1",
+  "role": "reviewer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "Independent pass-1 review of candidate 1f1e1d939d0e for task T1 (mean) against the feature spec and AC-1 to AC-9.",
+  "ac_ids": [
+   "AC-1",
+   "AC-2",
+   "AC-3",
+   "AC-4",
+   "AC-5",
+   "AC-6",
+   "AC-7",
+   "AC-8",
+   "AC-9"
+  ],
+  "exclusions": [
+   "No edits.",
+   "Do not read .agents/, .agent-task.md, audit logs, commit messages beyond the SHA, or any implementer narrative; none is provided to you in pass 1."
+  ],
+  "expected_result": "Per-criterion verdicts with file and line, findings with severity and a verification step, checks actually run with result lines."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/mean/spec.md",
+   "baseline": "approved",
+   "revision": "cf12747186a901fad2779a20be822f536bd0a95f",
+   "sha256": "8cf46782c533e0c72599e7086e99dad511b7c6d95418154400c82af5427535e3"
+  },
+  "feature_plan": {
+   "path": "specs/mean/plan.md",
+   "baseline": "approved",
+   "revision": "cf12747186a901fad2779a20be822f536bd0a95f",
+   "sha256": "fa1f26210af7ff0c6bb1f4842e65c32285421c43b9a0c4744b93068fddf0c3f1"
+  },
+  "role_pack_hash": "912b2f217303b6fb8d2bff664313f6fae6dd6afabbd4b4239452dfa3273f403d",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "git diff cf12747186a9..1f1e1d939d0e (run it yourself; read-only git commands are permitted)",
+   "specs/mean/spec.md at HEAD (same content as the pinned revision)"
+  ],
+  "predecessor_conclusions": [
+   "The repository has a deliberate pre-existing defect in clamp; the test 'clamp respects upper bound' fails on base and on the candidate by design (spec OD-4). It is a known limitation, not a finding against this candidate, unless the candidate changed clamp.",
+   "src/generated.mjs is written by the repository's pre-commit hook during the coordinator's commit; it is a declared generated path (spec OD-6), not an implementer change."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T1",
+  "base_sha": "cf12747186a901fad2779a20be822f536bd0a95f",
+  "candidate_sha": "1f1e1d939d0e1fa814f131374b592c332a332f4c",
+  "dirty_state": null,
+  "assigned_paths": [],
+  "new_paths": [],
+  "protected_paths": []
+ },
+ "execution": {
+  "runtime": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "permission_recipe": "codex-read-only",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 30,
+   "attempts": 1,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "mean tests",
+    "command": "node --test --test-name-pattern=\"^mean\" test/",
+    "expected": "pass 6, fail 0"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "pass 8, fail 1; the single failure is 'clamp respects upper bound'"
+   },
+   {
+    "name": "additive change",
+    "command": "git diff --unified=0 cf12747186a901fad2779a20be822f536bd0a95f 1f1e1d939d0e1fa814f131374b592c332a332f4c -- src/math.mjs",
+    "expected": "no removed lines"
+   },
+   {
+    "name": "test file change",
+    "command": "git diff --unified=0 cf12747186a901fad2779a20be822f536bd0a95f 1f1e1d939d0e1fa814f131374b592c332a332f4c -- test/math.test.mjs",
+    "expected": "the only removed line is the old import on line 3"
+   }
+  ],
+  "estimate": {
+   "files": 0,
+   "lines": 0
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "candidate SHA inspected",
+   "pass number",
+   "per-criterion verdicts with file and line",
+   "findings with severity, file, line, consequence, verification step",
+   "checks run with result lines",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (worker_done once)",
+  "usage_source": "codex-session-rollout",
+  "budget_ref": "mean-T1-review",
+  "escalation_rule": "BLOCKED_CONTEXT if HEAD is not the candidate SHA; otherwise complete the review",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl",
+  "pass": 1,
+  "pass_one_exclusions": [
+   "implementer self-report",
+   "claimed check results",
+   "advisor output",
+   "prior verdicts",
+   "plan rationale",
+   "recovery and audit files"
+  ]
+ }
+}

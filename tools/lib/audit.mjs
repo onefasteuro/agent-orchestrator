@@ -100,23 +100,38 @@ export function classifyResult(events, { run_id, task_id, dispatch_id, result_ha
     const prior = accepted || same[same.length - 1];
     return prior.result_hash === result_hash ? 'ignored' : 'conflict';
   }
-  const laterForTask = events.filter((e) => e.task_id === task_id && e.event_type === 'dispatch_intent' && e.dispatch_id && e.dispatch_id !== dispatch_id);
-  const thisIntent = events.find((e) => e.event_type === 'dispatch_intent' && e.dispatch_id === dispatch_id);
-  if (thisIntent && laterForTask.some((e) => e.sequence > thisIntent.sequence)) return 'stale';
-  if (!thisIntent) return 'unknown_dispatch';
+  // A dispatch becomes known at dispatch_intent (when the id is already known)
+  // or at dispatch_started (the receipt binds the id). Stale when the dispatch
+  // was stopped or abandoned, or when a later attempt for the same task exists.
+  const known = events.find((e) => ['dispatch_intent', 'dispatch_started'].includes(e.event_type) && e.dispatch_id === dispatch_id);
+  if (!known) return 'unknown_dispatch';
+  if (events.some((e) => e.dispatch_id === dispatch_id && ['worker_stopped', 'cancellation_requested'].includes(e.event_type))) return 'stale';
+  const taskOf = known.task_id || task_id;
+  const later = events.filter((e) => ['dispatch_intent', 'dispatch_started'].includes(e.event_type) && e.dispatch_id && e.dispatch_id !== dispatch_id && (e.task_id === taskOf || e.task_ref && e.task_ref === known.task_ref) && e.sequence > known.sequence);
+  if (later.length) return 'stale';
   return 'new';
 }
 
 // Intent-before-launch and acceptance-before-release invariants.
+// Intent is matched to its receipt by dispatch_id when the intent already knew
+// it, otherwise by brief_id (the receipt binds the id). A dispatch is resolved
+// when an acceptance cites it anywhere (review and advisory dispatches are
+// cited inside the task's acceptance rather than accepted on their own), or
+// when it was stopped, rejected, superseded by a later brief, or errored.
 export function unresolved(events) {
   const intents = events.filter((e) => e.event_type === 'dispatch_intent');
-  const started = new Set(events.filter((e) => e.event_type === 'dispatch_started').map((e) => e.dispatch_id));
+  const startedEvents = events.filter((e) => e.event_type === 'dispatch_started');
+  const started = new Set(startedEvents.map((e) => e.dispatch_id));
+  const startedBriefs = new Set(startedEvents.map((e) => e.brief_id).filter(Boolean));
+  const rejectedBriefs = new Set(events.filter((e) => e.event_type === 'brief_rejected').map((e) => e.brief_id));
+  const amendedFrom = new Set(events.filter((e) => e.event_type === 'brief_amended').map((e) => e.from_brief));
   const received = new Set(events.filter((e) => e.event_type === 'result_received').map((e) => e.dispatch_id));
-  const accepted = new Set(events.filter((e) => e.event_type === 'acceptance_recorded').map((e) => e.dispatch_id));
-  const stopped = new Set(events.filter((e) => ['worker_stopped', 'candidate_rejected', 'error'].includes(e.event_type)).map((e) => e.dispatch_id));
+  const acceptanceText = events.filter((e) => e.event_type === 'acceptance_recorded').map((e) => JSON.stringify(e)).join('\n');
+  const stopped = new Set(events.filter((e) => ['worker_stopped', 'candidate_rejected', 'error', 'result_ignored', 'cancellation_requested'].includes(e.event_type)).map((e) => e.dispatch_id));
+  const cited = (d) => d && acceptanceText.includes(d);
   return {
-    intent_without_receipt: intents.filter((e) => !e.dispatch_id || !started.has(e.dispatch_id)).map((e) => e.brief_id || e.event_id),
+    intent_without_receipt: intents.filter((e) => !(e.dispatch_id ? started.has(e.dispatch_id) : startedBriefs.has(e.brief_id)) && !rejectedBriefs.has(e.brief_id) && !amendedFrom.has(e.brief_id)).map((e) => e.brief_id || e.event_id),
     receipt_without_result: [...started].filter((d) => d && !received.has(d) && !stopped.has(d)),
-    result_without_acceptance: [...received].filter((d) => !accepted.has(d) && !stopped.has(d)),
+    result_without_acceptance: [...received].filter((d) => !cited(d) && !stopped.has(d)),
   };
 }
