@@ -1,0 +1,69 @@
+# Agentic SDD orchestration: controls
+
+Version 0.4, 14 October 2026. Status: specification only. No validator, logger or harness exists yet.
+
+Each control is a local convention implemented after feasibility, not an Orca API. Tiers:
+
+- **T0** required during the manual spike. Manual checklist and manual receipts are sufficient.
+- **T1** required before any managed pilot dispatch. Implemented in P1 and P2.
+- **T2** routine operation after adoption. May be relaxed by a recorded decision.
+
+Invariant and AC columns cite `orchestration-spec.md`.
+
+## 1. Control table
+
+| ID | Control | Tier | Mechanism | Invariant | AC |
+| --- | --- | --- | --- | --- | --- |
+| K-1 | Brief completeness | T0 | Seven sections per appendix A. Worker prompt is rendered from the validated envelope plus role text. Envelope and delivered prompt are persisted as ignored run artifacts with separate hashes. | C-1 | AC-4 |
+| K-2 | Brief preflight | T1, manual at T0 | Validate schema, sections, base SHA, candidate SHA by role (implementer none, reviewer required, advisor dirty-state description), feature spec and plan revisions and hashes, AC IDs resolve, assigned paths exist, new paths declared with an existing or planned parent, no traversal, symlink escape or protected path, setup state, limits. Fail: `brief_rejected`, no launch. Pass: hash envelope, bind Orca IDs from real receipts. | C-5 | AC-4 |
+| K-3 | Pre-approval research | T1 | Coordinator creates draft feature spec and plan snapshots (goal, constraints, questions). Research briefs pin those hashes and a provisional question ID. Implementation requires an approved committed baseline and nonempty valid AC references. | C-5, M-1 | AC-10 |
+| K-4 | Task size and attempts | T1 | One outcome, at most five source or test files, at most 300 added plus deleted lines excluding disclosed generated or lockfile deltas (still ownership-checked), named checks with expected results, one 30 to 90 minute session. Estimate before dispatch, measure before review. At 90 minutes checkpoint and split. Exceptions are named in the approved feature plan. One budget per task across attempts. At most two failed repairs before a new diagnosis. | C-6, L-2 | AC-12 |
+| K-5 | Spec drift | T1 | On any feature spec or plan edit: new identities, compare hashes against queued and in-flight briefs, hold dependents, assess each as compatible, rebrief or cancel, log `spec_changed`. Material change: new `approval_recorded` required. Nonmaterial: rationale logged, references updated. | C-7 | AC-8 |
+| K-6 | Candidate creation | T1 | Implementer hands off and pauses. Coordinator runs K-7, stages only validated assigned paths, commits on the task branch with a neutral message (task ID and brief hash, no narrative), records the SHA, emits the receipt (appendix B) and `candidate_created`. Leftovers are never committed to obtain a clean status. Uncommitted work is not reviewable. A repair is a new dispatch and a new SHA. | W-3, L-4 | AC-5 |
+| K-7 | Ownership gate | T1, manual at T0 | Diff base to candidate plus staged, unstaged, untracked and unexpected ignored state against the allowlist. Covers add, delete, mode, symlink, submodule and both rename sides. Protected: feature docs, project instructions, role pack, recovery and audit files, Git administration. Exact path rules beat directory rules. Recheck protected document hashes. Reject: preserve work, `candidate_rejected`. | W-5 | AC-5 |
+| K-8 | Allowlist amendment and integration failure | T1 | Implementer requests an extra path through the Q-1 ask channel. Approval yields a new brief hash and `brief_amended`. Integration: run required checks on the integrated SHA. Failure: revert the integration commit, return the task to repair, hold downstream, `integration_reverted`. | W-4, W-5 | AC-6 |
+| K-9 | Two-pass review | T1 | Pass 1 is one dispatch: base and candidate SHAs, diff, pinned feature spec and ACs, repository rules, code at the SHA in a detached read-only checkout. Withheld: self-report, claimed checks, advisor output, prior verdicts, plan rationale, recovery and audit files. Result persisted as `review_pass_one_recorded`. Pass 2 is a second dispatch (same session may resume under C-2) adding the withheld evidence. Both results retained. See D-11. | L-4, C-2 | AC-6 |
+| K-10 | Advice handling | T0 | Record the question ID. Dispatch the advisor with no dependency on implementation completion. Inspect the advisor dispatch via worker-show and worker-read while holding the question. Confirm the assignment is current, reply to the original ID, then acknowledge. Timeout is not a reply. Advisor failure: `escalation`. | Q-1 to Q-4 | AC-7 |
+| K-11 | Recovery index | T1 | `<integration>/.agent-task.md`, ignored, coordinator-only. Fields: mode, feature spec and plan identities, approval reference, authorization scope, role-pack identity, Orca run, dispatch and session IDs, worktree paths, accepted SHA, pending question IDs, evidence pointers, next action. Absolute path recorded in the Orca run note. Withheld from review pass 1. | R-1 | AC-9 |
+| K-12 | Audit log | T1, manual at T0 | `<integration>/.agents/orca-sdd/runs/<feature-id>/events.jsonl`, ignored (runtime subtree only, never the role pack). Schema in appendix C. Intent before launch, acceptance before release. One terminal result per dispatch: identical replay logs `result_ignored`; a different result under the same identity logs `error` and is investigated. Crash: preserve the partial trailing line, start a linked segment. Sanitized content only. | R-4 | AC-9 |
+| K-13 | Usage | T1, manual at T0 | Per dispatch and per coordinator session: runtime, model, effort, start, end, elapsed, attempts, native source, token categories where exposed, cost basis as actual, estimated or unavailable with currency and rate source. Baseline plus delta for cumulative counters. Limits recorded before, measurements after. Exhausted budget stops new dispatch. A dollar cap comes only from the user. | R-5 | AC-12 |
+| K-14 | Worker liveness | T1 | Expected progress interval per role, defaults: implementer 20 minutes, read-only roles 15 minutes. Silence beyond the interval: inspect the terminal through Orca. No progress: stop the worker, log `worker_stalled`, count one failed attempt. The spike records whether Orca exposes idle or heartbeat state natively. | R-6 | AC-9 |
+| K-15 | Human takeover | T1 | Log `human_takeover`. Pause or cancel the implementer dispatch. The human is sole writer. Hand-back: human declares changed paths, coordinator extends the allowlist with a new brief hash, then K-6, K-7 and K-9 apply unchanged. Counted as an unplanned intervention. | R-7 | AC-9 |
+| K-16 | Secrets | T0 | No copy, write, symlink or mount of secrets, real `.env` files or staging and production credentials into task or review worktrees. Native authentication stays in its store and is never forwarded into processes, briefs or logs. Fixtures only. A secret-dependent check is a recorded gap. | W-6 | AC-12 |
+| K-17 | Version pinning | T0 | Record Orca, Claude Code, Codex, Pi versions and model identifiers at the spike. The pilot runs on the same versions. An upgrade re-runs the affected spike rows before further managed dispatch. | A-7 | AC-12 |
+| K-18 | Fake-worker harness | T1 | A stub worker returning scripted outcomes: done, ask, timeout, duplicate result, conflicting result, out-of-allowlist edit, crash mid-write, silence. Used to test K-2, K-5, K-6, K-7, K-11, K-12 and K-14 deterministically without model tokens. | P1 | AC-3, 4, 5, 8, 9 |
+| K-19 | Reviewer calibration | T1 | Five seeded-defect candidates and five clean controls as separate synthetic commits with pinned spec and ACs, spread across pilot start, middle and end, never merged. Normal two-pass review with ground truth withheld. Scored on pass-1 findings; pass-2 additions recorded separately. A human validates seeds and controls and adjudicates matches. A genuine unseeded defect is a valid finding; a dirty control is replaced, not scored as a false positive. Repeat after a reviewer model or prompt change. | plan 6 | AC-12 |
+
+## Appendix A: brief envelope
+
+Versioned JSON envelope plus role and task prose. Hash the canonical UTF-8 serialization with stable key order; record the serialization version; exclude timestamps and receipt-only IDs. Hash delivered prompt bytes separately. A retry may reuse a brief hash; the dispatch ID distinguishes the attempt.
+
+| Section | Required fields |
+| --- | --- |
+| `identity` | Schema version, unique `brief_id`, role, mode. Orca task and dispatch IDs are bound from receipts, never invented. |
+| `objective` | One observable outcome, AC IDs resolving to the pinned feature spec (or a provisional question ID for pre-approval research), exclusions, expected result. |
+| `context` | Feature spec and plan paths, baseline kind (`draft` or `approved`), Git revisions or snapshot identities, SHA-256 content hashes, role-pack hash, applicable instructions, available evidence, predecessor conclusions. |
+| `workspace` | Repository, integration checkout, worker checkout, base SHA, candidate SHA when applicable, dirty-state description for advice, assigned existing and new paths, protected exclusions. |
+| `execution` | Runtime, model, effort, verified permission recipe, readiness, session and attempt limits, research retrieval capabilities where applicable. |
+| `validation` | Named checks with expected outcomes, file and line estimate, declared generated changes, bounded scratch locations, fixture-only setup. |
+| `delivery` | Required result fields, Orca reply route supplied at dispatch, usage source, budget reference, escalation rule, recovery and audit references. Review pass-1 exclusions apply. |
+
+## Appendix B: candidate receipt
+
+Computed from Git and filesystem state, never from the implementer's summary: base SHA, candidate SHA, feature spec and plan identities, brief hash, allowed-path digest, changed paths, cleanliness result, size result, protected-artifact hashes. The implementer handoff may carry no SHA; `candidate_created` binds the coordinator-created SHA to that handoff. A reviewer result must name its exact candidate SHA.
+
+## Appendix C: audit event
+
+One JSON object per line. Unavailable identities are explicit null with a lifecycle reason.
+
+| Group | Fields |
+| --- | --- |
+| Event | `schema_version`, `event_id`, per-log `sequence`, `timestamp_utc`, `event_type`, feature or run identifier |
+| Correlation | Orca run, task and dispatch IDs when available; `brief_id`, `brief_hash`, prompt hash; link to the originating intent event |
+| Baselines | Feature spec and plan revisions and hashes, role-pack identity, base SHA, candidate SHA |
+| Outcome | Status, decision or reason code, result hash, pointer to a sanitized artifact, approval reference |
+| Usage | Usage record or reference, runtime, model, effort, limits, measurement status |
+
+Vocabulary: `run_started`, `approval_recorded`, `brief_validated`, `brief_rejected`, `brief_amended`, `dispatch_intent`, `dispatch_started`, `result_received`, `result_ignored`, `candidate_created`, `candidate_rejected`, `review_pass_one_recorded`, `integration_reverted`, `usage_recorded`, `acceptance_recorded`, `spec_changed`, `worker_stalled`, `human_takeover`, `escalation`, `cancellation_requested`, `worker_stopped`, `recovery_reconciled`, `error`.
+
+Content rules: store references, hashes, metrics and minimal summaries. No raw secrets, credentials, customer data or unrestricted transcript dumps. Hashing a low-entropy secret is not sanitization.
