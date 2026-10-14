@@ -10,7 +10,7 @@ A developer gives Claude a project outcome. Claude drives a spec-driven developm
 
 v1 scope: one local Git repository on macOS, one coordinator, one implementation writer, with research and bounded consultations alongside. v1 support code is limited to a brief validator, ownership gate, audit writer, usage recorder and fake-worker harness; none of these schedules work.
 
-Out of v1: multiple writers, automatic continuation past approval, remote execution, autonomous deployment, another orchestration framework, a custom scheduler or database, Pi subagent extensions, debugger write ownership.
+Out of v1: multiple writers, skipping the upfront approval checkpoint, remote execution, autonomous deployment, another orchestration framework, a custom scheduler or database, Pi subagent extensions, debugger write ownership.
 
 The installer provisions role definitions and instructions only. Agent binaries, provider authentication, credentials and model defaults are separate setup concerns.
 
@@ -147,7 +147,7 @@ Planned checks, not executed results. Each maps to controls in `orchestration-co
 
 ## 8. Decisions
 
-- **D-1 Decided.** One explicit approval of the feature spec and plan, then execution within scope. Automatic continuation is phase two.
+- **D-1 Decided.** One explicit approval of the feature spec and plan, then execution within scope. Skipping the upfront approval checkpoint is phase two.
 - **D-2** Scope: local macOS, one writer. Platforms and parallel writers follow a successful pilot.
 - **D-3** Routing: Codex Astra for advice, review and debugging; Claude Sonnet for research initially; re-evaluate after the pilot.
 - **D-4** Pre-spike inputs: disposable fixture repository, installed versions, scoped spike authorization. Pre-pilot inputs: required checks, time and attempt budget, any user-supplied dollar cap.
@@ -158,7 +158,7 @@ Planned checks, not executed results. Each maps to controls in `orchestration-co
 - **D-9** Pilot thresholds are in the plan, section 6. Targets, not results.
 - **D-10** Orca supplies only required coordination. Failed critical feasibility stops and revises the integration.
 - **D-11 Needs confirmation.** Review pass 1 and pass 2 are two Orca dispatches, not one dispatch with an interim message (K-9). Replaces the v0.3 interim-report mechanism.
-- **D-12 Needs confirmation.** Adoption requires 100% time and attempt coverage. Token and cost coverage gates routing decisions, not workflow adoption (plan section 6). A user dollar cap is enforced only where telemetry allows; otherwise it is refused or replaced by a stated conservative bound (K-13). Replaces the v0.3 rule that estimates cannot fill the requirement.
+- **D-12 Needs confirmation.** Adoption requires 100% time and attempt coverage. Token and cost coverage gates routing decisions, not workflow adoption (plan section 6). A hard dollar cap is accepted only with verified per-request enforcement; otherwise it is declined and advisory estimates plus time limits are offered (K-13). Replaces the v0.3 rule that estimates cannot fill the requirement.
 - **D-13** Spike-validated tool versions are pinned for the pilot (K-17).
 
 Established input: the user's Pi/DeepSeek high configuration works. Everything about the combined Orca workflow is untested.

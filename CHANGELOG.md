@@ -55,6 +55,13 @@ Restructure for brevity. Guarantees preserved; mechanisms moved to a tiered cont
 - K-14: liveness clock pauses while the dispatch has an unanswered `ask`. New pilot drill.
 - K-13, D-12: a dollar cap is refused or replaced by a stated conservative bound when any role lacks cost telemetry.
 
+**Codex follow-up review, 14 October 2026, all four points accepted**
+
+- K-8, K-15: closing a dispatch requires a verified process stop or idle state before a human edits or a replacement dispatch starts; a pending question is resolved before its terminal is reused. Orca releasing ownership does not stop a live writer.
+- K-13, D-12: a hard dollar cap is accepted only with verified per-request enforcement; otherwise it is declined and advisory estimates plus time limits are offered. Removes the "conservative bound" fallback.
+- README: worktree example passes `--base-branch` and confirms the SHA.
+- D-1 and scope wording: "skipping the upfront approval checkpoint is phase two" replaces "automatic continuation".
+
 ## v0.3, 14 October 2026
 
 Added feasibility gate (P0a to P0c), D-1 decided, mechanical ownership gate, committed candidate SHA with detached review, two-pass review, spec drift handling, ignored recovery location, secrets rule, usage from first dispatch, task size heuristic, numeric pilot thresholds, brief preflight, append-only audit, reviewer calibration. Added `orchestration-contracts.md`.

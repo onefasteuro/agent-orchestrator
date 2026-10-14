@@ -54,7 +54,7 @@ Target workflow once P6 is complete. Nothing is installed today. Commands below 
 
 ### Start a feature
 
-1. Pick the integration checkout. Any checkout on a feature branch works, including the primary one Orca opened, as long as it is clean and you note its base SHA (W-1, W-2). A separate Orca worktree is preferable when the primary checkout carries local changes or you run more than one feature; create it in the Orca app from the intended base branch. Sidebar parentage does not set the Git base. The headless equivalent is `orca worktree create --repo id:<repoId> --name feat-<name> --json`.
+1. Pick the integration checkout. Any checkout on a feature branch works, including the primary one Orca opened, as long as it is clean and you note its base SHA (W-1, W-2). A separate Orca worktree is preferable when the primary checkout carries local changes or you run more than one feature; create it in the Orca app from the intended base branch. Sidebar parentage does not set the Git base. The headless equivalent is `orca worktree create --repo id:<repoId> --name feat-<name> --base-branch <intended-base> --json`; without `--base-branch` Orca uses the repository's configured base ref. Either way, confirm the SHA afterwards with `git rev-parse HEAD` in the new checkout.
 2. Open a terminal in that worktree and start the coordinator. The `--agent` flag applies the entrypoint's system prompt, tools and model to the main session:
    ```sh
    claude --agent sdd-orchestrator
