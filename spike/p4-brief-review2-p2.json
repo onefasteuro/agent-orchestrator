@@ -1,0 +1,128 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_median_T2_review2_p2",
+  "role": "reviewer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "Pass-2 review (reconcile your persisted pass-1 findings with the supplied evidence) of candidate f64dbabb9db2 for task T2 (median), a repair of an earlier candidate, against specs/median/spec.md AC-1 to AC-7.",
+  "ac_ids": [
+   "AC-1",
+   "AC-2",
+   "AC-3",
+   "AC-4",
+   "AC-5",
+   "AC-6",
+   "AC-7"
+  ],
+  "exclusions": [
+   "No edits.",
+   "Do not retract a pass-1 finding because the implementer says it is fine; only the code, the spec text or the checks can retract it."
+  ],
+  "expected_result": "Per-criterion verdicts with file and line, findings (kept, retracted, added) with severity and verification step, checks run with result lines."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/median/spec.md",
+   "baseline": "approved",
+   "revision": "859741ed8905c3be5bacc7918054183f2df1e5d3",
+   "sha256": "a99fd075174da640e556951fed20abf57a72ece161dd4b6c02b054a962c0e7b8"
+  },
+  "feature_plan": {
+   "path": "specs/median/plan.md",
+   "baseline": "approved",
+   "revision": "859741ed8905c3be5bacc7918054183f2df1e5d3",
+   "sha256": "ad71a28b09bc9c008da777f2fc5ecb3d86f04960a74fae18c3630784be9f9f51"
+  },
+  "role_pack_hash": "912b2f217303b6fb8d2bff664313f6fae6dd6afabbd4b4239452dfa3273f403d",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "git diff 859741ed8905..f64dbabb9db2 (run it yourself; read-only git commands are permitted)",
+   "Your own pass-1 report on this candidate (persisted as review_pass_one_recorded): Completed independent read-only pass 1 of candidate f64dbabb9db23fa8390ddd58d2533527ab9bdafe against base 859741ed8905c3be5bacc7918054183f2df1e5d3, confirmed HEAD matches, and reviewed the full diff, touched files, pinned spec and tests without consulting withheld material. Verdicts: AC-1 satisfied (src/math.mjs:42; test/math.test.mjs:53); AC-2 satisfied (src/math.mjs:47; test/math.test.mjs:57, including extreme finite values at lines 58-61); AC-3 satisfied (src/math.mjs:39; test/math.test.mjs:65); AC-4 satisfied (src/math.mjs:28-36; test/math.test.mjs:69-71); AC-5 satisfied (src/math.mjs:39; test/math.test.mjs:75-78); AC-6 satisfied (src/math.mjs:1-24 preserved, additions begin at line 25; existing test/math.test.mjs:5-50 byte-identical and only existing import at line 3 edited; only two assigned files plus declared src/generated.mjs:1 changed); AC-7 satisfied (test/math.test.mjs:13-14 is the sole failure, all mean and median tests pass); findings: none added, kept/retracted not applicable to blind pass 1; checks actually run: node --test --test-name-pattern=\"^median\" test/ exited 0 with result lines \"pass 5\", \"fail 0\", all five named median tests successful; npm test exited 1 with \"tests 14\", \"pass 13\", \"fail 1\", sole failure \"clamp respects upper bound\" with \"15 !== 10\"; git diff --unified=0 859741ed8905c3be5bacc7918054183f2df1e5d3 f64dbabb9db23fa8390ddd58d2533527ab9bdafe -- src/math.mjs exited 0 with hunk \"@@ -24,0 +25,24 @@\" and no removed source lines. No files were changed and no required checks remain unavailable; remaining uncertainty is limited to the excluded OD-1 coordination process and withheld prior findings, while acceptance remains the coordinator decision."
+  ],
+  "predecessor_conclusions": [
+   "The repository has a deliberate pre-existing defect in clamp; 'clamp respects upper bound' fails on base and candidate by design (mean spec OD-4). Not a finding unless the candidate changed clamp.",
+   "src/generated.mjs is written by the pre-commit hook; a declared generated path, not an implementer change.",
+   "The spec text says the implementer must confirm OD-1 with the coordinator; that process step is not reviewable from the code and is not a finding.",
+   "Implementer self-report (repair attempt 3): replaced the even-length averaging expression with separate a/b middle values and Number.isFinite(sum) ? sum/2 : a/2 + b/2; added four finite-extreme regression assertions inside the existing even-length test; claimed median tests pass 5 fail 0, npm test pass 13 fail 1 (clamp baseline), additive diff versus base. filesModified listed both files this time.",
+   "Gate receipt on the candidate: changed [[\"M\", \"src/generated.mjs\", [\"generated\"]], [\"M\", \"src/math.mjs\", [\"assigned\"]], [\"M\", \"test/math.test.mjs\", [\"assigned\"]]]; 2 files, 55 lines, within limits; clean after commit; pinned document hashes match.",
+   "Coordinator checks: median tests pass 5 fail 0; npm test pass 13 fail 1; probe median([MAX_VALUE, MAX_VALUE]) === MAX_VALUE and the negative pair both true.",
+   "Previous review (candidate 6a993ea): one MEDIUM finding, averaging overflow, kept in pass 2 with the recommended repair now applied in this candidate. That review's evidence is invalidated by the new SHA; judge this candidate on its own."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T2",
+  "base_sha": "859741ed8905c3be5bacc7918054183f2df1e5d3",
+  "candidate_sha": "f64dbabb9db23fa8390ddd58d2533527ab9bdafe",
+  "dirty_state": null,
+  "assigned_paths": [],
+  "new_paths": [],
+  "protected_paths": []
+ },
+ "execution": {
+  "runtime": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "permission_recipe": "codex-read-only",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 30,
+   "attempts": 1,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "median tests",
+    "command": "node --test --test-name-pattern=\"^median\" test/",
+    "expected": "pass 5, fail 0"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "pass 13, fail 1; only 'clamp respects upper bound' fails"
+   },
+   {
+    "name": "additive change",
+    "command": "git diff --unified=0 859741ed8905c3be5bacc7918054183f2df1e5d3 f64dbabb9db23fa8390ddd58d2533527ab9bdafe -- src/math.mjs",
+    "expected": "no removed lines"
+   }
+  ],
+  "estimate": {
+   "files": 0,
+   "lines": 0
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "candidate SHA inspected",
+   "pass number",
+   "per-criterion verdicts with file and line",
+   "findings with severity, file, line, consequence, verification step",
+   "checks run with result lines",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (worker_done once)",
+  "usage_source": "codex-session-rollout",
+  "budget_ref": "median-T2-review-2",
+  "escalation_rule": "BLOCKED_CONTEXT if HEAD is not the candidate SHA",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl",
+  "pass": 2
+ }
+}

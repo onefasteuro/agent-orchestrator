@@ -62,7 +62,7 @@ ORCA terminal create --worktree path:<abs-checkout> --title researcher \
 
 ## Review checkouts
 
-Orca only attaches terminals to worktrees it created (the repository setting `externalWorktreeVisibility` defaults to hide). Create the review worktree through Orca from the task branch, then `git checkout --detach <candidate SHA>` inside it. Verify HEAD and cleanliness before dispatch.
+Orca only attaches terminals to worktrees it created (the repository setting `externalWorktreeVisibility` defaults to hide). Every Orca worktree creation also writes a `[branch "<name>"] base = ...` entry into the shared `.git/config`, which the gate's metadata baseline (K-7, `sdd metadata-baseline`) will flag as drift. Record the baseline after the task's worktrees (task and review) exist, or re-baseline with the config diff archived and a `recovery_reconciled` event. Create the review worktree through Orca from the task branch, then `git checkout --detach <candidate SHA>` inside it. Verify HEAD and cleanliness before dispatch.
 
 ## Stopping and retrying (K-8, K-15)
 
@@ -74,4 +74,4 @@ ORCA orchestration worker-abandon --dispatch <id> --json   # settles the dispatc
 ORCA orchestration worker-start --retry-of <id> --task <task_id> --terminal <new handle> --worktree path:<...> --from <coord> --json
 ```
 
-`--retry-of` is refused until the dispatch is settled. A pending question on the old dispatch is replied to or cancelled first.
+`--retry-of` is refused until the dispatch is settled. A pending question on the old dispatch is replied to or cancelled first. Observed on 14 October 2026: closing the attached terminal settles the dispatch itself as `failed` with `terminationReason: operator_close`, after which `worker-abandon` is refused as already settled. So the order is `worker-stop` (fence), `terminal close` (verify `ptyKilled`), then `worker-abandon` only if `worker-show` still reports the dispatch unsettled.

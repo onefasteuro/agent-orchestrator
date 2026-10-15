@@ -34,7 +34,8 @@ export function readLog(file) {
       else problems.push({ line: i + 1, message: 'unparseable line in the middle of the log' });
     }
   }
-  let expected = 1;
+  // Continuity only: a linked segment legitimately starts above 1.
+  let expected = events.length ? events[0].sequence : 1;
   for (const e of events) {
     if (e.sequence !== expected) problems.push({ event_id: e.event_id, message: `sequence ${e.sequence}, expected ${expected}` });
     expected = (typeof e.sequence === 'number' ? e.sequence : expected) + 1;
@@ -46,8 +47,9 @@ export function append(file, event, opts = {}) {
   if (!event || typeof event !== 'object') throw new Error('event must be an object');
   if (!event.event_type) throw new Error('event_type required');
   if (!EVENT_TYPES.has(event.event_type) && !opts.allowCustom) throw new Error(`unknown event_type ${event.event_type}`);
-  const { events, partial } = readLog(file);
+  const { events, partial, problems } = readLog(file);
   if (partial && !opts.afterPartial) throw new Error('log ends in a partial line; run verify and start a linked segment (K-12)');
+  if (problems.length) throw new Error('log has integrity problems (' + problems.map((p) => p.message).join('; ') + '); run verify and start a linked segment (K-12)');
   const last = events.length ? events[events.length - 1].sequence : 0;
   const record = {
     schema_version: SCHEMA_VERSION,
@@ -126,9 +128,13 @@ export function unresolved(events) {
   const rejectedBriefs = new Set(events.filter((e) => e.event_type === 'brief_rejected').map((e) => e.brief_id));
   const amendedFrom = new Set(events.filter((e) => e.event_type === 'brief_amended').map((e) => e.from_brief));
   const received = new Set(events.filter((e) => e.event_type === 'result_received').map((e) => e.dispatch_id));
-  const acceptanceText = events.filter((e) => e.event_type === 'acceptance_recorded').map((e) => JSON.stringify(e)).join('\n');
+  // Exact-value citation: collect every string value inside acceptance events
+  // (any depth) and compare by equality, never by substring.
+  const citedIds = new Set();
+  const collect = (v) => { if (typeof v === 'string') citedIds.add(v); else if (Array.isArray(v)) v.forEach(collect); else if (v && typeof v === 'object') Object.values(v).forEach(collect); };
+  for (const e of events) if (e.event_type === 'acceptance_recorded') collect(e);
   const stopped = new Set(events.filter((e) => ['worker_stopped', 'candidate_rejected', 'error', 'result_ignored', 'cancellation_requested'].includes(e.event_type)).map((e) => e.dispatch_id));
-  const cited = (d) => d && acceptanceText.includes(d);
+  const cited = (d) => typeof d === 'string' && d.length > 0 && citedIds.has(d);
   return {
     intent_without_receipt: intents.filter((e) => !(e.dispatch_id ? started.has(e.dispatch_id) : startedBriefs.has(e.brief_id)) && !rejectedBriefs.has(e.brief_id) && !amendedFrom.has(e.brief_id)).map((e) => e.brief_id || e.event_id),
     receipt_without_result: [...started].filter((d) => d && !received.has(d) && !stopped.has(d)),

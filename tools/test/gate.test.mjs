@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import { writeFileSync, mkdirSync, renameSync, symlinkSync, rmSync } from 'node:fs';
 import { join } from 'node:path';
 import { makeRepo, makeBrief, git } from './helpers.mjs';
-import { runGate } from '../lib/gate.mjs';
+import { runGate as runGateRaw, metadataBaseline } from '../lib/gate.mjs';
+const runGate = (o) => runGateRaw({ metadataBaseline: metadataBaseline(o.repo), ...o });
 import { runScenario } from '../lib/fake-worker.mjs';
 
 function fresh(opts) {
@@ -141,8 +142,15 @@ test('hardening: in-tree .gitattributes drift or a changed shared config fails t
   assert.equal(r.ok, false);
   assert.ok(r.violations.some((v) => /metadata:/.test(v.reason) && v.path === 'src/sub/.gitattributes'), JSON.stringify(r.violations));
   rmSync(join(repo, 'src/sub'), { recursive: true });
-  const okRun = runGate({ repo, brief, baseSha: base, metadataBaseline: { config_sha256: 'not-the-real-hash' } });
+  const okRun = runGate({ repo, brief, baseSha: base, metadataBaseline: { config_sha256: 'not-the-real-hash', info_attributes_sha256: null } });
   assert.ok(okRun.violations.some((v) => v.path === '.git/config'), 'config baseline mismatch is a violation');
   const clean = runGate({ repo, brief, baseSha: base });
   assert.equal(clean.ok, true, JSON.stringify(clean.violations));
+});
+
+test('hardening: the gate fails closed without a recorded metadata baseline', () => {
+  const { repo, base, brief } = fresh();
+  const r = runGateRaw({ repo, brief, baseSha: base });
+  assert.equal(r.ok, false);
+  assert.ok(r.violations.some((v) => /no baseline recorded/.test(v.reason)));
 });

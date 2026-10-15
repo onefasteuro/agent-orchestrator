@@ -1,0 +1,132 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_median_T2_a3",
+  "role": "implementer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "Repair the reviewed candidate 6a993ea: median() averaging of the two middle values must not overflow for finite inputs; add regression assertions; keep everything else unchanged.",
+  "ac_ids": [
+   "AC-1",
+   "AC-2",
+   "AC-3",
+   "AC-4",
+   "AC-5",
+   "AC-6",
+   "AC-7"
+  ],
+  "exclusions": [
+   "Do not change add, clamp, mean or their tests.",
+   "Do not touch package.json, scripts/, .githooks/, AGENTS.md or src/generated.mjs.",
+   "No new dependencies."
+  ],
+  "expected_result": "A handoff where `node --test --test-name-pattern=\"^median\" test/` reports pass 5 fail 0 and `npm test` reports pass 13 fail 1 with the single failure 'clamp respects upper bound' (known baseline, report it, do not count it as a pass)."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/median/spec.md",
+   "baseline": "approved",
+   "revision": "859741ed8905c3be5bacc7918054183f2df1e5d3",
+   "sha256": "a99fd075174da640e556951fed20abf57a72ece161dd4b6c02b054a962c0e7b8"
+  },
+  "feature_plan": {
+   "path": "specs/median/plan.md",
+   "baseline": "approved",
+   "revision": "859741ed8905c3be5bacc7918054183f2df1e5d3",
+   "sha256": "ad71a28b09bc9c008da777f2fc5ecb3d86f04960a74fae18c3630784be9f9f51"
+  },
+  "role_pack_hash": "912b2f217303b6fb8d2bff664313f6fae6dd6afabbd4b4239452dfa3273f403d",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "specs/median/spec.md",
+   "specs/median/plan.md",
+   "src/math.mjs (mean shows the validation shape to reuse)"
+  ],
+  "predecessor_conclusions": [
+   "This is attempt 3 of 3 for T2 (final attempt under the task budget). The task worktree holds the committed candidate 6a993ea at HEAD; start from it, do not start over.",
+   "Independent review finding (MEDIUM, src/math.mjs line 44): `(sorted[mid - 1] + sorted[mid]) / 2` overflows to Infinity for median([Number.MAX_VALUE, Number.MAX_VALUE]) and to -Infinity for the negative pair, violating B-3 and the finite-number goal.",
+   "Recommended repair from the reviewer: let a and b be the two middle values; compute sum = a + b; return Number.isFinite(sum) ? sum / 2 : a / 2 + b / 2. Add regression assertions INSIDE the existing even-length median test (so the five-test count stays): both equal positive and negative MAX_VALUE pairs return the input value; opposite extrema [Number.MAX_VALUE, -Number.MAX_VALUE] return 0; equal MIN_VALUE pairs return Number.MIN_VALUE.",
+   "Do not ask a question this time: OD-1 is already confirmed (even length averages the middle pair).",
+   "Keep the comment above median(). The existing test 'clamp respects upper bound' fails by design; report it as a known baseline failure.",
+   "src/generated.mjs is written by the pre-commit hook during the coordinator's commit; never create or edit it."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/task-2",
+  "base_sha": "859741ed8905c3be5bacc7918054183f2df1e5d3",
+  "candidate_sha": null,
+  "dirty_state": null,
+  "assigned_paths": [
+   "src/math.mjs",
+   "test/math.test.mjs"
+  ],
+  "new_paths": [],
+  "protected_paths": [
+   "scripts/",
+   "package.json"
+  ]
+ },
+ "execution": {
+  "runtime": "pi",
+  "model": "ollama-cloud/deepseek-v4.1-flash",
+  "effort": "high",
+  "permission_recipe": "pi-terminal-attach",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 90,
+   "attempts": 3,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "median tests",
+    "command": "node --test --test-name-pattern=\"^median\" test/",
+    "expected": "pass 5, fail 0 (same five tests, with the new assertions inside the even-length test)"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "pass 13, fail 1; the single failure is 'clamp respects upper bound'"
+   },
+   {
+    "name": "additive change",
+    "command": "git diff --unified=0 859741ed8905c3be5bacc7918054183f2df1e5d3 HEAD -- src/math.mjs; git diff --unified=0 HEAD -- src/math.mjs",
+    "expected": "no removed lines versus base except the one averaging line being replaced inside median()"
+   }
+  ],
+  "estimate": {
+   "files": 2,
+   "lines": 60
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "changed paths as git status shows them",
+   "each required check with its result line",
+   "the question asked, the answer received, and whether a timeout happened first",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (ask for the question, worker_done once)",
+  "usage_source": "pi-status-bar",
+  "budget_ref": "median-T2: one session, 3 attempts",
+  "escalation_rule": "ask before any decision the brief does not settle, after two failed attempts at the same problem, or if a required path is outside your allowlist",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl"
+ }
+}

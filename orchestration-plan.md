@@ -1,6 +1,6 @@
 # Agentic SDD orchestration: plan
 
-Version 0.5, 14 October 2026. Status: P0 closed, P1 to P3 delivered 14 October 2026 (D-14, D-16 to D-18). P4 (consultation and recovery drills) needs authorization.
+Version 0.5, 14 October 2026. Status: P0 to P4 delivered (D-14, D-16 to D-19). P5, the measured pilot, needs authorization and the inputs in section 7.
 
 `orchestration-spec.md` holds requirements and invariants. `orchestration-controls.md` holds mechanisms. This document holds sequence, the spike checklist, pilot thresholds and open inputs.
 
@@ -55,7 +55,7 @@ Verify ignore rules before the first run. Task writers never own feature docs, r
 | P1 | Brief validator, ownership gate, audit writer, usage recorder, fake-worker harness | P0 closed, implementation authorized | Done 14 October 2026: `tools/` with one CLI, 29 tests under `npm test` covering K-2 to K-7, K-9, K-11 to K-14, W-2, W-3; the gate also reproduced the spike candidate findings on the real fixture |
 | P2 | Entrypoint, workflow, five prompts, launch recipes, review and spec-drift gates | P1 | Done 14 October 2026: pack under `pack/`; AC-1, AC-2 and AC-10 observed on the fixture with the installed pack (`spike/2026-10-14-p2-verification.md`); other ACs covered by the P1 tests and spike rows |
 | P3 | One real Pi task end to end | P2 | Done 14 October 2026: `mean()` delivered in the fixture through preflight, Pi dispatch, ownership gate, candidate commit, two-pass Codex review (no findings), fast-forward integration, acceptance with per-criterion evidence, 35 audit events, usage for every dispatch (`spike/2026-10-14-p3.md`) |
-| P4 | Consultation and recovery drills | P3 | Dirty-file advice, timeout, restart, cancellation, spec change, stalled worker, human takeover |
+| P4 | Consultation and recovery drills | P3 | Done 15 October 2026: seven drills pass on the fixture (advice with a held question, restart, cancellation, takeover, spec change, stall, revert and repair), plus an unplanned real repair loop after the blind review found a defect (`spike/2026-10-14-p4.md`) |
 | P5 | Measured pilot | P3, P4, pilot authorization | Section 6 thresholds met with human-audited evidence |
 | P6 | Installer and operator docs | Stable P1 to P5 | AC-13; lifecycle rechecked with freshly installed entrypoints |
 | P7 | Adoption decision | P5, P6 | Thresholds met, limitations listed, adopt or revise |
@@ -94,6 +94,6 @@ An unplanned intervention is any human action needed to rescue or correct ordina
 
 ## 7. Open inputs
 
-- Before P4: authorization. P4 drills: dirty-file advice with timeout, restart reconciliation, cancellation while Pi writes, spec change mid-run, stalled worker, human takeover, integration revert and repair.
+- Before P5: authorization; the ten-task sample, calibration inventory and any dollar cap (section 7); decide whether the coordinator runs as a Claude session following `workflow.md` (recommended after the P3 and P4 glue mistakes) and whether `sdd` gains `integrate` and `revert` commands that record events only after the Git effect.
 - Before the pilot: ten-task sample, required checks, calibration inventory, integration convention, time and attempt budget, any dollar cap.
 - After evidence: parallel writers, debugger ownership transfer, other platforms, routing changes.

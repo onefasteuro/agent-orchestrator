@@ -125,3 +125,10 @@ test('K-13: a usage event may cover several dispatches of one session', () => {
   assert.equal(cov.with_tokens, 2);
   assert.deepEqual(cov.missing_usage, []);
 });
+
+test('K-14: an agent that finished its turn without reporting is a stall even inside the interval', () => {
+  const now = Date.parse('2026-10-14T23:59:00Z');
+  const p = { stage: { worker: 'ready', dispatch: 'dispatched', activity: 'done' }, outcome: 'in_progress', liveness: { verdict: 'live', source: 'agent_status' } };
+  assert.equal(decideLiveness({ projection: p, role: 'reviewer', now, lastProgressAt: now - 60000 }).action, 'inspect');
+  assert.equal(decideLiveness({ projection: p, role: 'reviewer', now, lastProgressAt: now - 60000, pendingQuestionCreatedAt: new Date(now - 30000).toISOString() }).action, 'wait', 'a pending question still pauses the clock');
+});

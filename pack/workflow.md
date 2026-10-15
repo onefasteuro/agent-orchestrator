@@ -35,7 +35,7 @@ This is the procedure the `sdd-orchestrator` entrypoint follows. The specificati
 
 ## 4. Supervise
 
-Loop: `ORCA orchestration check --terminal <coord> --run <run> --wait --types "worker_done,escalation,question" --timeout-ms 900000 --json`.
+Loop: `ORCA orchestration check --terminal <coord> --run <run> --wait --types "worker_done,escalation,question" --timeout-ms 900000 --json`. On waits longer than about 15 s Orca prints keepalive lines (`{"_keepalive":true,...}`) before the final JSON object, and message bodies may contain raw control characters: parse the last complete object with a lenient JSON parser, never the first line.
 
 - A `question`: handle it per section 5 before acknowledging anything. A held unacknowledged delivery is replayed by every `check`, so do not wait on the inbox for anything else while holding it.
 - A `worker_done`: classify first: `sdd audit-classify --log <events> --run --task --dispatch --result-hash <sha256 of the message body and payload>`. `ignored` means an identical replay: append `result_ignored`, ack, continue. `conflict` or `stale`: append `error`, ack, investigate; never accept. `new`: append `result_received`, then handle by role (sections 6 and 7). Ack only after the record is appended.

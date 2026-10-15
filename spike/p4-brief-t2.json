@@ -1,0 +1,131 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_median_T2_a1",
+  "role": "implementer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "src/math.mjs exports median(values) per specs/median/spec.md with five tests named 'median ...' in test/math.test.mjs.",
+  "ac_ids": [
+   "AC-1",
+   "AC-2",
+   "AC-3",
+   "AC-4",
+   "AC-5",
+   "AC-6",
+   "AC-7"
+  ],
+  "exclusions": [
+   "Do not change add, clamp, mean or their tests.",
+   "Do not touch package.json, scripts/, .githooks/, AGENTS.md or src/generated.mjs.",
+   "No new dependencies."
+  ],
+  "expected_result": "A handoff where `node --test --test-name-pattern=\"^median\" test/` reports pass 5 fail 0 and `npm test` reports pass 13 fail 1 with the single failure 'clamp respects upper bound' (known baseline, report it, do not count it as a pass)."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/median/spec.md",
+   "baseline": "approved",
+   "revision": "859741ed8905c3be5bacc7918054183f2df1e5d3",
+   "sha256": "a99fd075174da640e556951fed20abf57a72ece161dd4b6c02b054a962c0e7b8"
+  },
+  "feature_plan": {
+   "path": "specs/median/plan.md",
+   "baseline": "approved",
+   "revision": "859741ed8905c3be5bacc7918054183f2df1e5d3",
+   "sha256": "ad71a28b09bc9c008da777f2fc5ecb3d86f04960a74fae18c3630784be9f9f51"
+  },
+  "role_pack_hash": "912b2f217303b6fb8d2bff664313f6fae6dd6afabbd4b4239452dfa3273f403d",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "specs/median/spec.md",
+   "specs/median/plan.md",
+   "src/math.mjs (mean shows the validation shape to reuse)"
+  ],
+  "predecessor_conclusions": [
+   "REQUIRED ORDER OF WORK. Step 1: write a first draft of median() in src/math.mjs and the five tests in test/math.test.mjs, but do not run any checks yet. Step 2: ask the coordinator exactly one blocking question using the ask command from your preamble with --timeout-ms 60000, with this exact text: 'OD-1 confirmation: for even-length arrays, should median() return the arithmetic mean of the two middle values, or the lower middle value?' Then stop editing. If the ask times out, resume the same question with --resume <message_id> and keep waiting; do not edit until the answer arrives. Step 3: after the answer, finish the implementation accordingly, run the required checks, and send worker_done.",
+   "Validation shape: reuse the checks mean() uses (plain array, nonempty, every element a finite number) but do not refactor mean().",
+   "Sort a copy numerically: [...values].sort((a, b) => a - b).",
+   "The existing test 'clamp respects upper bound' fails on the base commit by design; report it as a known baseline failure.",
+   "src/generated.mjs is written by the pre-commit hook during the coordinator's commit; never create or edit it."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/task-2",
+  "base_sha": "859741ed8905c3be5bacc7918054183f2df1e5d3",
+  "candidate_sha": null,
+  "dirty_state": null,
+  "assigned_paths": [
+   "src/math.mjs",
+   "test/math.test.mjs"
+  ],
+  "new_paths": [],
+  "protected_paths": [
+   "scripts/",
+   "package.json"
+  ]
+ },
+ "execution": {
+  "runtime": "pi",
+  "model": "ollama-cloud/deepseek-v4.1-flash",
+  "effort": "high",
+  "permission_recipe": "pi-terminal-attach",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 90,
+   "attempts": 3,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "median tests",
+    "command": "node --test --test-name-pattern=\"^median\" test/",
+    "expected": "pass 5, fail 0"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "pass 13, fail 1; the single failure is 'clamp respects upper bound'"
+   },
+   {
+    "name": "additive change",
+    "command": "git diff --unified=0 HEAD -- src/math.mjs",
+    "expected": "no removed lines"
+   }
+  ],
+  "estimate": {
+   "files": 2,
+   "lines": 60
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "changed paths as git status shows them",
+   "each required check with its result line",
+   "the question asked, the answer received, and whether a timeout happened first",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (ask for the question, worker_done once)",
+  "usage_source": "pi-status-bar",
+  "budget_ref": "median-T2: one session, 3 attempts",
+  "escalation_rule": "ask before any decision the brief does not settle, after two failed attempts at the same problem, or if a required path is outside your allowlist",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl"
+ }
+}

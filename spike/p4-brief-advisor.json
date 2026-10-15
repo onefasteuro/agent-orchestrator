@@ -1,0 +1,104 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_median_T2_advice_1",
+  "role": "advisor",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "Answer the paused implementer's question: for even-length arrays, should median() return the arithmetic mean of the two middle values, or the lower middle value? Recommend one answer grounded in specs/median/spec.md and the current draft in the worktree.",
+  "ac_ids": [
+   "AC-2"
+  ],
+  "exclusions": [
+   "No edits, no git state changes.",
+   "Do not widen the task."
+  ],
+  "expected_result": "Recommendation, verification step, evidence examined, uncertainty."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/median/spec.md",
+   "baseline": "approved",
+   "revision": "859741ed8905c3be5bacc7918054183f2df1e5d3",
+   "sha256": "a99fd075174da640e556951fed20abf57a72ece161dd4b6c02b054a962c0e7b8"
+  },
+  "feature_plan": {
+   "path": "specs/median/plan.md",
+   "baseline": "approved",
+   "revision": "859741ed8905c3be5bacc7918054183f2df1e5d3",
+   "sha256": "ad71a28b09bc9c008da777f2fc5ecb3d86f04960a74fae18c3630784be9f9f51"
+  },
+  "role_pack_hash": "912b2f217303b6fb8d2bff664313f6fae6dd6afabbd4b4239452dfa3273f403d",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "The implementer's current uncommitted draft in src/math.mjs and test/math.test.mjs (git diff shows it)",
+   "specs/median/spec.md B-3 and AC-2"
+  ],
+  "predecessor_conclusions": [
+   "Implementer question (msg_bac1e655a142): 'OD-1 confirmation: for even-length arrays, should median() return the arithmetic mean of the two middle values, or the lower middle value?'",
+   "The implementer wrote a draft before asking and is paused; it will not edit until the coordinator replies.",
+   "Check whether the draft already matches the spec's answer and say so."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/task-2",
+  "base_sha": "859741ed8905c3be5bacc7918054183f2df1e5d3",
+  "candidate_sha": null,
+  "dirty_state": "paused implementer worktree with uncommitted edits:  M src/math.mjs; M test/math.test.mjs;",
+  "assigned_paths": [],
+  "new_paths": [],
+  "protected_paths": []
+ },
+ "execution": {
+  "runtime": "codex",
+  "model": "gpt-6-astra",
+  "effort": "max",
+  "permission_recipe": "codex-read-only",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 15,
+   "attempts": 1,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "draft inspection",
+    "command": "git diff -- src/math.mjs test/math.test.mjs",
+    "expected": "shows the implementer's draft"
+   }
+  ],
+  "estimate": {
+   "files": 0,
+   "lines": 0
+  },
+  "generated_paths": [],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "question as understood",
+   "recommendation",
+   "verification step",
+   "evidence examined",
+   "uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (worker_done once)",
+  "usage_source": "codex-session-rollout",
+  "budget_ref": "median-T2-advice",
+  "escalation_rule": "BLOCKED_CONTEXT if the worktree is not the one named",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl"
+ }
+}

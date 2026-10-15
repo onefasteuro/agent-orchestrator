@@ -57,8 +57,8 @@ export function metadataDrift(repo, base, baseline = {}) {
       let bytes = null;
       try { bytes = readFileSync(resolvePath(dir, file)); } catch { bytes = null; }
       const actual = bytes ? createHash('sha256').update(bytes).digest('hex') : null;
-      if (baseline[key] !== undefined && baseline[key] !== actual) problems.push({ path: `.git/${file}`, reason: `differs from the recorded baseline (expected ${String(baseline[key]).slice(0, 12)}, actual ${String(actual).slice(0, 12)})` });
-      if (file === 'info/attributes' && baseline[key] === undefined && actual !== null) problems.push({ path: '.git/info/attributes', reason: 'present but no baseline recorded; record one at setup or remove it' });
+      if (baseline[key] === undefined) { problems.push({ path: `.git/${file}`, reason: `no baseline recorded for ${key}; run \`sdd metadata-baseline\` at worktree setup and pass it to the gate (fail closed)` }); continue; }
+      if (baseline[key] !== actual) problems.push({ path: `.git/${file}`, reason: `differs from the recorded baseline (expected ${String(baseline[key]).slice(0, 12)}, actual ${String(actual).slice(0, 12)})` });
     }
   }
   return problems;

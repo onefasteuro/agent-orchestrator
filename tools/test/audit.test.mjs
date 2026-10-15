@@ -92,3 +92,56 @@ test('K-12: intents bound by brief_id and dispatches cited by an acceptance are 
   const u = unresolved(readLog(f).events);
   assert.deepEqual(u, { intent_without_receipt: [], receipt_without_result: [], result_without_acceptance: [] });
 });
+
+test('K-5 and R-2: spec-drift and reconcile CLI commands', async () => {
+  const { execFileSync } = await import('node:child_process');
+  const { writeFileSync } = await import('node:fs');
+  const { join } = await import('node:path');
+  const { makeRepo, makeBrief } = await import('./helpers.mjs');
+  const { repo, base } = makeRepo();
+  const brief = makeBrief({ repo, base });
+  const f = logFile();
+  const cli = (...a) => { try { return JSON.parse(execFileSync('node', ['tools/sdd.mjs', ...a], { encoding: 'utf8', cwd: new URL('../..', import.meta.url).pathname })); } catch (e) { return JSON.parse(e.stdout); } };
+  append(f, { event_type: 'approval_recorded', run_id: 'r', feature_spec: { path: 'specs/feature-a/spec.md', revision: base, sha256: brief.context.feature_spec.sha256 }, feature_plan: { path: 'specs/feature-a/plan.md', revision: base, sha256: brief.context.feature_plan.sha256 } });
+  append(f, { event_type: 'brief_validated', run_id: 'r', brief_id: 'b1', brief_hash: 'bh1', feature_spec_sha256: brief.context.feature_spec.sha256, feature_plan_sha256: brief.context.feature_plan.sha256 });
+  assert.equal(cli('spec-drift', '--log', f, '--repo', repo).ok, true);
+  writeFileSync(join(repo, 'specs/feature-a/spec.md'), '# changed\n- AC-1 changed\n');
+  const drift = cli('spec-drift', '--log', f, '--repo', repo);
+  assert.equal(drift.ok, false);
+  assert.deepEqual(drift.affected_briefs.map((b) => b.brief_id), ['b1']);
+  append(f, { event_type: 'dispatch_started', run_id: 'r', task_id: 't1', dispatch_id: 'd1', brief_id: 'b1' });
+  const { writeIndex } = await import('../lib/recovery.mjs');
+  writeIndex(repo, { mode: 'M-2', feature_spec: { path: 'x', revision: 'a'.repeat(40), sha256: 'b'.repeat(64) }, feature_plan: { path: 'y', revision: 'a'.repeat(40), sha256: 'c'.repeat(64) }, approval_ref: 'a', authorization_scope: 's', role_pack_identity: 'p', orca: { run_id: 'r', coordinator_handle: 'h', dispatches: [{ dispatch_id: 'd1' }, { dispatch_id: 'ghost' }] }, worktrees: {}, accepted_sha: null, pending_question_ids: [], evidence: {}, next_action: 'n', audit_log: f });
+  const wl = join(repo, 'wl.json');
+  writeFileSync(wl, JSON.stringify({ result: { workers: [{ dispatchId: 'd1', projection: { liveness: { verdict: 'live' } } }, { dispatchId: 'd-unknown', projection: { liveness: { verdict: 'live' } } }] } }));
+  const rec = cli('reconcile', '--log', f, '--checkout', repo, '--workers', wl);
+  assert.equal(rec.ok, false);
+  assert.ok(rec.findings.some((x) => /d-unknown/.test(x)), 'unknown live worker flagged');
+  assert.ok(rec.findings.some((x) => /ghost/.test(x)), 'index entry Orca does not list flagged');
+  assert.ok(rec.findings.some((x) => /d1 started with no result: still live/.test(x)));
+});
+
+test('K-12: exact-match citation and refusal to append to a corrupt log', () => {
+  const f = logFile();
+  append(f, { event_type: 'dispatch_started', run_id: 'r', task_id: 't', dispatch_id: 'd1', brief_id: 'b' });
+  append(f, { event_type: 'result_received', run_id: 'r', task_id: 't', dispatch_id: 'd1', result_hash: 'h' });
+  append(f, { event_type: 'acceptance_recorded', run_id: 'r', task_id: 'x', dispatch_id: 'd10', note: 'mentions d1 in prose only' });
+  assert.deepEqual(unresolved(readLog(f).events).result_without_acceptance, ['d1'], 'substring or prose mention does not count as acceptance');
+  const { appendFileSync } = require_fs_sync();
+  appendFileSync(f, 'garbage line\n{"schema_version":"1","event_id":"x","sequence":99,"event_type":"error"}\n');
+  assert.throws(() => append(f, { event_type: 'error' }), /integrity problems/);
+});
+function require_fs_sync() { return { appendFileSync: (p, t) => { const fs = process.getBuiltinModule('node:fs'); fs.appendFileSync(p, t); } }; }
+
+test('CLI: every documented command is dispatchable', async () => {
+  const { execFileSync } = await import('node:child_process');
+  const root = new URL('../..', import.meta.url).pathname;
+  const src = (await import('node:fs')).readFileSync(root + 'tools/sdd.mjs', 'utf8');
+  const documented = [...src.matchAll(/^\/\/   sdd ([a-z-]+)/gm)].map((m) => m[1]);
+  let listed;
+  try { execFileSync('node', ['tools/sdd.mjs', 'nope'], { cwd: root, encoding: 'utf8' }); } catch (e) { listed = JSON.parse(e.stdout).commands; }
+  for (const c of documented) {
+    assert.ok(listed.includes(c), `${c} documented but not listed`);
+    assert.ok(src.includes(`case '${c}':`), `${c} listed but has no case`);
+  }
+});

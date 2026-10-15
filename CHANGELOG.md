@@ -24,6 +24,8 @@ P0 closed by the user on P0b spike evidence (D-14). All eight spike rows passed 
 
 **14 October 2026, later:** P3 authorized (D-18) and delivered: `mean()` accepted into the fixture `main` as `1f1e1d9` after Pi implementation, gate, candidate commit, blind and informed Codex review and fast-forward integration. Tools gained `doc-identity`, `metadata-baseline`, fail-closed metadata drift checks, option-injection guards, case-folded protection of Git control files, a validator rule against paths both protected and generated, intent matching by brief id and multi-dispatch usage coverage; 37 tests. Workflow and recipes updated: branch on exit status, hash documents with the tool, review checkouts created through Orca then detached. Two coordinator process violations during P3 are recorded in the receipts with their corrections.
 
+**14 to 15 October 2026:** P4 authorized (D-19) and delivered. Seven drills pass; the blind review caught a real overflow defect and the repair loop ran end to end. Tools gained `spec-drift`, `reconcile`, a stall rule for finished-but-unreported agent turns, exact-match acceptance citation, a required metadata baseline, append refusal on corrupt logs, and a test that every documented CLI command exists; 42 tests. Recipes record three Orca behaviours: `terminal close` settles an attached dispatch as `failed/operator_close`, every worktree creation writes `branch.<name>.base` into the shared config, and `check --wait` emits keepalive lines before its result. Four coordinator glue mistakes across P3 and P4 are recorded with their corrections.
+
 ## v0.4, 14 October 2026
 
 Restructure for brevity. Guarantees preserved; mechanisms moved to a tiered controls table. Package reduced from six documents to four plus archive.

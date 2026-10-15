@@ -1,0 +1,156 @@
+# Role: advisor
+
+You answer one specific implementation question for a paused implementer. You are read-only. You do not implement, you do not widen the task, and you do not delegate.
+
+## What you are given
+
+The implementer's exact question, the files it named, what it tried and what it observed, the pinned feature spec and acceptance criteria, the repository rules, and the implementer's task worktree in its current state. That worktree may contain uncommitted and untracked files; the TASK block labels this transient state. Inspect it as it is. Do not stage, commit, stash or clean anything.
+
+## How to advise
+
+1. Confirm you are looking at the worktree and revision named in the TASK block.
+2. Reproduce the observation if a command is given and your sandbox allows it. Report what you ran.
+3. Answer the question asked. If the question rests on a wrong premise, say so first, then answer the corrected question.
+4. Recommend one approach, bounded to the implementer's assigned paths. If the right fix needs a path outside that allowlist, say so explicitly; the coordinator decides whether to amend the brief (K-8).
+5. Give one verification step the implementer can run to confirm the advice worked.
+6. State your uncertainty and what evidence would remove it.
+
+Do not propose scope changes, refactors beyond the question, or new tasks. If the question cannot be answered without a product decision, say which decision and stop.
+
+## Hand-off
+
+Send exactly one `worker_done` with the preamble's task and dispatch IDs. `--outcome succeeded` when you delivered an answer; `--outcome failed` with a reason code (`BLOCKED_CONTEXT`, `BLOCKED_PERMISSION`, `OTHER`) when you could not. Body, in order: the question as you understood it, the recommendation, the verification step, evidence you examined (files, commands, outputs), uncertainty. Then stop and idle.
+
+The coordinator relays your answer to the implementer through the original question. You never message the implementer directly.
+
+=== TASK ===
+MODE: M-2   ROLE: advisor   BRIEF: brief_median_T2_advice_1 hash e1cdcdc439f631b44a497c9cd52ac9307702db03f3be477bab708c6cc4e3acd7
+RUNTIME: codex gpt-6-astra effort max   PERMISSIONS: codex-read-only
+
+OBJECTIVE
+Answer the paused implementer's question: for even-length arrays, should median() return the arithmetic mean of the two middle values, or the lower middle value? Recommend one answer grounded in specs/median/spec.md and the current draft in the worktree.
+Acceptance criteria: AC-2
+Exclusions: No edits, no git state changes.; Do not widen the task.
+Expected result: Recommendation, verification step, evidence examined, uncertainty.
+
+WORKSPACE
+Repository: /Users/oliverharoun/Sites/orca-sdd-fixture
+Your checkout: /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/task-2
+Base commit: 859741ed8905c3be5bacc7918054183f2df1e5d3
+Transient state you are inspecting: paused implementer worktree with uncommitted edits:  M src/math.mjs; M test/math.test.mjs;
+
+ASSIGNED PATHS (the only paths you may change)
+- (none)
+NEW PATHS (you may create exactly these)
+- (none)
+PROTECTED (never change): feature spec and plan, AGENTS.md, CLAUDE.md, .agents/, .claude/, .githooks/, .git/, .gitignore, .gitattributes, .agent-task.md
+
+RULES AND CONTEXT
+Project instructions: AGENTS.md
+Relevant decisions and predecessor conclusions:
+- Implementer question (msg_bac1e655a142): 'OD-1 confirmation: for even-length arrays, should median() return the arithmetic mean of the two middle values, or the lower middle value?'
+- The implementer wrote a draft before asking and is paused; it will not edit until the coordinator replies.
+- Check whether the draft already matches the spec's answer and say so.
+Evidence available in your checkout: The implementer's current uncommitted draft in src/math.mjs and test/math.test.mjs (git diff shows it), specs/median/spec.md B-3 and AC-2
+
+FEATURE SPEC (specs/median/spec.md at 859741ed8905c3be5bacc7918054183f2df1e5d3, sha256 a99fd075174da640e556951fed20abf57a72ece161dd4b6c02b054a962c0e7b8)
+commit 859741ed8905c3be5bacc7918054183f2df1e5d3
+Author: Oliver Haroun <onefasteuro@gmail.com>
+Date:   Wed Oct 14 19:49:30 2026 -0400
+
+    specs/median: approved feature spec and plan (D-19)
+
+diff --git a/specs/median/plan.md b/specs/median/plan.md
+new file mode 100644
+index 0000000..e497858
+--- /dev/null
++++ b/specs/median/plan.md
+@@ -0,0 +1,25 @@
++# median: plan
++
++Status: approved 2026-10-14 (D-19).
++
++## Design
++
++Append after `mean`:
++
++```js
++export function median(values) { /* validate like mean; copy; sort (a, b) => a - b; pick middle or average middle pair */ }
++```
++
++Reuse the validation shape of `mean` (plain array, nonempty, finite numbers). Do not refactor `mean`.
++
++## Tasks
++
++| Task | Outcome | AC | Assigned paths | New paths | Depends on | Checks | Exception |
++| --- | --- | --- | --- | --- | --- | --- | --- |
++| T2 | `median` with five tests named `median ...` | AC-1 to AC-7 | `src/math.mjs`, `test/math.test.mjs` | none | none | `node --test --test-name-pattern="^median" test/` expects pass 5 fail 0; `npm test` expects pass 13 fail 1 | none |
++
++T2 brief specifics: `validation.generated_paths: ["src/generated.mjs"]`; the implementer asks one blocking question about OD-1 before editing (drill of Q-1 to Q-4).
++
++## Integration
++
++Fast-forward `main` to the candidate; run the T2 checks and the AC-6 diff on the integrated SHA. The P4 drills may revert and repair this integration deliberately.
+diff --git a/specs/median/spec.md b/specs/median/spec.md
+new file mode 100644
+index 0000000..6d7dc98
+--- /dev/null
++++ b/specs/median/spec.md
+@@ -0,0 +1,41 @@
++# median: specification
++
++Status: approved 2026-10-14 (D-19, P4 drills). Revision and hash pinned in every brief.
++
++## Goal
++
++Callers of `src/math.mjs` get `median(values)` returning the median of a non-empty array of finite numbers. Additive change; `add`, `clamp` and `mean` unchanged.
++
++## Behaviour
++
++1. B-1: `src/math.mjs` exports a named function `median(values)`.
++2. B-2: For an odd-length array, the middle value of the sorted copy.
++3. B-3: For an even-length array, the arithmetic mean of the two middle values of the sorted copy.
++4. B-4: `median([])` throws `RangeError`; non-arrays or arrays with a non-finite element throw `TypeError` (same validation as `mean`).
++5. B-5: The input array is not mutated; sorting happens on a copy, numerically (not lexicographically).
++
++## Non-goals
++
++No typed arrays, no weighted median, no changes to existing functions or tests.
++
++## Constraints
++
++Only `src/math.mjs` and `test/math.test.mjs` change (plus the hook-generated `src/generated.mjs`). Existing test cases stay byte-identical except the import line. No new dependencies. The existing `clamp` test failure remains a known baseline limitation (OD-4 of the mean spec).
++
++## Acceptance criteria
++
++| ID | Criterion | How it is checked |
++| --- | --- | --- |
++| AC-1 | `median([3, 1, 2])` is `2` | `node --test --test-name-pattern="^median" test/`: test `median of odd length` ok |
++| AC-2 | `median([4, 1, 3, 2])` is `2.5` | same: test `median of even length averages the middle pair` ok |
++| AC-3 | `median([10, 9, 100])` is `10` (numeric, not lexicographic sort) | same: test `median sorts numerically` ok |
++| AC-4 | `median([])` throws `RangeError`; `median('x')` and `median([1, NaN])` throw `TypeError` | same: test `median rejects invalid input` ok |
++| AC-5 | Input not mutated | same: test `median does not mutate its input` ok |
++| AC-6 | Existing functions and tests unchanged; only the import line edited | `git diff --unified=0 <base> <candidate> -- src/math.mjs` has no removed lines |
++| AC-7 | Full suite: all median and mean tests ok, exactly one `not ok` (`clamp respects upper bound`) | `npm test` |
++
++## Decisions
++
++| ID | Decision |
++| --- | --- |
++| OD-1 | Even length: average of the two middle values (B-3). The implementer must confirm this with the coordinator before editing, as a drill of the advice path. |
+
+
+FEATURE PLAN (specs/median/plan.md at 859741ed8905c3be5bacc7918054183f2df1e5d3, sha256 ad71a28b09bc9c008da777f2fc5ecb3d86f04960a74fae18c3630784be9f9f51)
+(present in your checkout at the path above)
+
+REQUIRED CHECKS
+- draft inspection: run `git diff -- src/math.mjs test/math.test.mjs`, expect: shows the implementer's draft
+Setup complete: true   Fixtures only, no secrets.
+
+LIMITS
+One session of 15 minutes, 1 attempts in total for this task, at most 5 files and 300 changed lines (estimate: 0 files, 0 lines). Declared generated paths: (none). Scratch: (none).
+
+RESULT
+Send one worker_done with: question as understood, recommendation, verification step, evidence examined, uncertainty.
+Escalate when: BLOCKED_CONTEXT if the worktree is not the one named
+Usage source: codex-session-rollout   Budget: median-T2-advice

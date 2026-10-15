@@ -16,6 +16,12 @@ export function decideLiveness({ projection, role, now, lastProgressAt, pendingQ
     return { action: 'wait', reason: 'question pending; liveness clock paused (K-14)', ask_age_seconds: Math.round(askAge / 1000) };
   }
   if (verdict === 'exited') return { action: 'stop', reason: 'worker exited without worker_done' };
+  // Observed 14 October 2026: an agent that finished its turn without reporting
+  // stays "live" (agent_status) with stage.activity "done" and outcome
+  // "in_progress". That combination is a stall regardless of elapsed time.
+  if (projection?.stage?.activity === 'done' && (projection?.outcome === 'in_progress' || projection?.stage?.dispatch === 'dispatched')) {
+    return { action: 'inspect', reason: 'agent turn finished (stage.activity done) but the dispatch has no terminal result: inspect with worker-read, then stop per K-15' };
+  }
   const silence = progressMs != null ? nowMs - progressMs : null;
   if (verdict === 'live') {
     if (silence != null && silence > interval) return { action: 'inspect', reason: `live but silent for ${Math.round(silence / 60000)} min, over the ${interval / 60000} min interval` };

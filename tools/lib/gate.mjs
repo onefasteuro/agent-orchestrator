@@ -4,6 +4,7 @@
 // only: it never modifies the checkout.
 
 import { readFileSync } from 'node:fs';
+import { resolve as resolvePath } from 'node:path';
 import { briefHash, hashBytes, hashObject } from './canonical.mjs';
 import { diffNameStatus, diffRaw, numstat, workingState, readAtRevision, resolveCommit, git, assertWorktreeOf, metadataDrift } from './git.mjs';
 import { DEFAULT_PROTECTED, normalizeRepoPath, isProtected, isAllowed } from './paths.mjs';
@@ -32,6 +33,14 @@ function classify(path, kind, allow) {
   if (kind === 'A' && isAllowed(path, allow.assigned)) return { cls: 'assigned', ok: true }; // allowed dir rule
   if (kind !== 'A' && isAllowed(path, allow.created)) return { cls: 'created', ok: true };
   return { cls: 'undeclared', ok: false };
+}
+
+// Baseline of the shared Git metadata, recorded at worktree setup (K-17).
+export function metadataBaseline(repo) {
+  const common = git(repo, ['rev-parse', '--git-common-dir']).trim();
+  const dir = resolvePath(repo, common);
+  const h = (f) => { try { return hashBytes(readFileSync(resolvePath(dir, f))); } catch { return null; } };
+  return { config_sha256: h('config'), info_attributes_sha256: h('info/attributes') };
 }
 
 // Inspect base..candidate (committed) or base..working tree (handoff).
