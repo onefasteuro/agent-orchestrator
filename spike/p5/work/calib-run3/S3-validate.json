@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "errors": [],
+  "stage": "passed",
+  "identities": {
+    "brief_id": "brief_pilot_calib_S3_p1",
+    "brief_hash": "a8b3984e1da00a261df2959758b2966c2cca6bf0043549758ba410b1bcdbadba",
+    "serialization": "cjson-1",
+    "role": "reviewer",
+    "base_sha": "1c6397c740d9b64fab471a40f493c6f6acd10bcc",
+    "candidate_sha": "e38b0f9eb06c9bd4bb029ff75deab9f97d083960",
+    "feature_spec": {
+      "revision": "1c6397c740d9b64fab471a40f493c6f6acd10bcc",
+      "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+    },
+    "feature_plan": {
+      "revision": "1c6397c740d9b64fab471a40f493c6f6acd10bcc",
+      "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+    },
+    "role_pack_hash": "7ea4e5b445b5b8241df6b7ae332687d85243234d7e3a912da9bf5afe111ce919"
+  }
+}

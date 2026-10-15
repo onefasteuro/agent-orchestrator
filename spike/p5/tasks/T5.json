@@ -1,0 +1,37 @@
+{
+ "id": "T5",
+ "outcome": "clamp(value, min, max) applies the upper bound: clamp(15, 0, 10) is 10.",
+ "ac_ids": [
+  "AC-5",
+  "AC-11"
+ ],
+ "assigned": [
+  "src/math.mjs"
+ ],
+ "new": [],
+ "prefix": "clamp",
+ "checks": [
+  {
+   "name": "clamp tests",
+   "command": "node --test --test-name-pattern=\"^clamp\" test/",
+   "expected": "pass 2, fail 0"
+  }
+ ],
+ "full_expect": "pass 31 fail 0",
+ "ask": false,
+ "ask_question": "",
+ "ask_answer": "",
+ "conclusions": [
+  "Edit ONLY the clamp function in src/math.mjs: add the upper-bound branch and remove the comment that says the defect is deliberate. Do not touch tests; the existing test 'clamp respects upper bound' must pass unchanged.",
+  "This change removes one line (the deliberate-defect comment) and adds one; that is allowed for this task."
+ ],
+ "estimate": {
+  "files": 1,
+  "lines": 4
+ },
+ "clamp_fixed": true,
+ "exclusions": [
+  "Do not edit any test file.",
+  "Do not change any other function."
+ ]
+}

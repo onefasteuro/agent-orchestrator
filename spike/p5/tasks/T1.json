@@ -1,0 +1,41 @@
+{
+ "id": "T1",
+ "outcome": "src/math.mjs exports min(values) returning the smallest element.",
+ "ac_ids": [
+  "AC-1",
+  "AC-11"
+ ],
+ "assigned": [
+  "src/math.mjs",
+  "test/math.test.mjs"
+ ],
+ "new": [],
+ "prefix": "min",
+ "checks": [
+  {
+   "name": "min tests",
+   "command": "node --test --test-name-pattern=\"^min\" test/",
+   "expected": "pass 4, fail 0"
+  },
+  {
+   "name": "additive change",
+   "command": "git diff --unified=0 HEAD -- src/math.mjs",
+   "expected": "no removed lines"
+  }
+ ],
+ "full_expect": "pass 18 fail 1",
+ "ask": false,
+ "ask_question": "",
+ "ask_answer": "",
+ "conclusions": [
+  "Append the new function after the last existing function in src/math.mjs; do not reorder or edit existing functions.",
+  "Write EXACTLY the number of tests the check names, each test name starting with the function name, appended at the end of test/math.test.mjs; the only edit to an existing line is extending the import on line 3.",
+  "validation per R-1: plain array, nonempty, every element a finite number; TypeError for shape and element problems, RangeError for empty",
+  "Four tests: min of several values, min of a single element, invalid input throws (TypeError and RangeError), input not mutated."
+ ],
+ "estimate": {
+  "files": 2,
+  "lines": 60
+ },
+ "clamp_fixed": false
+}

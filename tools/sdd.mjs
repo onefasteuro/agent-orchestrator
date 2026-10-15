@@ -18,6 +18,9 @@
 //   sdd doc-identity --repo <checkout> --revision <sha> --path <file> [--baseline approved|draft]
 //   sdd spec-drift --log <events.jsonl> --repo <checkout> [--revision <sha>]   (K-5: briefs whose pinned document hashes differ from the current documents)
 //   sdd reconcile --log <events.jsonl> --checkout <integration> --workers <worker-list.json>   (R-2: index, log and live Orca state side by side)
+//   sdd integrate --repo <integration-checkout> --candidate <sha> --log <events.jsonl> --run <id> --task <id> --dispatch <id> --brief-hash <hex> --check '<shell command>' --expect '<substring that must appear in the check output>' [--message <text>] [--cites <dispatch ids, comma separated: every result that informed the acceptance>]
+//        merges (fast-forward when possible, else a single merge), runs the check, and ONLY THEN appends acceptance_recorded;
+//        a failed check reverts the integration commit and appends integration_reverted; exit 1
 //   sdd pack-hash --dir <pack>
 //   sdd brief-render --brief <brief.json> --role-file <roles/x.md> [--spec-excerpt <file>] [--plan-excerpt <file>] [--out <prompt.txt>]
 //   sdd fake-worker --scenario <name> --repo <checkout> --brief <brief.json> --task <id> --dispatch <id> [--audit <file>]
@@ -168,6 +171,33 @@ try {
       for (const d of (idx?.orca?.dispatches || [])) if (!rows.some((r) => r.dispatch_id === d.dispatch_id)) findings.push(`recovery index names dispatch ${d.dispatch_id} that Orca does not list`);
       out({ ok: findings.length === 0, index: idx ? { run_id: idx.orca?.run_id, accepted_sha: idx.accepted_sha, next_action: idx.next_action, dispatches: idx.orca?.dispatches } : null, live_dispatches: live, unresolved: u, findings, next: findings.length ? 'resolve every finding before dispatching anything new (R-2)' : 'state consistent; safe to continue' }, findings.length ? 1 : 0);
     }
+    case 'integrate': {
+      need(args, ['repo', 'candidate', 'log', 'run', 'task', 'dispatch', 'brief-hash', 'check', 'expect']);
+      const { execFileSync, execSync } = await import('node:child_process');
+      const { resolveCommit } = await import('./lib/git.mjs');
+      const repo = args.repo;
+      const gitc = (...a) => execFileSync('git', ['-C', repo, '-c', 'user.name=sdd-coordinator', '-c', 'user.email=sdd-coordinator@local', '-c', 'core.hooksPath=/dev/null', ...a], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
+      const cand = resolveCommit(repo, args.candidate);
+      if (!cand) out({ ok: false, error: 'candidate does not resolve' }, 2);
+      if (gitc('status', '--porcelain')) out({ ok: false, error: 'integration checkout is dirty' }, 2);
+      const before = gitc('rev-parse', 'HEAD');
+      let mode;
+      try { gitc('merge', '--ff-only', cand); mode = 'fast-forward'; } catch { gitc('merge', '--no-ff', '-m', args.message || `Integrate candidate ${cand}`, cand); mode = 'merge'; }
+      const integrated = gitc('rev-parse', 'HEAD');
+      let output = '', passed = false;
+      try { output = execSync(args.check, { cwd: repo, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }); } catch (e) { output = String(e.stdout || '') + String(e.stderr || ''); }
+      passed = output.includes(args.expect);
+      if (passed) {
+        const cites = args.cites ? String(args.cites).split(',').filter(Boolean) : [];
+        const rec = append(args.log, { event_type: 'acceptance_recorded', run_id: args.run, task_id: args.task, dispatch_id: args.dispatch, brief_hash: args['brief-hash'], base_before_integration: before, candidate_sha: cand, integrated_sha: integrated, integration: mode, cites, check: { command: args.check, expect: args.expect, passed: true, output_tail: output.slice(-400) } });
+        out({ ok: true, integrated_sha: integrated, integration: mode, sequence: rec.sequence });
+      }
+      // failed: revert the integration and record it; the Git effect precedes the event
+      if (mode === 'fast-forward') gitc('reset', '--hard', before); else gitc('revert', '-m', '1', '--no-edit', integrated);
+      const after = gitc('rev-parse', 'HEAD');
+      const rec = append(args.log, { event_type: 'integration_reverted', run_id: args.run, task_id: args.task, dispatch_id: args.dispatch, brief_hash: args['brief-hash'], candidate_sha: cand, integration_sha: integrated, revert_sha: after, reverted_by: mode === 'fast-forward' ? 'reset to the pre-integration SHA (no merge commit existed)' : 'git revert -m 1', check: { command: args.check, expect: args.expect, passed: false, output_tail: output.slice(-600) } });
+      out({ ok: false, integrated_sha: integrated, reverted_to: after, integration: mode, sequence: rec.sequence, check_output_tail: output.slice(-600) }, 1);
+    }
     case 'pack-hash': { need(args, ['dir']); out({ ok: true, ...packHash(args.dir) }); }
     case 'brief-render': {
       need(args, ['brief', 'role-file']);
@@ -182,7 +212,7 @@ try {
       out({ ok: true, ...runScenario(args.scenario, { repo: args.repo, brief: loadBrief(args.brief), task_id: args.task, dispatch_id: args.dispatch, auditFile: args.audit || null }) });
     }
     default:
-      out({ ok: false, error: `unknown command ${cmd || '(none)'}`, commands: ['brief-validate', 'gate', 'audit-append', 'audit-verify', 'audit-segment', 'audit-classify', 'usage-codex', 'usage-pi', 'usage-coverage', 'liveness', 'recovery-write', 'recovery-read', 'doc-identity', 'spec-drift', 'reconcile', 'pack-hash', 'brief-render', 'metadata-baseline', 'fake-worker'] }, 2);
+      out({ ok: false, error: `unknown command ${cmd || '(none)'}`, commands: ['brief-validate', 'gate', 'audit-append', 'audit-verify', 'audit-segment', 'audit-classify', 'usage-codex', 'usage-pi', 'usage-coverage', 'liveness', 'recovery-write', 'recovery-read', 'doc-identity', 'spec-drift', 'reconcile', 'integrate', 'pack-hash', 'brief-render', 'metadata-baseline', 'fake-worker'] }, 2);
   }
 } catch (err) {
   out({ ok: false, error: String(err.message || err) }, 2);

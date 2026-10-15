@@ -1,0 +1,123 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_pilot_T4_review_p2",
+  "role": "reviewer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "Pass-2 review reconciling your persisted pass-1 findings with the supplied evidence of candidate 174858dbc3d6 for task T4 (src/math.mjs exports product(values) returning the product of all elements.) against specs/pilot/spec.md AC-4, AC-11 and shared rules R-1 to R-5.",
+  "ac_ids": [
+   "AC-4",
+   "AC-11"
+  ],
+  "exclusions": [
+   "No edits.",
+   "Do not retract a pass-1 finding because the implementer says it is fine."
+  ],
+  "expected_result": "VERDICT line first, then per-criterion verdicts with file and line, findings with severity and verification step, checks run with result lines."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/pilot/spec.md",
+   "baseline": "approved",
+   "revision": "9a03465ff5595546d1b261a7494b4c82651370cd",
+   "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+  },
+  "feature_plan": {
+   "path": "specs/pilot/plan.md",
+   "baseline": "approved",
+   "revision": "9a03465ff5595546d1b261a7494b4c82651370cd",
+   "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+  },
+  "role_pack_hash": "a54a3e8cff7c4c34bb087af861c335ee1c8d9ecadcb6a767b585402a35e72987",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "git diff 9a03465ff559..174858dbc3d6 (run it yourself; read-only git commands are permitted)",
+   "Your own pass-1 report (persisted as review_pass_one_recorded): VERDICT: ACCEPT\nI completed independent pass 1 at verified HEAD 174858dbc3d651358c767dc4b15ef72ab29f6970, reading the full base-to-candidate diff, touched files and tests; AC-4 satisfied (src/math.mjs:117-129 and test/math.test.mjs:169-195); AC-11 satisfied for this candidate (package.json:7 and test/math.test.mjs:13-14, observed pass 30 / fail 1); R-1 satisfied (src/math.mjs:118-127 validates shape, empty array and finite elements like mean); R-2 satisfied (src/math.mjs:129 reads without mutation, test/math.test.mjs:190-195 verifies it); R-3 satisfied (base-to-candidate diff preserves src/math.mjs:1-114 and all existing tests except permitted import test/math.test.mjs:3); R-4 satisfied (package.json unchanged, no dependencies added, only declared generated timestamp src/generated.mjs:1); R-5 satisfied (test/math.test.mjs:169,174,178,190 all use product prefix).\nFindings: none; automated checks actually run: node --test --test-name-pattern=\"^product\" test/ exited 0 with result lines \"tests 4\", \"pass 4\", \"fail 0\"; git diff --unified=0 HEAD -- src/math.mjs exited 0 with empty output; supplementary base-to-candidate zero-context math diff exited 0 with 16 additions and no removals; npm test exited 1 with result lines \"tests 31\", \"pass 30\", \"fail 1\", and sole failure \"clamp respects upper bound\" at test/math.test.mjs:14 reporting 15 !== 10, the explicitly expected unchanged defect.\nNothing remains for this review; all required checks ran, no files were changed, no withheld narrative was consulted, and uncertainty is limited to any future integration SHA, which was not available for evaluation."
+  ],
+  "predecessor_conclusions": [
+   "Clamp: 'clamp respects upper bound' fails by design until task T5; not a finding unless the candidate changed clamp.",
+   "src/generated.mjs is hook-generated and declared; not an implementer change.",
+   "Your worker_done body MUST start with exactly one of these lines: 'VERDICT: ACCEPT' (no findings, or only low findings the coordinator may accept) or 'VERDICT: REPAIR' (at least one medium or higher finding). Then the per-criterion verdicts, findings, checks run, uncertainty.",
+   "Implementer self-report: Added product(values) to src/math.mjs (appended after the last existing function, R-1 validation: TypeError for shape/element problems, RangeError for empty) and appended exactly four product tests to test/math.test.mjs, extending the import on line 3 only. Required checks passed: 'node --test --test-name-pattern=\"^product\" test/' reported pass 4, fail 0; 'git diff --unified=0 HEAD -- src/math.mjs' showed only added lines (no removed lines). Remaining uncertainty: full 'npm test' shows tests 31, pass 30, fail 1, the expected known baseline failure 'clamp respects upper bound' that fails by design until T5; no other failures, and no questions were asked. (filesModified payload: ['test/math.test.mjs']; the Git-computed receipt is authoritative)",
+   "Gate receipt on the candidate: changed [[\"M\", \"src/generated.mjs\", [\"generated\"]], [\"M\", \"src/math.mjs\", [\"assigned\"]], [\"M\", \"test/math.test.mjs\", [\"assigned\"]]]; size {\"files\": 2, \"lines\": 46, \"within\": true}; clean after commit; pinned document hashes match.",
+   "Coordinator checks on the candidate: task tests pass 4 fail 0; full suite pass 30 fail 1."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T4",
+  "base_sha": "9a03465ff5595546d1b261a7494b4c82651370cd",
+  "candidate_sha": "174858dbc3d651358c767dc4b15ef72ab29f6970",
+  "dirty_state": null,
+  "assigned_paths": [],
+  "new_paths": [],
+  "protected_paths": []
+ },
+ "execution": {
+  "runtime": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "permission_recipe": "codex-read-only",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 30,
+   "attempts": 1,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "product tests",
+    "command": "node --test --test-name-pattern=\"^product\" test/",
+    "expected": "pass 4, fail 0"
+   },
+   {
+    "name": "additive change",
+    "command": "git diff --unified=0 HEAD -- src/math.mjs",
+    "expected": "no removed lines"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "pass 30 fail 1"
+   }
+  ],
+  "estimate": {
+   "files": 0,
+   "lines": 0
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "VERDICT line",
+   "candidate SHA inspected",
+   "pass number",
+   "per-criterion verdicts",
+   "findings",
+   "checks run",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (worker_done once)",
+  "usage_source": "codex-session-rollout",
+  "budget_ref": "pilot-T4-review",
+  "escalation_rule": "BLOCKED_CONTEXT if HEAD is not the candidate SHA",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl",
+  "pass": 2
+ }
+}

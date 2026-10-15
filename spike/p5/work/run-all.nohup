@@ -1,0 +1,96 @@
+=== 12:22:37Z ./run-calibration.sh S1 range AC-3
+[calib S1] VERDICT: REPAIR (2026-10-15T12:24:58Z)
+=== 12:25:04Z ./run-calibration.sh C1 min AC-1
+[calib C1] VERDICT: ACCEPT (2026-10-15T12:27:12Z)
+=== 12:27:17Z ./run-task.sh tasks/T2.json
+[T2] base 1a76f44ba4d1296d03cc29e405eb29b16615ec2e
+  dispatched brief_pilot_T2_a1 as ctx_7c2801936a2d
+  restart drill: ["dispatch ctx_7c2801936a2d started with no result: still live, keep waiting", "dispatch ctx_4280152a868f has a result awaiting acceptance or rejection", "dispatch ctx_1c64e9b775d2 has a result awaiting acceptance or rejection"]
+  dispatched brief_pilot_T2_review_p1 as ctx_99117ffb374e
+  dispatched brief_pilot_T2_review_p2 as ctx_0d15713d5778
+  final review: VERDICT: ACCEPT
+  integrated 7188ca07150f (fast-forward)
+[T2] DONE 12:30:24Z
+=== 12:30:24Z ./run-task.sh tasks/T3.json
+[T3] base 7188ca07150f971c73392d0a00d656676acf854a
+  dispatched brief_pilot_T3_a1 as ctx_8a1494b12a3f
+  dispatched brief_pilot_T3_review_p1 as ctx_6ed3f39d2111
+  dispatched brief_pilot_T3_review_p2 as ctx_31c278d40f4d
+  final review: VERDICT: ACCEPT
+  integrated 9a03465ff559 (fast-forward)
+[T3] DONE 12:34:43Z
+=== 12:34:43Z ./run-task.sh tasks/T4.json
+[T4] base 9a03465ff5595546d1b261a7494b4c82651370cd
+  dispatched brief_pilot_T4_a1 as ctx_476dd18752ba
+  dispatched brief_pilot_T4_review_p1 as ctx_d7d6a8631830
+  dispatched brief_pilot_T4_review_p2 as ctx_5368862ca65e
+  final review: VERDICT: ACCEPT
+  integrated 174858dbc3d6 (fast-forward)
+[T4] DONE 12:38:08Z
+=== 12:38:08Z ./run-task.sh tasks/T5.json
+[T5] base 174858dbc3d651358c767dc4b15ef72ab29f6970
+  dispatched brief_pilot_T5_a1 as ctx_2b7c47df556c
+  dispatched brief_pilot_T5_review_p1 as ctx_a888b258137a
+  dispatched brief_pilot_T5_review_p2 as ctx_0de04b10bb0d
+  final review: VERDICT: ACCEPT
+  integrated 4fbe1e0f9742 (fast-forward)
+[T5] DONE 12:40:56Z
+=== 12:40:56Z ./run-calibration.sh S2 min AC-1
+[calib S2] VERDICT: REPAIR (2026-10-15T12:43:03Z)
+=== 12:43:08Z ./run-calibration.sh C2 max AC-2
+[calib C2] VERDICT: ACCEPT (2026-10-15T12:45:16Z)
+=== 12:45:21Z ./run-calibration.sh S3 product AC-4
+[calib S3] VERDICT: REPAIR (2026-10-15T12:47:25Z)
+=== 12:47:31Z ./run-task.sh tasks/T6.json
+[T6] base 4fbe1e0f9742839cf3263aaf482650366ec88c7e
+  dispatched brief_pilot_T6_a1 as ctx_acd61b012904
+  restart drill: ["dispatch ctx_acd61b012904 started with no result: still live, keep waiting", "dispatch ctx_4280152a868f has a result awaiting acceptance or rejection", "dispatch ctx_1c64e9b775d2 has a result awaiting acceptance or rejection", "dispatch ctx_99117ffb374e has a result awaiting acceptance or rejection", "dispatch ctx_0d15713d5778 has a result awaiting acceptance or rejection", "dispatch ctx_6ed3f39d2111 has a result awaiting acceptance or rejection", "dispatch ctx_31c278d40f4d has a result awaiting acceptance or rejection", "dispatch ctx_d7d6a8631830 has a result awaiting acceptance or rejection", "dispatch ctx_5368862ca65e has a result awaiting acceptance or rejection", "dispatch ctx_a888b258137a has a result awaiting acceptance or rejection", "dispatch ctx_0de04b10bb0d has a result awaiting acceptance or rejection"]
+  dispatched brief_pilot_T6_review_p1 as ctx_29087dc8b141
+  dispatched brief_pilot_T6_review_p2 as ctx_7f5eb74c0636
+  final review: VERDICT: ACCEPT
+  integrated e6c17439eff7 (fast-forward)
+[T6] DONE 12:50:42Z
+=== 12:50:42Z ./run-task.sh tasks/T7.json
+[T7] base e6c17439eff73702d3ca17cbdcd10ee15f584a13
+  dispatched brief_pilot_T7_a1 as ctx_2c26b0a0ef10
+  dispatched brief_pilot_T7_review_p1 as ctx_1dd2aabdc886
+  dispatched brief_pilot_T7_review_p2 as ctx_79b255710875
+  final review: VERDICT: ACCEPT
+  integrated 04b48980749a (fast-forward)
+[T7] DONE 12:55:44Z
+=== 12:55:44Z ./run-calibration.sh S4 product AC-4
+[calib S4] VERDICT: REPAIR (2026-10-15T12:57:45Z)
+=== 12:57:51Z ./run-calibration.sh C3 range AC-3
+[calib C3] VERDICT: REPAIR (2026-10-15T13:00:05Z)
+=== 13:00:10Z ./run-task.sh tasks/T8.json
+[T8] base 04b48980749af3c596dbe1b630a7d82eb5d0e6d5
+  dispatched brief_pilot_T8_a1 as ctx_3ee58b31e820
+  dispatched brief_pilot_T8_review_p1 as ctx_e7a88c99bd07
+  dispatched brief_pilot_T8_review_p2 as ctx_188a8bcdb7ab
+  final review: VERDICT: ACCEPT
+  integrated db6bf72ce95f (fast-forward)
+[T8] DONE 13:22:01Z
+=== 13:22:01Z ./run-task.sh tasks/T9.json
+[T9] base db6bf72ce95f7eaca9ff5e66f384c694b80e6f56
+  dispatched brief_pilot_T9_a1 as ctx_35f7df0a09c5
+  restart drill: ["dispatch ctx_35f7df0a09c5 started with no result: still live, keep waiting", "dispatch ctx_4280152a868f has a result awaiting acceptance or rejection", "dispatch ctx_1c64e9b775d2 has a result awaiting acceptance or rejection", "dispatch ctx_99117ffb374e has a result awaiting acceptance or rejection", "dispatch ctx_0d15713d5778 has a result awaiting acceptance or rejection", "dispatch ctx_6ed3f39d2111 has a result awaiting acceptance or rejection", "dispatch ctx_31c278d40f4d has a result awaiting acceptance or rejection", "dispatch ctx_d7d6a8631830 has a result awaiting acceptance or rejection", "dispatch ctx_5368862ca65e has a result awaiting acceptance or rejection", "dispatch ctx_a888b258137a has a result awaiting acceptance or rejection", "dispatch ctx_0de04b10bb0d has a result awaiting acceptance or rejection", "dispatch ctx_29087dc8b141 has a result awaiting acceptance or rejection", "dispatch ctx_7f5eb74c0636 has a result awaiting acceptance or rejection", "dispatch ctx_1dd2aabdc886 has a result awaiting acceptance or rejection", "dispatch ctx_79b255710875 has a result awaiting acceptance or rejection", "dispatch ctx_e7a88c99bd07 has a result awaiting acceptance or rejection", "dispatch ctx_188a8bcdb7ab has a result awaiting acceptance or rejection"]
+  dispatched brief_pilot_T9_review_p1 as ctx_2a409148df63
+  dispatched brief_pilot_T9_review_p2 as ctx_babc4b79d11d
+  final review: VERDICT: ACCEPT
+  integrated cec39f7aea42 (fast-forward)
+[T9] DONE 13:41:57Z
+=== 13:41:57Z ./run-calibration.sh S5 max AC-2
+[calib S5] VERDICT: REPAIR (2026-10-15T13:44:13Z)
+=== 13:44:19Z ./run-calibration.sh C4 product AC-4
+[calib C4] VERDICT: REPAIR (2026-10-15T13:46:41Z)
+=== 13:46:47Z ./run-calibration.sh C5 count AC-1
+[calib C5] VERDICT: REPAIR (2026-10-15T13:48:48Z)
+=== 13:48:54Z ./run-task.sh tasks/T10.json
+[T10] base cec39f7aea42fe9a3d3108674f94ba27212f5870
+  dispatched brief_pilot_T10_a1 as ctx_435f077a61f4
+  dispatched brief_pilot_T10_review_p1 as ctx_8c7807eeec8e
+  dispatched brief_pilot_T10_review_p2 as ctx_529213121578
+  final review: VERDICT: ACCEPT
+  integrated d6687b322bbd (fast-forward)
+[T10] DONE 13:52:34Z
+=== 13:52:34Z ALL DONE

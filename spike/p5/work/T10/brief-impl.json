@@ -1,0 +1,115 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_pilot_T10_a1",
+  "role": "implementer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "src/index.mjs re-exports every public function of src/math.mjs and a test proves the barrel exposes them all.",
+  "ac_ids": [
+   "AC-10",
+   "AC-11"
+  ],
+  "exclusions": [
+   "Do not edit src/math.mjs."
+  ],
+  "expected_result": "A handoff where index tests: pass 1, fail 0."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/pilot/spec.md",
+   "baseline": "approved",
+   "revision": "cec39f7aea42fe9a3d3108674f94ba27212f5870",
+   "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+  },
+  "feature_plan": {
+   "path": "specs/pilot/plan.md",
+   "baseline": "approved",
+   "revision": "cec39f7aea42fe9a3d3108674f94ba27212f5870",
+   "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+  },
+  "role_pack_hash": "1055575776b821df5a692ee1084f1be3aa62a51d55e944779c70b85b94e839b8",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "specs/pilot/spec.md (shared rules R-1 to R-5, acceptance criteria)",
+   "src/math.mjs (mean shows the validation shape)"
+  ],
+  "predecessor_conclusions": [
+   "Create src/index.mjs containing exactly: export * from './math.mjs';",
+   "Append EXACTLY one test named with the prefix 'index' at the end of test/math.test.mjs that imports * as stats from '../src/index.mjs' and asserts typeof is 'function' for add, clamp, mean, median, sum, min, max, range, product, variance, stddev. Do not change the existing import line unless needed.",
+   "Do not edit src/math.mjs.",
+   "The full suite must have 0 failures.",
+   "The existing test 'clamp respects upper bound' has been fixed; the full suite must have 0 failures.",
+   "src/generated.mjs is written by the pre-commit hook during the coordinator's commit; never create or edit it."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T10",
+  "base_sha": "cec39f7aea42fe9a3d3108674f94ba27212f5870",
+  "candidate_sha": null,
+  "dirty_state": null,
+  "assigned_paths": [
+   "test/math.test.mjs"
+  ],
+  "new_paths": [
+   "src/index.mjs"
+  ],
+  "protected_paths": [
+   "scripts/",
+   "package.json"
+  ]
+ },
+ "execution": {
+  "runtime": "pi",
+  "model": "ollama-cloud/deepseek-v4.1-flash",
+  "effort": "high",
+  "permission_recipe": "pi-terminal-attach",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 90,
+   "attempts": 3,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "index tests",
+    "command": "node --test --test-name-pattern=\"^index\" test/",
+    "expected": "pass 1, fail 0"
+   }
+  ],
+  "estimate": {
+   "files": 2,
+   "lines": 20
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "changed paths as git status shows them",
+   "each required check with its result line",
+   "questions asked and answers received, with any timeout",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble",
+  "usage_source": "pi-status-bar",
+  "budget_ref": "pilot-T10",
+  "escalation_rule": "ask before any decision the brief does not settle, after two failed attempts at the same problem, or if a required path is outside your allowlist",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl"
+ }
+}

@@ -1,0 +1,118 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_pilot_T5_review_p2",
+  "role": "reviewer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "Pass-2 review reconciling your persisted pass-1 findings with the supplied evidence of candidate 4fbe1e0f9742 for task T5 (clamp(value, min, max) applies the upper bound: clamp(15, 0, 10) is 10.) against specs/pilot/spec.md AC-5, AC-11 and shared rules R-1 to R-5.",
+  "ac_ids": [
+   "AC-5",
+   "AC-11"
+  ],
+  "exclusions": [
+   "No edits.",
+   "Do not retract a pass-1 finding because the implementer says it is fine."
+  ],
+  "expected_result": "VERDICT line first, then per-criterion verdicts with file and line, findings with severity and verification step, checks run with result lines."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/pilot/spec.md",
+   "baseline": "approved",
+   "revision": "174858dbc3d651358c767dc4b15ef72ab29f6970",
+   "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+  },
+  "feature_plan": {
+   "path": "specs/pilot/plan.md",
+   "baseline": "approved",
+   "revision": "174858dbc3d651358c767dc4b15ef72ab29f6970",
+   "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+  },
+  "role_pack_hash": "aebaa5a81edb0069dd3f8fa0ae4daaf206925f3950bc55dba356e9d6a9a27c32",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "git diff 174858dbc3d6..4fbe1e0f9742 (run it yourself; read-only git commands are permitted)",
+   "Your own pass-1 report (persisted as review_pass_one_recorded): VERDICT: ACCEPT\nPass 1 independently reviewed candidate 4fbe1e0f9742839cf3263aaf482650366ec88c7e against base 174858dbc3d651358c767dc4b15ef72ab29f6970 after confirming HEAD, reading the complete diff, touched files and tests; AC-5 satisfied at src/math.mjs:6-8 and unchanged test/math.test.mjs:9-15; AC-11 satisfied at package.json:7 by the executed full suite.\nShared rules: R-1 satisfied as applicable (no new functions or validation changes, src/math.mjs:5); R-2 satisfied (no input writes, src/math.mjs:6-8); R-3 satisfied (complete diff changes only named clamp and declared generated timestamp, with test/math.test.mjs:1-195 byte-identical); R-4 satisfied (package.json:1-10 unchanged, no dependencies added, src/generated.mjs:1 declared); R-5 satisfied (clamp-prefixed tests at test/math.test.mjs:9 and :13); findings: none; checks run: node --test --test-name-pattern=\"^clamp\" test/ exited 0 with \"clamp respects lower bound\", \"clamp respects upper bound\", \"pass 2\", \"fail 0\", and npm test exited 0 with \"tests 31\", \"pass 31\", \"fail 0\".\nRemaining uncertainty: none for the assigned scope; working tree clean, no files modified, no withheld narratives accessed, and acceptance remains the coordinator decision."
+  ],
+  "predecessor_conclusions": [
+   "Clamp: fixed in T5; the full suite must have 0 failures.",
+   "src/generated.mjs is hook-generated and declared; not an implementer change.",
+   "Your worker_done body MUST start with exactly one of these lines: 'VERDICT: ACCEPT' (no findings, or only low findings the coordinator may accept) or 'VERDICT: REPAIR' (at least one medium or higher finding). Then the per-criterion verdicts, findings, checks run, uncertainty.",
+   "Implementer self-report: Changed src/math.mjs only (git status: ' M src/math.mjs'): clamp now applies the upper bound via a 'value > max' branch and the deliberate-defect comment is removed, touching just that function. Required check 'node --test --test-name-pattern=\"^clamp\" test/' reports 'pass 2, fail 0', and the full 'npm test' suite reports 'pass 31, fail 0'. No questions were asked (no timeout), no blockers remain; the only untested detail is that src/generated.mjs is absent because it is hook-generated at the coordinator's commit. (filesModified payload: ['src/math.mjs']; the Git-computed receipt is authoritative)",
+   "Gate receipt on the candidate: changed [[\"M\", \"src/generated.mjs\", [\"generated\"]], [\"M\", \"src/math.mjs\", [\"assigned\"]]]; size {\"files\": 1, \"lines\": 2, \"within\": true}; clean after commit; pinned document hashes match.",
+   "Coordinator checks on the candidate: task tests pass 2 fail 0; full suite pass 31 fail 0."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T5",
+  "base_sha": "174858dbc3d651358c767dc4b15ef72ab29f6970",
+  "candidate_sha": "4fbe1e0f9742839cf3263aaf482650366ec88c7e",
+  "dirty_state": null,
+  "assigned_paths": [],
+  "new_paths": [],
+  "protected_paths": []
+ },
+ "execution": {
+  "runtime": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "permission_recipe": "codex-read-only",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 30,
+   "attempts": 1,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "clamp tests",
+    "command": "node --test --test-name-pattern=\"^clamp\" test/",
+    "expected": "pass 2, fail 0"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "pass 31 fail 0"
+   }
+  ],
+  "estimate": {
+   "files": 0,
+   "lines": 0
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "VERDICT line",
+   "candidate SHA inspected",
+   "pass number",
+   "per-criterion verdicts",
+   "findings",
+   "checks run",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (worker_done once)",
+  "usage_source": "codex-session-rollout",
+  "budget_ref": "pilot-T5-review",
+  "escalation_rule": "BLOCKED_CONTEXT if HEAD is not the candidate SHA",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl",
+  "pass": 2
+ }
+}

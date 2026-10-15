@@ -1,0 +1,30 @@
+[T1] base 1c6397c740d9b64fab471a40f493c6f6acd10bcc
+  worktrees /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T1 and /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T1-2; metadata baseline recorded after both exist
+  event 109 brief_validated
+  event 110 dispatch_intent
+  event 111 dispatch_started
+  dispatched brief_pilot_T1_a1 as ctx_393a593356a3
+  event 112 result_received
+  event 113 usage_recorded
+  event 114 candidate_created
+  candidate 1a76f44ba4d1296d03cc29e405eb29b16615ec2e: 2 files 46 lines
+  checks: ℹ pass 4 ℹ fail 0 | full: ℹ pass 18 ℹ fail 1 
+STOP [T1] full suite on candidate: ℹ pass 18 ℹ fail 1  (expected pass 18 fail 1)
+[T1] base 1c6397c740d9b64fab471a40f493c6f6acd10bcc
+  resuming at review: candidate 1a76f44ba4d1296d03cc29e405eb29b16615ec2e, checks  pass 4 fail 0 | full:  pass 18 fail 1 
+b=agent-update-prompt
+  event 115 brief_validated
+  event 116 dispatch_intent
+  event 117 dispatch_started
+  dispatched brief_pilot_T1_review_p1 as ctx_4280152a868f
+  event 118 result_received
+  event 119 review_pass_one_recorded
+  event 120 brief_validated
+  event 121 dispatch_intent
+  event 122 dispatch_started
+  dispatched brief_pilot_T1_review_p2 as ctx_1c64e9b775d2
+  event 123 result_received
+  event 124 usage_recorded
+  final review: VERDICT: ACCEPT
+  integrated 1a76f44ba4d1 (fast-forward)
+[T1] DONE 12:21:01Z

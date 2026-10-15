@@ -1,0 +1,85 @@
+{
+  "id": "0fe1ee89-6ef4-4bfe-a374-99ffda1328b0",
+  "ok": true,
+  "result": {
+    "runId": "run_a78be37eff9a",
+    "taskId": "task_4c2ae546da68",
+    "dispatchId": "ctx_848e854269fb",
+    "state": "ready",
+    "stage": "input_accepted",
+    "turnStart": "observed",
+    "setup": {
+      "requested": "not_applicable",
+      "effective": "not_applicable",
+      "source": "existing_worktree",
+      "hookFound": false,
+      "startupPolicy": "start-immediately",
+      "state": "not_applicable"
+    },
+    "launch": {
+      "requested": {
+        "agent": null,
+        "model": null,
+        "effort": null
+      },
+      "effective": {
+        "agent": null,
+        "model": null,
+        "effort": null
+      }
+    },
+    "mode": {
+      "mode": "terminal",
+      "preferred": "terminal",
+      "reason": "user_default",
+      "detail": "Started a terminal agent worker, the default for new agent tabs in your settings."
+    },
+    "timeoutMs": 60000,
+    "effects": [
+      {
+        "kind": "worktree",
+        "action": "reused",
+        "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C1"
+      },
+      {
+        "kind": "setup",
+        "action": "not_applicable",
+        "state": "not_applicable"
+      },
+      {
+        "kind": "terminal",
+        "role": "agent",
+        "action": "reused",
+        "id": "term_c98384d8-5681-4b37-9529-63b9c05e2e36"
+      },
+      {
+        "kind": "dispatch_input",
+        "role": "agent",
+        "id": "term_c98384d8-5681-4b37-9529-63b9c05e2e36",
+        "state": "accepted"
+      }
+    ],
+    "prompt": {
+      "requestId": "ba9f2da3-1cc0-4b01-bbe8-a7f841b3ae7f",
+      "stages": [
+        "input_accepted",
+        "turn_started"
+      ],
+      "provider": "codex",
+      "observation": "supported",
+      "processIncarnation": "0dbe3ceb-2931-40dc-b7d4-b9cf0ee95ea8",
+      "generation": 29,
+      "baselineWorkingSequence": 1,
+      "baselineExplicitWorkingStartedAt": null,
+      "baselinePermissionSequence": 2
+    },
+    "residualResources": [],
+    "mutation": {
+      "requestId": "ba9f2da3-1cc0-4b01-bbe8-a7f841b3ae7f",
+      "replayed": false
+    }
+  },
+  "_meta": {
+    "runtimeId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be"
+  }
+}

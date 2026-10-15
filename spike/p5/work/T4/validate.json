@@ -1,0 +1,22 @@
+{
+  "ok": true,
+  "errors": [],
+  "stage": "passed",
+  "identities": {
+    "brief_id": "brief_pilot_T4_review_p2",
+    "brief_hash": "cb9371dfa973baeb1d3ba7d7a2d3faed9c58a58d636e1732e9fd8ee6b27e8516",
+    "serialization": "cjson-1",
+    "role": "reviewer",
+    "base_sha": "9a03465ff5595546d1b261a7494b4c82651370cd",
+    "candidate_sha": "174858dbc3d651358c767dc4b15ef72ab29f6970",
+    "feature_spec": {
+      "revision": "9a03465ff5595546d1b261a7494b4c82651370cd",
+      "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+    },
+    "feature_plan": {
+      "revision": "9a03465ff5595546d1b261a7494b4c82651370cd",
+      "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+    },
+    "role_pack_hash": "a54a3e8cff7c4c34bb087af861c335ee1c8d9ecadcb6a767b585402a35e72987"
+  }
+}

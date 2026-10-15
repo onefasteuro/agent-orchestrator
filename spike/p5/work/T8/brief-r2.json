@@ -1,0 +1,118 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_pilot_T8_review_p2",
+  "role": "reviewer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "Pass-2 review reconciling your persisted pass-1 findings with the supplied evidence of candidate db6bf72ce95f for task T8 (A new test file test/stats.integration.test.mjs exercises at least four functions together.) against specs/pilot/spec.md AC-8, AC-11 and shared rules R-1 to R-5.",
+  "ac_ids": [
+   "AC-8",
+   "AC-11"
+  ],
+  "exclusions": [
+   "No edits.",
+   "Do not retract a pass-1 finding because the implementer says it is fine."
+  ],
+  "expected_result": "VERDICT line first, then per-criterion verdicts with file and line, findings with severity and verification step, checks run with result lines."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/pilot/spec.md",
+   "baseline": "approved",
+   "revision": "04b48980749af3c596dbe1b630a7d82eb5d0e6d5",
+   "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+  },
+  "feature_plan": {
+   "path": "specs/pilot/plan.md",
+   "baseline": "approved",
+   "revision": "04b48980749af3c596dbe1b630a7d82eb5d0e6d5",
+   "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+  },
+  "role_pack_hash": "3fd6bcd6c369f7da27cfb1f0035fce534bb500d0fdcc25a619c6f22dac9f1147",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "git diff 04b48980749a..db6bf72ce95f (run it yourself; read-only git commands are permitted)",
+   "Your own pass-1 report (persisted as review_pass_one_recorded): VERDICT: ACCEPT\nI completed independent pass 1 at verified HEAD db6bf72ce95f7eaca9ff5e66f384c694b80e6f56 against base 04b48980749af3c596dbe1b630a7d82eb5d0e6d5, reading the full diff, touched files, implementation context and existing tests without accessing withheld material or changing files.\nPer-criterion verdicts: AC-8 satisfied (test/stats.integration.test.mjs:6-11 composes mean/min/max/range, :15-20 compares median/mean with range consistency, :24-31 relates stddev/variance and other aggregates); AC-11 satisfied (package.json:7 runs the full suite, observed pass 39/fail 0); R-1 satisfied for this change (no new public functions, only test callbacks at test/stats.integration.test.mjs:6,15,24); R-2 satisfied (no production changes and no input mutation introduced at test/stats.integration.test.mjs:7-31, existing implementation inspected); R-3 satisfied (full diff leaves src/math.mjs and test/math.test.mjs byte-identical); R-4 satisfied (only new test plus declared src/generated.mjs:1 timestamp change, package.json unchanged and test/stats.integration.test.mjs:1-3 imports only built-ins/local code); R-5 satisfied (integration prefix at test/stats.integration.test.mjs:6,15,24); findings: none, including no unauthorized paths, weakened tests, or new error/state/security issues.\nChecks actually run: node --test --test-name-pattern=\"^integration\" test/ exited 0 with result lines \"tests 4\", \"pass 4\", \"fail 0\" (differs from brief count 3 because output includes a passing test/math.test.mjs file-level entry); supplemental node --test --test-name-pattern=\"^integration\" test/stats.integration.test.mjs exited 0 with \"tests 3\", \"pass 3\", \"fail 0\"; npm test exited 0 with \"tests 39\", \"pass 39\", \"fail 0\"; git diff --check exited 0 with no output; git status --short was empty; runtime was Node v26.11.1; remaining uncertainty is only the brief's directory-filtered count expectation on other Node versions, with no required check unavailable and no repair work identified."
+  ],
+  "predecessor_conclusions": [
+   "Clamp: fixed in T5; the full suite must have 0 failures.",
+   "src/generated.mjs is hook-generated and declared; not an implementer change.",
+   "Your worker_done body MUST start with exactly one of these lines: 'VERDICT: ACCEPT' (no findings, or only low findings the coordinator may accept) or 'VERDICT: REPAIR' (at least one medium or higher finding). Then the per-criterion verdicts, findings, checks run, uncertainty.",
+   "Implementer self-report: Created test/stats.integration.test.mjs with exactly three tests named integration*, each combining at least four functions from ../src/math.mjs (mean of min/max equals range midpoint; median versus mean on a skewed set; stddev squared equals variance). Integration tests: 3 pass, 0 fail, and the full suite is green (npm test: tests 39, pass 39, fail 0).\n\nChanged paths (git status --porcelain):\n?? test/stats.integration.test.mjs\n\nRequired check - integration tests: node --test --test-name-pattern=\"^integration\" test/\nResult lines: ^ tests 4, ^ pass 4, ^ fail 0 (three lines are \"integration ...\" tests; the fourth is Node 26 directory-mode emitting a passing file-level entry for test/math.test.mjs, whose tests are all filtered out by the pattern). Running the same pattern against the integration file alone gives ^ pass 3, ^ fail 0. No integration test failed.\nSupplementary check - npm test: ^ tests 39, ^ pass 39, ^ fail 0.\n\nQuestions asked: none. Timeouts: none.\n\nUncertainty: the directory-mode summary reports pass 4 rather than the brief literal pass 3 because Node 26 counts the non-matching test/math.test.mjs file as an extra passing entry; the actual integration-test count is exactly 3 pass, 0 fail, and I could not suppress that harness artifact without editing an existing/protected file. No existing file or src/ was modified. (filesModified payload: ['test/stats.integration.test.mjs']; the Git-computed receipt is authoritative)",
+   "Gate receipt on the candidate: changed [[\"M\", \"src/generated.mjs\", [\"generated\"]], [\"A\", \"test/stats.integration.test.mjs\", [\"created\"]]]; size {\"files\": 1, \"lines\": 32, \"within\": true}; clean after commit; pinned document hashes match.",
+   "Coordinator checks on the candidate: task tests pass 4 fail 0; full suite pass 39 fail 0."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T8",
+  "base_sha": "04b48980749af3c596dbe1b630a7d82eb5d0e6d5",
+  "candidate_sha": "db6bf72ce95f7eaca9ff5e66f384c694b80e6f56",
+  "dirty_state": null,
+  "assigned_paths": [],
+  "new_paths": [],
+  "protected_paths": []
+ },
+ "execution": {
+  "runtime": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "permission_recipe": "codex-read-only",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 30,
+   "attempts": 1,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "integration tests",
+    "command": "node --test --test-name-pattern=\"^integration\" test/",
+    "expected": "pass 3, fail 0"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "pass 39 fail 0"
+   }
+  ],
+  "estimate": {
+   "files": 0,
+   "lines": 0
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "VERDICT line",
+   "candidate SHA inspected",
+   "pass number",
+   "per-criterion verdicts",
+   "findings",
+   "checks run",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (worker_done once)",
+  "usage_source": "codex-session-rollout",
+  "budget_ref": "pilot-T8-review",
+  "escalation_rule": "BLOCKED_CONTEXT if HEAD is not the candidate SHA",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl",
+  "pass": 2
+ }
+}

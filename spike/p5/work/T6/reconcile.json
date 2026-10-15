@@ -1,0 +1,44 @@
+{
+  "ok": false,
+  "index": {
+    "run_id": "run_a78be37eff9a",
+    "accepted_sha": "4fbe1e0f9742839cf3263aaf482650366ec88c7e",
+    "next_action": "pilot T5 accepted; next task",
+    "dispatches": []
+  },
+  "live_dispatches": [
+    "ctx_acd61b012904"
+  ],
+  "unresolved": {
+    "intent_without_receipt": [],
+    "receipt_without_result": [
+      "ctx_acd61b012904"
+    ],
+    "result_without_acceptance": [
+      "ctx_4280152a868f",
+      "ctx_1c64e9b775d2",
+      "ctx_99117ffb374e",
+      "ctx_0d15713d5778",
+      "ctx_6ed3f39d2111",
+      "ctx_31c278d40f4d",
+      "ctx_d7d6a8631830",
+      "ctx_5368862ca65e",
+      "ctx_a888b258137a",
+      "ctx_0de04b10bb0d"
+    ]
+  },
+  "findings": [
+    "dispatch ctx_acd61b012904 started with no result: still live, keep waiting",
+    "dispatch ctx_4280152a868f has a result awaiting acceptance or rejection",
+    "dispatch ctx_1c64e9b775d2 has a result awaiting acceptance or rejection",
+    "dispatch ctx_99117ffb374e has a result awaiting acceptance or rejection",
+    "dispatch ctx_0d15713d5778 has a result awaiting acceptance or rejection",
+    "dispatch ctx_6ed3f39d2111 has a result awaiting acceptance or rejection",
+    "dispatch ctx_31c278d40f4d has a result awaiting acceptance or rejection",
+    "dispatch ctx_d7d6a8631830 has a result awaiting acceptance or rejection",
+    "dispatch ctx_5368862ca65e has a result awaiting acceptance or rejection",
+    "dispatch ctx_a888b258137a has a result awaiting acceptance or rejection",
+    "dispatch ctx_0de04b10bb0d has a result awaiting acceptance or rejection"
+  ],
+  "next": "resolve every finding before dispatching anything new (R-2)"
+}

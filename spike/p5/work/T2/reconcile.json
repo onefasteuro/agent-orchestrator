@@ -1,0 +1,28 @@
+{
+  "ok": false,
+  "index": {
+    "run_id": "run_a78be37eff9a",
+    "accepted_sha": "1a76f44ba4d1296d03cc29e405eb29b16615ec2e",
+    "next_action": "pilot T1 accepted; next task",
+    "dispatches": []
+  },
+  "live_dispatches": [
+    "ctx_7c2801936a2d"
+  ],
+  "unresolved": {
+    "intent_without_receipt": [],
+    "receipt_without_result": [
+      "ctx_7c2801936a2d"
+    ],
+    "result_without_acceptance": [
+      "ctx_4280152a868f",
+      "ctx_1c64e9b775d2"
+    ]
+  },
+  "findings": [
+    "dispatch ctx_7c2801936a2d started with no result: still live, keep waiting",
+    "dispatch ctx_4280152a868f has a result awaiting acceptance or rejection",
+    "dispatch ctx_1c64e9b775d2 has a result awaiting acceptance or rejection"
+  ],
+  "next": "resolve every finding before dispatching anything new (R-2)"
+}

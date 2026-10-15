@@ -154,3 +154,35 @@ test('hardening: the gate fails closed without a recorded metadata baseline', ()
   assert.equal(r.ok, false);
   assert.ok(r.violations.some((v) => /no baseline recorded/.test(v.reason)));
 });
+
+test('K-8: integrate records acceptance only after the check passes, and reverts on failure', async () => {
+  const { execFileSync } = await import('node:child_process');
+  const { mkdtempSync } = await import('node:fs');
+  const { tmpdir } = await import('node:os');
+  const { readLog } = await import('../lib/audit.mjs');
+  const { repo, base } = makeRepo();
+  const log = join(mkdtempSync(join(tmpdir(), 'sdd-int-')), 'events.jsonl');
+  const root = new URL('../..', import.meta.url).pathname;
+  const cli = (...a) => { try { return JSON.parse(execFileSync('node', ['tools/sdd.mjs', ...a], { cwd: root, encoding: 'utf8' })); } catch (e) { return JSON.parse(e.stdout); } };
+  // good candidate on a branch
+  git(repo, ['checkout', '-q', '-b', 'good']);
+  writeFileSync(join(repo, 'src/math.mjs'), 'export function clamp(v, min, max) {\n  if (v < min) return min;\n  if (v > max) return max;\n  return v;\n}\n');
+  git(repo, ['commit', '-qam', 'good']);
+  const good = git(repo, ['rev-parse', 'HEAD']);
+  git(repo, ['checkout', '-q', 'main']);
+  const r1 = cli('integrate', '--repo', repo, '--candidate', good, '--log', log, '--run', 'r', '--task', 't', '--dispatch', 'd', '--brief-hash', 'h', '--check', 'grep -c "v > max" src/math.mjs', '--expect', '1');
+  assert.equal(r1.ok, true);
+  assert.equal(r1.integration, 'fast-forward');
+  assert.equal(readLog(log).events.at(-1).event_type, 'acceptance_recorded');
+  // bad candidate: check fails, integration reverted, event recorded after the revert
+  git(repo, ['checkout', '-q', '-b', 'bad']);
+  writeFileSync(join(repo, 'src/math.mjs'), 'export function clamp() { return 0; }\n');
+  git(repo, ['commit', '-qam', 'bad']);
+  const bad = git(repo, ['rev-parse', 'HEAD']);
+  git(repo, ['checkout', '-q', 'main']);
+  const r2 = cli('integrate', '--repo', repo, '--candidate', bad, '--log', log, '--run', 'r', '--task', 't2', '--dispatch', 'd2', '--brief-hash', 'h2', '--check', 'grep -c "v > max" src/math.mjs', '--expect', '1');
+  assert.equal(r2.ok, false);
+  assert.equal(git(repo, ['rev-parse', 'HEAD']), r2.reverted_to);
+  assert.ok(execFileSync('cat', [join(repo, 'src/math.mjs')], { encoding: 'utf8' }).includes('v > max'), 'main restored');
+  assert.equal(readLog(log).events.at(-1).event_type, 'integration_reverted');
+});

@@ -1,0 +1,119 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_pilot_calib_C3c_p1",
+  "role": "reviewer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "Independent pass-1 review of candidate eac860d85a3c which adds range() and its tests, against specs/pilot/spec.md shared rules R-1 to R-5 and AC-3.",
+  "ac_ids": [
+   "AC-3"
+  ],
+  "exclusions": [
+   "No edits.",
+   "Do not read .agents/, .agent-task.md, audit logs or any implementer narrative."
+  ],
+  "expected_result": "VERDICT line first, then per-criterion verdicts with file and line, findings with severity and verification step, checks run with result lines."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/pilot/spec.md",
+   "baseline": "approved",
+   "revision": "1c6397c740d9b64fab471a40f493c6f6acd10bcc",
+   "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+  },
+  "feature_plan": {
+   "path": "specs/pilot/plan.md",
+   "baseline": "approved",
+   "revision": "1c6397c740d9b64fab471a40f493c6f6acd10bcc",
+   "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+  },
+  "role_pack_hash": "afcf6a5811b3846b10828b0d22ea69f37d0ce5e08e61761c4113474107fb20ca",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "git diff 1c6397c740d9..eac860d85a3c (run it yourself; read-only git commands are permitted)"
+  ],
+  "predecessor_conclusions": [
+   "'clamp respects upper bound' fails by design until task T5; not a finding unless the candidate changed clamp.",
+   "The candidate's own tests may be incomplete; judge the implementation against the spec, not only against the tests it ships.",
+   "Your worker_done body MUST start with exactly one of these lines: 'VERDICT: ACCEPT' (no findings, or only low findings) or 'VERDICT: REPAIR' (at least one medium or higher finding). Then the per-criterion verdicts, findings, checks run, uncertainty."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C3c",
+  "base_sha": "1c6397c740d9b64fab471a40f493c6f6acd10bcc",
+  "candidate_sha": "eac860d85a3c1a03198d40c16fe6463420e84397",
+  "dirty_state": null,
+  "assigned_paths": [],
+  "new_paths": [],
+  "protected_paths": []
+ },
+ "execution": {
+  "runtime": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "permission_recipe": "codex-read-only",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 20,
+   "attempts": 1,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "range tests",
+    "command": "node --test --test-name-pattern=\"^range\" test/",
+    "expected": "all range tests ok"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "only 'clamp respects upper bound' fails"
+   }
+  ],
+  "estimate": {
+   "files": 0,
+   "lines": 0
+  },
+  "generated_paths": [],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "VERDICT line",
+   "candidate SHA inspected",
+   "pass number",
+   "per-criterion verdicts",
+   "findings",
+   "checks run",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (worker_done once)",
+  "usage_source": "codex-session-rollout",
+  "budget_ref": "pilot-calibration",
+  "escalation_rule": "BLOCKED_CONTEXT if HEAD is not the candidate SHA",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl",
+  "pass": 1,
+  "pass_one_exclusions": [
+   "implementer self-report",
+   "claimed check results",
+   "advisor output",
+   "prior verdicts",
+   "plan rationale",
+   "recovery and audit files"
+  ]
+ }
+}

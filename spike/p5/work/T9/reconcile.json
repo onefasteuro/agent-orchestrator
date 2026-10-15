@@ -1,0 +1,56 @@
+{
+  "ok": false,
+  "index": {
+    "run_id": "run_a78be37eff9a",
+    "accepted_sha": "db6bf72ce95f7eaca9ff5e66f384c694b80e6f56",
+    "next_action": "pilot T8 accepted; next task",
+    "dispatches": []
+  },
+  "live_dispatches": [
+    "ctx_35f7df0a09c5"
+  ],
+  "unresolved": {
+    "intent_without_receipt": [],
+    "receipt_without_result": [
+      "ctx_35f7df0a09c5"
+    ],
+    "result_without_acceptance": [
+      "ctx_4280152a868f",
+      "ctx_1c64e9b775d2",
+      "ctx_99117ffb374e",
+      "ctx_0d15713d5778",
+      "ctx_6ed3f39d2111",
+      "ctx_31c278d40f4d",
+      "ctx_d7d6a8631830",
+      "ctx_5368862ca65e",
+      "ctx_a888b258137a",
+      "ctx_0de04b10bb0d",
+      "ctx_29087dc8b141",
+      "ctx_7f5eb74c0636",
+      "ctx_1dd2aabdc886",
+      "ctx_79b255710875",
+      "ctx_e7a88c99bd07",
+      "ctx_188a8bcdb7ab"
+    ]
+  },
+  "findings": [
+    "dispatch ctx_35f7df0a09c5 started with no result: still live, keep waiting",
+    "dispatch ctx_4280152a868f has a result awaiting acceptance or rejection",
+    "dispatch ctx_1c64e9b775d2 has a result awaiting acceptance or rejection",
+    "dispatch ctx_99117ffb374e has a result awaiting acceptance or rejection",
+    "dispatch ctx_0d15713d5778 has a result awaiting acceptance or rejection",
+    "dispatch ctx_6ed3f39d2111 has a result awaiting acceptance or rejection",
+    "dispatch ctx_31c278d40f4d has a result awaiting acceptance or rejection",
+    "dispatch ctx_d7d6a8631830 has a result awaiting acceptance or rejection",
+    "dispatch ctx_5368862ca65e has a result awaiting acceptance or rejection",
+    "dispatch ctx_a888b258137a has a result awaiting acceptance or rejection",
+    "dispatch ctx_0de04b10bb0d has a result awaiting acceptance or rejection",
+    "dispatch ctx_29087dc8b141 has a result awaiting acceptance or rejection",
+    "dispatch ctx_7f5eb74c0636 has a result awaiting acceptance or rejection",
+    "dispatch ctx_1dd2aabdc886 has a result awaiting acceptance or rejection",
+    "dispatch ctx_79b255710875 has a result awaiting acceptance or rejection",
+    "dispatch ctx_e7a88c99bd07 has a result awaiting acceptance or rejection",
+    "dispatch ctx_188a8bcdb7ab has a result awaiting acceptance or rejection"
+  ],
+  "next": "resolve every finding before dispatching anything new (R-2)"
+}

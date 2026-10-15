@@ -1,6 +1,6 @@
 # Agentic SDD orchestration: specification
 
-Version 0.5, 14 October 2026. Status: P0 closed on 14 October 2026 by the user on P0b spike evidence (`spike/2026-10-14-p0b.md`, all eight rows passed). P1 to P4 authorized 14 October 2026 (D-16 to D-19); P5 onward remains unauthorized until the user says so.
+Version 0.5, 14 October 2026. Status: P0 closed on 14 October 2026 by the user on P0b spike evidence (`spike/2026-10-14-p0b.md`, all eight rows passed). P1 to P5 authorized (D-16 to D-20); P6 onward remains unauthorized until the user says so.
 
 Rules are stated once and cited by ID elsewhere. Mechanisms live in `orchestration-controls.md` (K-n). Sequence and thresholds live in `orchestration-plan.md` (P-n). Non-claims are collected in section 9.
 
@@ -162,6 +162,8 @@ Planned checks, not executed results. Each maps to controls in `orchestration-co
 - **D-13** Spike-validated tool versions are pinned for the pilot (K-17): Orca 1.4.224, Codex 0.161.0, Pi 1.0.4, Claude Code 2.1.300, Node v26.11.1.
 - **D-14 Decided 14 October 2026.** P0 closed. Spike rows 1 to 8 passed; findings folded into K-1, K-6, K-8, K-10, K-12 to K-15, K-20 and K-21.
 - **D-15 Decided 14 October 2026.** Codex levels: advisor and debugger `max`, reviewer `high` with `max` as recorded escalation.
+- **D-21 Decided 15 October 2026.** Calibration adjudication: the reviewer's "spec-required behaviour without a test" finding on controls C3 and C4 is legitimate; those controls were below the pilot's test standard and their replacements stand. `roles/reviewer.md` now sets a MEDIUM severity floor for that class of finding at rule level (a required rule with no test is MEDIUM; a tested rule missing sub-cases is LOW), after a first wording caused the reviewer to demand every sub-case; the calibration block is rerun under the final prompt (K-19).
+- **D-20 Decided 15 October 2026.** P5 authorized by the user with "proceed". Inputs not supplied by the user and chosen by the coordinator, recorded in `spike/2026-10-15-p5-inputs.md`: a ten-task sample on the fixture feature `pilot`, a calibration inventory of five seeded defects and five clean controls whose ground truth the user must validate before scores count, and no dollar cap (usage measured and reported, nothing enforced).
 - **D-19 Decided 14 October 2026.** P4 authorized: consultation and recovery drills on the fixture with a second feature (`median`), covering advice against a dirty worktree with a held question, restart reconciliation, cancellation while the implementer writes, feature-document change mid-run, a stalled worker, human takeover and hand-back, and integration revert with repair. The user's "proceed" is the delivery approval for that feature.
 - **D-18 Decided 14 October 2026.** P3 authorized: one real implementation task (`mean()` in the fixture) through preflight, Pi dispatch, ownership gate, candidate commit, two-pass Codex review, integration and acceptance, with audit and usage records. The user's "proceed" after the AC-2 documents counts as the single delivery approval for that task.
 - **D-17 Decided 14 October 2026.** P2 authorized: role pack drafted under `pack/` in this repository (entrypoint, workflow, role map, launch recipes, five role prompts, templates), installed to `.agents/orca-sdd/` only in P6.

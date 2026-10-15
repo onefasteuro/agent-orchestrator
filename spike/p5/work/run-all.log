@@ -1,0 +1,293 @@
+=== 12:22:37Z ./run-calibration.sh S1 range AC-3
+[calib S1] VERDICT: REPAIR (2026-10-15T12:24:58Z)
+=== 12:25:04Z ./run-calibration.sh C1 min AC-1
+[calib C1] VERDICT: ACCEPT (2026-10-15T12:27:12Z)
+=== 12:27:17Z ./run-task.sh tasks/T2.json
+[T2] base 1a76f44ba4d1296d03cc29e405eb29b16615ec2e
+  worktrees /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T2 and /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T2-2; metadata baseline recorded after both exist
+  event 142 brief_validated
+  event 143 dispatch_intent
+  event 144 dispatch_started
+  dispatched brief_pilot_T2_a1 as ctx_7c2801936a2d
+  restart drill: ["dispatch ctx_7c2801936a2d started with no result: still live, keep waiting", "dispatch ctx_4280152a868f has a result awaiting acceptance or rejection", "dispatch ctx_1c64e9b775d2 has a result awaiting acceptance or rejection"]
+  event 145 recovery_reconciled
+  event 146 result_received
+  event 147 usage_recorded
+  event 148 candidate_created
+  candidate 7188ca07150f971c73392d0a00d656676acf854a: 2 files 46 lines
+  checks:  pass 4 fail 0 | full:  pass 22 fail 1 
+b=agent-update-prompt
+  event 149 brief_validated
+  event 150 dispatch_intent
+  event 151 dispatch_started
+  dispatched brief_pilot_T2_review_p1 as ctx_99117ffb374e
+  event 152 result_received
+  event 153 review_pass_one_recorded
+  event 154 brief_validated
+  event 155 dispatch_intent
+  event 156 dispatch_started
+  dispatched brief_pilot_T2_review_p2 as ctx_0d15713d5778
+  event 157 result_received
+  event 158 usage_recorded
+  final review: VERDICT: ACCEPT
+  integrated 7188ca07150f (fast-forward)
+[T2] DONE 12:30:24Z
+=== 12:30:24Z ./run-task.sh tasks/T3.json
+[T3] base 7188ca07150f971c73392d0a00d656676acf854a
+  worktrees /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T3 and /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T3; metadata baseline recorded after both exist
+  event 160 brief_validated
+  event 161 dispatch_intent
+  event 162 dispatch_started
+  dispatched brief_pilot_T3_a1 as ctx_8a1494b12a3f
+  event 163 escalation
+  holding the question past the worker's 60 s timeout (drill)
+  event 164 escalation
+TYPE=question
+DEL=delivery_767c0e83fa50
+MID=msg_d2825c3bc241
+PD=ctx_8a1494b12a3f
+  event 165 result_received
+  event 166 usage_recorded
+  event 167 candidate_created
+  candidate 9a03465ff5595546d1b261a7494b4c82651370cd: 2 files 46 lines
+  checks:  pass 4 fail 0 | full:  pass 26 fail 1 
+b=agent-update-prompt
+  event 168 brief_validated
+  event 169 dispatch_intent
+  event 170 dispatch_started
+  dispatched brief_pilot_T3_review_p1 as ctx_6ed3f39d2111
+  event 171 result_received
+  event 172 review_pass_one_recorded
+  event 173 brief_validated
+  event 174 dispatch_intent
+  event 175 dispatch_started
+  dispatched brief_pilot_T3_review_p2 as ctx_31c278d40f4d
+  event 176 result_received
+  event 177 usage_recorded
+  final review: VERDICT: ACCEPT
+  integrated 9a03465ff559 (fast-forward)
+[T3] DONE 12:34:43Z
+=== 12:34:43Z ./run-task.sh tasks/T4.json
+[T4] base 9a03465ff5595546d1b261a7494b4c82651370cd
+  worktrees /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T4 and /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T4; metadata baseline recorded after both exist
+  event 179 brief_validated
+  event 180 dispatch_intent
+  event 181 dispatch_started
+  dispatched brief_pilot_T4_a1 as ctx_476dd18752ba
+  event 182 result_received
+  event 183 usage_recorded
+  event 184 candidate_created
+  candidate 174858dbc3d651358c767dc4b15ef72ab29f6970: 2 files 46 lines
+  checks:  pass 4 fail 0 | full:  pass 30 fail 1 
+b=agent-update-prompt
+  event 185 brief_validated
+  event 186 dispatch_intent
+  event 187 dispatch_started
+  dispatched brief_pilot_T4_review_p1 as ctx_d7d6a8631830
+  event 188 result_received
+  event 189 review_pass_one_recorded
+  event 190 brief_validated
+  event 191 dispatch_intent
+  event 192 dispatch_started
+  dispatched brief_pilot_T4_review_p2 as ctx_5368862ca65e
+  event 193 result_received
+  event 194 usage_recorded
+  final review: VERDICT: ACCEPT
+  integrated 174858dbc3d6 (fast-forward)
+[T4] DONE 12:38:08Z
+=== 12:38:08Z ./run-task.sh tasks/T5.json
+[T5] base 174858dbc3d651358c767dc4b15ef72ab29f6970
+  worktrees /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T5 and /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T5; metadata baseline recorded after both exist
+  event 196 brief_validated
+  event 197 dispatch_intent
+  event 198 dispatch_started
+  dispatched brief_pilot_T5_a1 as ctx_2b7c47df556c
+  event 199 result_received
+  event 200 usage_recorded
+  event 201 candidate_created
+  candidate 4fbe1e0f9742839cf3263aaf482650366ec88c7e: 1 files 2 lines
+  checks:  pass 2 fail 0 | full:  pass 31 fail 0 
+b=agent-update-prompt
+  event 202 brief_validated
+  event 203 dispatch_intent
+  event 204 dispatch_started
+  dispatched brief_pilot_T5_review_p1 as ctx_a888b258137a
+  event 205 result_received
+  event 206 review_pass_one_recorded
+  event 207 brief_validated
+  event 208 dispatch_intent
+  event 209 dispatch_started
+  dispatched brief_pilot_T5_review_p2 as ctx_0de04b10bb0d
+  event 210 result_received
+  event 211 usage_recorded
+  final review: VERDICT: ACCEPT
+  integrated 4fbe1e0f9742 (fast-forward)
+[T5] DONE 12:40:56Z
+=== 12:40:56Z ./run-calibration.sh S2 min AC-1
+[calib S2] VERDICT: REPAIR (2026-10-15T12:43:03Z)
+=== 12:43:08Z ./run-calibration.sh C2 max AC-2
+[calib C2] VERDICT: ACCEPT (2026-10-15T12:45:16Z)
+=== 12:45:21Z ./run-calibration.sh S3 product AC-4
+[calib S3] VERDICT: REPAIR (2026-10-15T12:47:25Z)
+=== 12:47:31Z ./run-task.sh tasks/T6.json
+[T6] base 4fbe1e0f9742839cf3263aaf482650366ec88c7e
+  worktrees /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T6 and /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T6; metadata baseline recorded after both exist
+  event 234 brief_validated
+  event 235 dispatch_intent
+  event 236 dispatch_started
+  dispatched brief_pilot_T6_a1 as ctx_acd61b012904
+  restart drill: ["dispatch ctx_acd61b012904 started with no result: still live, keep waiting", "dispatch ctx_4280152a868f has a result awaiting acceptance or rejection", "dispatch ctx_1c64e9b775d2 has a result awaiting acceptance or rejection", "dispatch ctx_99117ffb374e has a result awaiting acceptance or rejection", "dispatch ctx_0d15713d5778 has a result awaiting acceptance or rejection", "dispatch ctx_6ed3f39d2111 has a result awaiting acceptance or rejection", "dispatch ctx_31c278d40f4d has a result awaiting acceptance or rejection", "dispatch ctx_d7d6a8631830 has a result awaiting acceptance or rejection", "dispatch ctx_5368862ca65e has a result awaiting acceptance or rejection", "dispatch ctx_a888b258137a has a result awaiting acceptance or rejection", "dispatch ctx_0de04b10bb0d has a result awaiting acceptance or rejection"]
+  event 237 recovery_reconciled
+  event 238 result_received
+  event 239 usage_recorded
+  event 240 candidate_created
+  candidate e6c17439eff73702d3ca17cbdcd10ee15f584a13: 2 files 25 lines
+  checks:  pass 3 fail 0 | full:  pass 34 fail 0 
+b=agent-update-prompt
+  event 241 brief_validated
+  event 242 dispatch_intent
+  event 243 dispatch_started
+  dispatched brief_pilot_T6_review_p1 as ctx_29087dc8b141
+  event 244 result_received
+  event 245 review_pass_one_recorded
+  event 246 brief_validated
+  event 247 dispatch_intent
+  event 248 dispatch_started
+  dispatched brief_pilot_T6_review_p2 as ctx_7f5eb74c0636
+  event 249 result_received
+  event 250 usage_recorded
+  final review: VERDICT: ACCEPT
+  integrated e6c17439eff7 (fast-forward)
+[T6] DONE 12:50:42Z
+=== 12:50:42Z ./run-task.sh tasks/T7.json
+[T7] base e6c17439eff73702d3ca17cbdcd10ee15f584a13
+  worktrees /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T7 and /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T7; metadata baseline recorded after both exist
+  event 252 brief_validated
+  event 253 dispatch_intent
+  event 254 dispatch_started
+  dispatched brief_pilot_T7_a1 as ctx_2c26b0a0ef10
+  event 255 escalation
+  holding the question past the worker's 60 s timeout (drill)
+  event 256 escalation
+TYPE=question
+DEL=delivery_93bf4e6fce65
+MID=msg_f9e0ea17a9cd
+PD=ctx_2c26b0a0ef10
+  event 257 result_received
+  event 258 usage_recorded
+  event 259 candidate_created
+  candidate 04b48980749af3c596dbe1b630a7d82eb5d0e6d5: 2 files 13 lines
+  checks:  pass 2 fail 0 | full:  pass 36 fail 0 
+b=agent-update-prompt
+  event 260 brief_validated
+  event 261 dispatch_intent
+  event 262 dispatch_started
+  dispatched brief_pilot_T7_review_p1 as ctx_1dd2aabdc886
+  event 263 result_received
+  event 264 review_pass_one_recorded
+  event 265 brief_validated
+  event 266 dispatch_intent
+  event 267 dispatch_started
+  dispatched brief_pilot_T7_review_p2 as ctx_79b255710875
+  event 268 result_received
+  event 269 usage_recorded
+  final review: VERDICT: ACCEPT
+  integrated 04b48980749a (fast-forward)
+[T7] DONE 12:55:44Z
+=== 12:55:44Z ./run-calibration.sh S4 product AC-4
+[calib S4] VERDICT: REPAIR (2026-10-15T12:57:45Z)
+=== 12:57:51Z ./run-calibration.sh C3 range AC-3
+[calib C3] VERDICT: REPAIR (2026-10-15T13:00:05Z)
+=== 13:00:10Z ./run-task.sh tasks/T8.json
+[T8] base 04b48980749af3c596dbe1b630a7d82eb5d0e6d5
+  worktrees /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T8 and /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T8; metadata baseline recorded after both exist
+  event 285 brief_validated
+  event 286 dispatch_intent
+  event 287 dispatch_started
+  dispatched brief_pilot_T8_a1 as ctx_3ee58b31e820
+  event 288 result_received
+  event 289 usage_recorded
+  event 290 candidate_created
+  candidate db6bf72ce95f7eaca9ff5e66f384c694b80e6f56: 1 files 32 lines
+  checks:  pass 4 fail 0 | full:  pass 39 fail 0 
+b=agent-update-prompt
+  event 291 brief_validated
+  event 292 dispatch_intent
+  event 293 dispatch_started
+  dispatched brief_pilot_T8_review_p1 as ctx_e7a88c99bd07
+  event 294 result_received
+  event 295 review_pass_one_recorded
+  event 296 brief_validated
+  event 297 dispatch_intent
+  event 298 dispatch_started
+  dispatched brief_pilot_T8_review_p2 as ctx_188a8bcdb7ab
+  event 299 result_received
+  event 300 usage_recorded
+  final review: VERDICT: ACCEPT
+  integrated db6bf72ce95f (fast-forward)
+[T8] DONE 13:22:01Z
+=== 13:22:01Z ./run-task.sh tasks/T9.json
+[T9] base db6bf72ce95f7eaca9ff5e66f384c694b80e6f56
+  worktrees /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T9 and /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T9; metadata baseline recorded after both exist
+  event 302 brief_validated
+  event 303 dispatch_intent
+  event 304 dispatch_started
+  dispatched brief_pilot_T9_a1 as ctx_35f7df0a09c5
+  restart drill: ["dispatch ctx_35f7df0a09c5 started with no result: still live, keep waiting", "dispatch ctx_4280152a868f has a result awaiting acceptance or rejection", "dispatch ctx_1c64e9b775d2 has a result awaiting acceptance or rejection", "dispatch ctx_99117ffb374e has a result awaiting acceptance or rejection", "dispatch ctx_0d15713d5778 has a result awaiting acceptance or rejection", "dispatch ctx_6ed3f39d2111 has a result awaiting acceptance or rejection", "dispatch ctx_31c278d40f4d has a result awaiting acceptance or rejection", "dispatch ctx_d7d6a8631830 has a result awaiting acceptance or rejection", "dispatch ctx_5368862ca65e has a result awaiting acceptance or rejection", "dispatch ctx_a888b258137a has a result awaiting acceptance or rejection", "dispatch ctx_0de04b10bb0d has a result awaiting acceptance or rejection", "dispatch ctx_29087dc8b141 has a result awaiting acceptance or rejection", "dispatch ctx_7f5eb74c0636 has a result awaiting acceptance or rejection", "dispatch ctx_1dd2aabdc886 has a result awaiting acceptance or rejection", "dispatch ctx_79b255710875 has a result awaiting acceptance or rejection", "dispatch ctx_e7a88c99bd07 has a result awaiting acceptance or rejection", "dispatch ctx_188a8bcdb7ab has a result awaiting acceptance or rejection"]
+  event 305 recovery_reconciled
+  event 306 result_received
+  event 307 usage_recorded
+  event 308 candidate_created
+  candidate cec39f7aea42fe9a3d3108674f94ba27212f5870: 1 files 20 lines
+  checks:  pass 4 fail 0 | full:  pass 41 fail 0 
+b=agent-update-prompt
+  event 309 brief_validated
+  event 310 dispatch_intent
+  event 311 dispatch_started
+  dispatched brief_pilot_T9_review_p1 as ctx_2a409148df63
+  event 312 result_received
+  event 313 review_pass_one_recorded
+  event 314 brief_validated
+  event 315 dispatch_intent
+  event 316 dispatch_started
+  dispatched brief_pilot_T9_review_p2 as ctx_babc4b79d11d
+  event 317 result_received
+  event 318 usage_recorded
+  final review: VERDICT: ACCEPT
+  integrated cec39f7aea42 (fast-forward)
+[T9] DONE 13:41:57Z
+=== 13:41:57Z ./run-calibration.sh S5 max AC-2
+[calib S5] VERDICT: REPAIR (2026-10-15T13:44:13Z)
+=== 13:44:19Z ./run-calibration.sh C4 product AC-4
+[calib C4] VERDICT: REPAIR (2026-10-15T13:46:41Z)
+=== 13:46:47Z ./run-calibration.sh C5 count AC-1
+[calib C5] VERDICT: REPAIR (2026-10-15T13:48:48Z)
+=== 13:48:54Z ./run-task.sh tasks/T10.json
+[T10] base cec39f7aea42fe9a3d3108674f94ba27212f5870
+  worktrees /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T10 and /Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T10; metadata baseline recorded after both exist
+  event 341 brief_validated
+  event 342 dispatch_intent
+  event 343 dispatch_started
+  dispatched brief_pilot_T10_a1 as ctx_435f077a61f4
+  event 344 result_received
+  event 345 usage_recorded
+  event 346 candidate_created
+  candidate d6687b322bbdbd9650b02e8760377c399313c9e7: 2 files 8 lines
+  checks:  pass 3 fail 0 | full:  pass 42 fail 0 
+b=agent-update-prompt
+  event 347 brief_validated
+  event 348 dispatch_intent
+  event 349 dispatch_started
+  dispatched brief_pilot_T10_review_p1 as ctx_8c7807eeec8e
+  event 350 result_received
+  event 351 review_pass_one_recorded
+  event 352 brief_validated
+  event 353 dispatch_intent
+  event 354 dispatch_started
+  dispatched brief_pilot_T10_review_p2 as ctx_529213121578
+  event 355 result_received
+  event 356 usage_recorded
+  final review: VERDICT: ACCEPT
+  integrated d6687b322bbd (fast-forward)
+[T10] DONE 13:52:34Z
+=== 13:52:34Z ALL DONE

@@ -1,0 +1,85 @@
+{
+  "id": "c68628c5-434d-442e-b40e-8bf76a7e928d",
+  "ok": true,
+  "result": {
+    "runId": "run_a78be37eff9a",
+    "taskId": "task_24e872bf5483",
+    "dispatchId": "ctx_529213121578",
+    "state": "ready",
+    "stage": "input_accepted",
+    "turnStart": "observed",
+    "setup": {
+      "requested": "not_applicable",
+      "effective": "not_applicable",
+      "source": "existing_worktree",
+      "hookFound": false,
+      "startupPolicy": "start-immediately",
+      "state": "not_applicable"
+    },
+    "launch": {
+      "requested": {
+        "agent": null,
+        "model": null,
+        "effort": null
+      },
+      "effective": {
+        "agent": null,
+        "model": null,
+        "effort": null
+      }
+    },
+    "mode": {
+      "mode": "terminal",
+      "preferred": "terminal",
+      "reason": "user_default",
+      "detail": "Started a terminal agent worker, the default for new agent tabs in your settings."
+    },
+    "timeoutMs": 60000,
+    "effects": [
+      {
+        "kind": "worktree",
+        "action": "reused",
+        "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T10"
+      },
+      {
+        "kind": "setup",
+        "action": "not_applicable",
+        "state": "not_applicable"
+      },
+      {
+        "kind": "terminal",
+        "role": "agent",
+        "action": "reused",
+        "id": "term_bce99ee8-639d-4231-a405-cdb0cabf6ca3"
+      },
+      {
+        "kind": "dispatch_input",
+        "role": "agent",
+        "id": "term_bce99ee8-639d-4231-a405-cdb0cabf6ca3",
+        "state": "accepted"
+      }
+    ],
+    "prompt": {
+      "requestId": "e2b69ae7-bd03-40d0-9961-bf7671b7aaaa",
+      "stages": [
+        "input_accepted",
+        "turn_started"
+      ],
+      "provider": "codex",
+      "observation": "supported",
+      "processIncarnation": "485dc0e8-bdf8-4068-99f8-7380a0585c78",
+      "generation": 116,
+      "baselineWorkingSequence": 2,
+      "baselineExplicitWorkingStartedAt": null,
+      "baselinePermissionSequence": 2
+    },
+    "residualResources": [],
+    "mutation": {
+      "requestId": "e2b69ae7-bd03-40d0-9961-bf7671b7aaaa",
+      "replayed": false
+    }
+  },
+  "_meta": {
+    "runtimeId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be"
+  }
+}

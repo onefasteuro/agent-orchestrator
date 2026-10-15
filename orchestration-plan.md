@@ -1,6 +1,6 @@
 # Agentic SDD orchestration: plan
 
-Version 0.5, 14 October 2026. Status: P0 to P4 delivered (D-14, D-16 to D-19). P5, the measured pilot, needs authorization and the inputs in section 7.
+Version 0.5, 14 October 2026. Status: P0 to P5 delivered (D-14, D-16 to D-21). P6 (installer) and P7 (adoption decision) need authorization.
 
 `orchestration-spec.md` holds requirements and invariants. `orchestration-controls.md` holds mechanisms. This document holds sequence, the spike checklist, pilot thresholds and open inputs.
 
@@ -56,7 +56,7 @@ Verify ignore rules before the first run. Task writers never own feature docs, r
 | P2 | Entrypoint, workflow, five prompts, launch recipes, review and spec-drift gates | P1 | Done 14 October 2026: pack under `pack/`; AC-1, AC-2 and AC-10 observed on the fixture with the installed pack (`spike/2026-10-14-p2-verification.md`); other ACs covered by the P1 tests and spike rows |
 | P3 | One real Pi task end to end | P2 | Done 14 October 2026: `mean()` delivered in the fixture through preflight, Pi dispatch, ownership gate, candidate commit, two-pass Codex review (no findings), fast-forward integration, acceptance with per-criterion evidence, 35 audit events, usage for every dispatch (`spike/2026-10-14-p3.md`) |
 | P4 | Consultation and recovery drills | P3 | Done 15 October 2026: seven drills pass on the fixture (advice with a held question, restart, cancellation, takeover, spec change, stall, revert and repair), plus an unplanned real repair loop after the blind review found a defect (`spike/2026-10-14-p4.md`) |
-| P5 | Measured pilot | P3, P4, pilot authorization | Section 6 thresholds met with human-audited evidence |
+| P5 | Measured pilot | Ten completed implementation tasks, calibration and required drills | P3/P4; authorized pilot scope | Done 15 October 2026: 10 of 10 tasks accepted, 5 of 5 seeds caught, 0 false positives on the final control set under the shipped reviewer prompt (three calibration blocks, 33 reviews, user adjudication D-21), 0 interventions, usage on every dispatch (`spike/2026-10-15-p5.md`) |
 | P6 | Installer and operator docs | Stable P1 to P5 | AC-13; lifecycle rechecked with freshly installed entrypoints |
 | P7 | Adoption decision | P5, P6 | Thresholds met, limitations listed, adopt or revise |
 

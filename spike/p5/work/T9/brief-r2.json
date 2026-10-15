@@ -1,0 +1,118 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_pilot_T9_review_p2",
+  "role": "reviewer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "Pass-2 review reconciling your persisted pass-1 findings with the supplied evidence of candidate cec39f7aea42 for task T9 (A new test file test/regression.test.mjs pins the median overflow fix and clamp bounds.) against specs/pilot/spec.md AC-9, AC-11 and shared rules R-1 to R-5.",
+  "ac_ids": [
+   "AC-9",
+   "AC-11"
+  ],
+  "exclusions": [
+   "No edits.",
+   "Do not retract a pass-1 finding because the implementer says it is fine."
+  ],
+  "expected_result": "VERDICT line first, then per-criterion verdicts with file and line, findings with severity and verification step, checks run with result lines."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/pilot/spec.md",
+   "baseline": "approved",
+   "revision": "db6bf72ce95f7eaca9ff5e66f384c694b80e6f56",
+   "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+  },
+  "feature_plan": {
+   "path": "specs/pilot/plan.md",
+   "baseline": "approved",
+   "revision": "db6bf72ce95f7eaca9ff5e66f384c694b80e6f56",
+   "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+  },
+  "role_pack_hash": "b0536d2387e0885ea4ffa5d5637ac7d185216dad8cd0daf23d38960de11c45a8",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "git diff db6bf72ce95f..cec39f7aea42 (run it yourself; read-only git commands are permitted)",
+   "Your own pass-1 report (persisted as review_pass_one_recorded): VERDICT: ACCEPT\nI completed independent pass 1 at verified candidate cec39f7aea42fe9a3d3108674f94ba27212f5870, reading the full base-to-candidate diff, touched files, implementation context and all tests without accessing withheld material.\nPer-criterion verdicts: AC-9 satisfied \u2014 test/regression.test.mjs:7-13 asserts finite and exact positive/negative maximum-pair medians, and :18-19 asserts both clamp bounds; AC-11 satisfied \u2014 package.json:7 runs the integrated suite with actual result lines \"tests 41\", \"pass 41\", \"fail 0\"; R-1 satisfied for this change \u2014 no new production functions, test/regression.test.mjs:3 imports existing functions; R-2 satisfied \u2014 src/math.mjs:39 copies before sorting and :5-8 clamps scalar arguments; R-3 satisfied \u2014 full diff shows existing functions and existing tests byte-identical; R-4 satisfied \u2014 package.json:1-10 unchanged with no dependencies, only declared src/generated.mjs:1 timestamp changes alongside the new regression file; R-5 satisfied \u2014 test/regression.test.mjs:6 and :17 both use the regression prefix; findings: none.\nChecks run: git rev-parse HEAD matched the candidate, git status --short stayed empty, required node --test --test-name-pattern=\"^regression\" test/ exited 0 with \"tests 4\", \"pass 4\", \"fail 0\", required npm test exited 0 with \"tests 41\", \"pass 41\", \"fail 0\", and supplemental node --test --test-name-pattern=\"^regression\" test/regression.test.mjs exited 0 with \"tests 2\", \"pass 2\", \"fail 0\"; remaining qualification: on Node v26.11.1 the required directory-filtered command also counts the two files without matching tests, so its literal expected pass count of 2 is not reproduced although both intended regression cases pass, with no code repair indicated and acceptance left to the coordinator."
+  ],
+  "predecessor_conclusions": [
+   "Clamp: fixed in T5; the full suite must have 0 failures.",
+   "src/generated.mjs is hook-generated and declared; not an implementer change.",
+   "Your worker_done body MUST start with exactly one of these lines: 'VERDICT: ACCEPT' (no findings, or only low findings the coordinator may accept) or 'VERDICT: REPAIR' (at least one medium or higher finding). Then the per-criterion verdicts, findings, checks run, uncertainty.",
+   "Implementer self-report: Created test/regression.test.mjs with exactly two 'regression'-prefixed tests pinning the median overflow fix (Number.MAX_VALUE pair finite and equal, negative pair equals -Number.MAX_VALUE) and clamp bounds on both sides (15->10, -5->0); no existing files were touched. Required check 'node --test --test-name-pattern=\"^regression\" test/' reported 'pass 4 / fail 0' over the whole test dir because Node also counts the two non-matching test-file roots as passing tests, while the same pattern on test/regression.test.mjs alone reported 'pass 2 / fail 0', and 'npm test' reported pass 41 / fail 0. No questions were asked and no timeouts occurred; the only uncertainty is the directory-run pass count of 4 versus the brief's expected 2, which is Node's file-root accounting and not a regression-test failure. Changed paths (git status --porcelain): '?? test/regression.test.mjs'. Checks: regression -> tests 2 pass 2 fail 0 (file run) / tests 4 pass 4 fail 0 (dir run); npm test -> tests 41 pass 41 fail 0. (filesModified payload: ['test/regression.test.mjs']; the Git-computed receipt is authoritative)",
+   "Gate receipt on the candidate: changed [[\"M\", \"src/generated.mjs\", [\"generated\"]], [\"A\", \"test/regression.test.mjs\", [\"created\"]]]; size {\"files\": 1, \"lines\": 20, \"within\": true}; clean after commit; pinned document hashes match.",
+   "Coordinator checks on the candidate: task tests pass 4 fail 0; full suite pass 41 fail 0."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T9",
+  "base_sha": "db6bf72ce95f7eaca9ff5e66f384c694b80e6f56",
+  "candidate_sha": "cec39f7aea42fe9a3d3108674f94ba27212f5870",
+  "dirty_state": null,
+  "assigned_paths": [],
+  "new_paths": [],
+  "protected_paths": []
+ },
+ "execution": {
+  "runtime": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "permission_recipe": "codex-read-only",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 30,
+   "attempts": 1,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "regression tests",
+    "command": "node --test --test-name-pattern=\"^regression\" test/",
+    "expected": "pass 2, fail 0"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "pass 41 fail 0"
+   }
+  ],
+  "estimate": {
+   "files": 0,
+   "lines": 0
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "VERDICT line",
+   "candidate SHA inspected",
+   "pass number",
+   "per-criterion verdicts",
+   "findings",
+   "checks run",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (worker_done once)",
+  "usage_source": "codex-session-rollout",
+  "budget_ref": "pilot-T9-review",
+  "escalation_rule": "BLOCKED_CONTEXT if HEAD is not the candidate SHA",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl",
+  "pass": 2
+ }
+}

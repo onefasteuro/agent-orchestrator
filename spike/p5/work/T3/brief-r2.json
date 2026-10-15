@@ -1,0 +1,123 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_pilot_T3_review_p2",
+  "role": "reviewer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "Pass-2 review reconciling your persisted pass-1 findings with the supplied evidence of candidate 9a03465ff559 for task T3 (src/math.mjs exports range(values) returning max minus min.) against specs/pilot/spec.md AC-3, AC-11 and shared rules R-1 to R-5.",
+  "ac_ids": [
+   "AC-3",
+   "AC-11"
+  ],
+  "exclusions": [
+   "No edits.",
+   "Do not retract a pass-1 finding because the implementer says it is fine."
+  ],
+  "expected_result": "VERDICT line first, then per-criterion verdicts with file and line, findings with severity and verification step, checks run with result lines."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/pilot/spec.md",
+   "baseline": "approved",
+   "revision": "7188ca07150f971c73392d0a00d656676acf854a",
+   "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+  },
+  "feature_plan": {
+   "path": "specs/pilot/plan.md",
+   "baseline": "approved",
+   "revision": "7188ca07150f971c73392d0a00d656676acf854a",
+   "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+  },
+  "role_pack_hash": "bad2c1a65381543c7b7370f66ac539f523e661ec02300d6c31fa20f3c14da6c1",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "git diff 7188ca07150f..9a03465ff559 (run it yourself; read-only git commands are permitted)",
+   "Your own pass-1 report (persisted as review_pass_one_recorded): VERDICT: ACCEPT\nI completed independent pass 1 of candidate 9a03465ff5595546d1b261a7494b4c82651370cd, confirmed HEAD matches, and reviewed the complete base-to-candidate diff, touched files, and tests without accessing withheld material.\nAC-3 satisfied: src/math.mjs:102-113 validates shape, emptiness, and finite numbers and returns max minus min, with required examples at test/math.test.mjs:142 and :147; AC-11 satisfied: the executed suite reports the specified 26 passes and 1 failure, solely the unchanged clamp assertion at test/math.test.mjs:14; R-1 satisfied at src/math.mjs:102-110; R-2 satisfied by read-only reductions at src/math.mjs:81 and :97 and the mutation test at test/math.test.mjs:162-166; R-3 satisfied by the complete diff preserving existing functions and tests except the allowed import at test/math.test.mjs:3; R-4 satisfied with no dependency changes and only the declared generated timestamp at src/generated.mjs:1; R-5 satisfied by all four new test names at test/math.test.mjs:141, :146, :150, and :162; findings: none.\nChecks actually run: node --test --test-name-pattern=\"^range\" test/ exited 0 with result lines \"tests 4\", \"pass 4\", \"fail 0\"; git diff --unified=0 HEAD -- src/math.mjs exited 0 with no output, with additive behavior separately verified against the base diff; npm test exited 1 with result lines \"tests 27\", \"pass 26\", \"fail 1\", and \"clamp respects upper bound\" failing with \"15 !== 10\" as explicitly expected; git diff --check against the base exited 0 with no output and git status --porcelain was empty; remaining uncertainty: none for the assigned criteria, no files changed, and acceptance remains the coordinator's decision."
+  ],
+  "predecessor_conclusions": [
+   "Clamp: 'clamp respects upper bound' fails by design until task T5; not a finding unless the candidate changed clamp.",
+   "src/generated.mjs is hook-generated and declared; not an implementer change.",
+   "Your worker_done body MUST start with exactly one of these lines: 'VERDICT: ACCEPT' (no findings, or only low findings the coordinator may accept) or 'VERDICT: REPAIR' (at least one medium or higher finding). Then the per-criterion verdicts, findings, checks run, uncertainty.",
+   "Implementer self-report: Implemented range() in src/math.mjs appended after max(), validating per R-1 and returning max minus min, with four range tests appended to test/math.test.mjs and only the import on line 3 otherwise edited. Check 'range tests' (node --test --test-name-pattern=\"^range\" test/) reported 'pass 4, fail 0'; check 'additive change' (git diff --unified=0 HEAD -- src/math.mjs) showed only added lines with zero removals; full npm test is pass 26, fail 1, the one failure being the known baseline 'clamp respects upper bound' that T5 fixes. I asked one blocking question, 'Should range() of a single-element array return 0, or throw?', which timed out once (msg_d2825c3bc241) then resumed and answered: return 0, do not throw for a single element, only an empty array throws RangeError; the draft already matched, and remaining uncertainty is only the known pre-T5 clamp baseline failure. Changed paths: M src/math.mjs, M test/math.test.mjs. (filesModified payload: ['test/math.test.mjs']; the Git-computed receipt is authoritative)",
+   "Gate receipt on the candidate: changed [[\"M\", \"src/generated.mjs\", [\"generated\"]], [\"M\", \"src/math.mjs\", [\"assigned\"]], [\"M\", \"test/math.test.mjs\", [\"assigned\"]]]; size {\"files\": 2, \"lines\": 46, \"within\": true}; clean after commit; pinned document hashes match.",
+   "Coordinator checks on the candidate: task tests pass 4 fail 0; full suite pass 26 fail 1."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T3",
+  "base_sha": "7188ca07150f971c73392d0a00d656676acf854a",
+  "candidate_sha": "9a03465ff5595546d1b261a7494b4c82651370cd",
+  "dirty_state": null,
+  "assigned_paths": [],
+  "new_paths": [],
+  "protected_paths": []
+ },
+ "execution": {
+  "runtime": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "permission_recipe": "codex-read-only",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 30,
+   "attempts": 1,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "range tests",
+    "command": "node --test --test-name-pattern=\"^range\" test/",
+    "expected": "pass 4, fail 0"
+   },
+   {
+    "name": "additive change",
+    "command": "git diff --unified=0 HEAD -- src/math.mjs",
+    "expected": "no removed lines"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "pass 26 fail 1"
+   }
+  ],
+  "estimate": {
+   "files": 0,
+   "lines": 0
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "VERDICT line",
+   "candidate SHA inspected",
+   "pass number",
+   "per-criterion verdicts",
+   "findings",
+   "checks run",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (worker_done once)",
+  "usage_source": "codex-session-rollout",
+  "budget_ref": "pilot-T3-review",
+  "escalation_rule": "BLOCKED_CONTEXT if HEAD is not the candidate SHA",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl",
+  "pass": 2
+ }
+}

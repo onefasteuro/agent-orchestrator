@@ -1,0 +1,85 @@
+{
+  "id": "10473a24-4833-4915-ae1b-91db9f5a921d",
+  "ok": true,
+  "result": {
+    "runId": "run_a78be37eff9a",
+    "taskId": "task_12932d8cc7bf",
+    "dispatchId": "ctx_0bc1f8165818",
+    "state": "ready",
+    "stage": "input_accepted",
+    "turnStart": "observed",
+    "setup": {
+      "requested": "not_applicable",
+      "effective": "not_applicable",
+      "source": "existing_worktree",
+      "hookFound": false,
+      "startupPolicy": "start-immediately",
+      "state": "not_applicable"
+    },
+    "launch": {
+      "requested": {
+        "agent": null,
+        "model": null,
+        "effort": null
+      },
+      "effective": {
+        "agent": null,
+        "model": null,
+        "effort": null
+      }
+    },
+    "mode": {
+      "mode": "terminal",
+      "preferred": "terminal",
+      "reason": "user_default",
+      "detail": "Started a terminal agent worker, the default for new agent tabs in your settings."
+    },
+    "timeoutMs": 60000,
+    "effects": [
+      {
+        "kind": "worktree",
+        "action": "reused",
+        "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C5c"
+      },
+      {
+        "kind": "setup",
+        "action": "not_applicable",
+        "state": "not_applicable"
+      },
+      {
+        "kind": "terminal",
+        "role": "agent",
+        "action": "reused",
+        "id": "term_12de0f70-d44f-4bc9-a89f-1cad447d1dee"
+      },
+      {
+        "kind": "dispatch_input",
+        "role": "agent",
+        "id": "term_12de0f70-d44f-4bc9-a89f-1cad447d1dee",
+        "state": "accepted"
+      }
+    ],
+    "prompt": {
+      "requestId": "e11a3127-26a2-4bd3-87da-a443b702775f",
+      "stages": [
+        "input_accepted",
+        "turn_started"
+      ],
+      "provider": "codex",
+      "observation": "supported",
+      "processIncarnation": "e1d7adeb-e7a2-43ad-b94c-97902a905b03",
+      "generation": 237,
+      "baselineWorkingSequence": 1,
+      "baselineExplicitWorkingStartedAt": null,
+      "baselinePermissionSequence": 2
+    },
+    "residualResources": [],
+    "mutation": {
+      "requestId": "e11a3127-26a2-4bd3-87da-a443b702775f",
+      "replayed": false
+    }
+  },
+  "_meta": {
+    "runtimeId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be"
+  }
+}

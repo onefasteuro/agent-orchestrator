@@ -1,0 +1,3335 @@
+{
+  "id": "99ca34db-c89d-457d-9323-066f9939bf30",
+  "ok": true,
+  "result": {
+    "workers": [
+      {
+        "dispatchId": "ctx_46f41d06110b",
+        "taskId": "task_eaf77e369fd7",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_88835198-372f-45eb-9969-1e0c7a743480",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_ebba4dec32ff",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_88835198-372f-45eb-9969-1e0c7a743480",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C5b",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C5b@@5005a195:fd34b4b8-1e88-4e7e-958b-61466249eeff",
+          "originDispatchId": "ctx_46f41d06110b",
+          "ownerDispatchId": "ctx_46f41d06110b",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_46f41d06110b",
+          "dispatchId": "ctx_46f41d06110b",
+          "taskId": "task_eaf77e369fd7",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C5b",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_65589edf4835",
+        "taskId": "task_ec1d2f0432d2",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_350f2a59-14e3-4b2d-8e3d-0bd7d06c92a1",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_ef41b0ed9145",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_350f2a59-14e3-4b2d-8e3d-0bd7d06c92a1",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C4b",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C4b@@a520dd84:38035e3b-57b6-4066-96a9-1ab31b274c69",
+          "originDispatchId": "ctx_65589edf4835",
+          "ownerDispatchId": "ctx_65589edf4835",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_65589edf4835",
+          "dispatchId": "ctx_65589edf4835",
+          "taskId": "task_ec1d2f0432d2",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C4b",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_8b86056efd3d",
+        "taskId": "task_ae34f62cc371",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_0e7449ca-de00-4453-931c-380d9d046c78",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_7ef376d49ced",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_0e7449ca-de00-4453-931c-380d9d046c78",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C3b",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C3b@@89c28248:801701c3-3bdb-424f-9202-01b882f6e800",
+          "originDispatchId": "ctx_8b86056efd3d",
+          "ownerDispatchId": "ctx_8b86056efd3d",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_8b86056efd3d",
+          "dispatchId": "ctx_8b86056efd3d",
+          "taskId": "task_ae34f62cc371",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C3b",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_529213121578",
+        "taskId": "task_24e872bf5483",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_bce99ee8-639d-4231-a405-cdb0cabf6ca3",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_f27f66aa9629",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_bce99ee8-639d-4231-a405-cdb0cabf6ca3",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T10",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T10@@22041dff:485dc0e8-bdf8-4068-99f8-7380a0585c78",
+          "originDispatchId": "ctx_529213121578",
+          "ownerDispatchId": "ctx_529213121578",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_529213121578",
+          "dispatchId": "ctx_529213121578",
+          "taskId": "task_24e872bf5483",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T10",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_8c7807eeec8e",
+        "taskId": "task_a07f77a99256",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_bce99ee8-639d-4231-a405-cdb0cabf6ca3",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_9ab969346c2f",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_bce99ee8-639d-4231-a405-cdb0cabf6ca3",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T10",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T10@@22041dff:485dc0e8-bdf8-4068-99f8-7380a0585c78",
+          "originDispatchId": "ctx_8c7807eeec8e",
+          "ownerDispatchId": "ctx_8c7807eeec8e",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_8c7807eeec8e",
+          "dispatchId": "ctx_8c7807eeec8e",
+          "taskId": "task_a07f77a99256",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T10",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_435f077a61f4",
+        "taskId": "task_d0a333620433",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_9f4e93e3-ad26-4361-b311-4a24fe21c670",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_f08b95d4bbe2",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_9f4e93e3-ad26-4361-b311-4a24fe21c670",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T10",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T10@@8c4a8037:945711e2-dc0e-4bdf-a8fb-d4b7ccbea230",
+          "originDispatchId": "ctx_435f077a61f4",
+          "ownerDispatchId": "ctx_435f077a61f4",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_435f077a61f4",
+          "dispatchId": "ctx_435f077a61f4",
+          "taskId": "task_d0a333620433",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T10",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_8aa7298d74a3",
+        "taskId": "task_5f2f3e97a032",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_ec76263d-9dda-4167-a3c3-0df69e82fc04",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_9b3b038cbf83",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_ec76263d-9dda-4167-a3c3-0df69e82fc04",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C5",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C5@@3f3a9c46:1c15fd0b-2fe1-4fa9-b59d-289cb92986fb",
+          "originDispatchId": "ctx_8aa7298d74a3",
+          "ownerDispatchId": "ctx_8aa7298d74a3",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_8aa7298d74a3",
+          "dispatchId": "ctx_8aa7298d74a3",
+          "taskId": "task_5f2f3e97a032",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C5",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_cd2c01239716",
+        "taskId": "task_4a031d4be453",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_fc2d36ef-5812-409a-8225-ae34f15652b6",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_d9c602162eb3",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_fc2d36ef-5812-409a-8225-ae34f15652b6",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C4",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C4@@f4dc4bcf:b36bf27c-c54f-4cb6-b47f-f6c1ba042d42",
+          "originDispatchId": "ctx_cd2c01239716",
+          "ownerDispatchId": "ctx_cd2c01239716",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_cd2c01239716",
+          "dispatchId": "ctx_cd2c01239716",
+          "taskId": "task_4a031d4be453",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C4",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_69b1287c8f1d",
+        "taskId": "task_82042a2a7090",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_81c2c483-e1ca-4fe1-8e6f-122a0ee5d218",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_7bde9a297337",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_81c2c483-e1ca-4fe1-8e6f-122a0ee5d218",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S5",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S5@@1deb24ed:9d616475-227d-4c02-8354-c90d2d994eae",
+          "originDispatchId": "ctx_69b1287c8f1d",
+          "ownerDispatchId": "ctx_69b1287c8f1d",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_69b1287c8f1d",
+          "dispatchId": "ctx_69b1287c8f1d",
+          "taskId": "task_82042a2a7090",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S5",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_babc4b79d11d",
+        "taskId": "task_9cd7f4c550cb",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_be5a1265-413e-4883-aa17-53edf0ba17f1",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_66bef278f1a3",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_be5a1265-413e-4883-aa17-53edf0ba17f1",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T9",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T9@@51e6ef01:75719c63-c768-4db2-bfeb-d68283f2d399",
+          "originDispatchId": "ctx_babc4b79d11d",
+          "ownerDispatchId": "ctx_babc4b79d11d",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_babc4b79d11d",
+          "dispatchId": "ctx_babc4b79d11d",
+          "taskId": "task_9cd7f4c550cb",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T9",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_2a409148df63",
+        "taskId": "task_06937a4063c9",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_be5a1265-413e-4883-aa17-53edf0ba17f1",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_bd08a01e42fc",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_be5a1265-413e-4883-aa17-53edf0ba17f1",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T9",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T9@@51e6ef01:75719c63-c768-4db2-bfeb-d68283f2d399",
+          "originDispatchId": "ctx_2a409148df63",
+          "ownerDispatchId": "ctx_2a409148df63",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_2a409148df63",
+          "dispatchId": "ctx_2a409148df63",
+          "taskId": "task_06937a4063c9",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T9",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_35f7df0a09c5",
+        "taskId": "task_dd6b46fd5ebe",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_e341cfdb-5c9d-433b-a98e-014bebb24314",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_0dc95fa7bb71",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_e341cfdb-5c9d-433b-a98e-014bebb24314",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T9",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T9@@7678f6dc:7a6c6638-237c-4ba0-ba22-b3e8726d3e1a",
+          "originDispatchId": "ctx_35f7df0a09c5",
+          "ownerDispatchId": "ctx_35f7df0a09c5",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_35f7df0a09c5",
+          "dispatchId": "ctx_35f7df0a09c5",
+          "taskId": "task_dd6b46fd5ebe",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T9",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_188a8bcdb7ab",
+        "taskId": "task_f06204c95948",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_22959d7e-058a-4103-88de-ea29e22f23b4",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_75319368f6e8",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_22959d7e-058a-4103-88de-ea29e22f23b4",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T8",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T8@@970e8243:410b323b-c99b-400b-834b-11c155ad13b0",
+          "originDispatchId": "ctx_188a8bcdb7ab",
+          "ownerDispatchId": "ctx_188a8bcdb7ab",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_188a8bcdb7ab",
+          "dispatchId": "ctx_188a8bcdb7ab",
+          "taskId": "task_f06204c95948",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T8",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_e7a88c99bd07",
+        "taskId": "task_21d577cbb7bf",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_22959d7e-058a-4103-88de-ea29e22f23b4",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_c93658654740",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_22959d7e-058a-4103-88de-ea29e22f23b4",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T8",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T8@@970e8243:410b323b-c99b-400b-834b-11c155ad13b0",
+          "originDispatchId": "ctx_e7a88c99bd07",
+          "ownerDispatchId": "ctx_e7a88c99bd07",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_e7a88c99bd07",
+          "dispatchId": "ctx_e7a88c99bd07",
+          "taskId": "task_21d577cbb7bf",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T8",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_3ee58b31e820",
+        "taskId": "task_8deb9b0786dc",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_860f20a6-7842-4167-9a98-4fb4c272ddd0",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_1aa53714f164",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_860f20a6-7842-4167-9a98-4fb4c272ddd0",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T8",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T8@@4683db2e:a8b43279-d962-4ba3-bd2f-a96cd20b4d5c",
+          "originDispatchId": "ctx_3ee58b31e820",
+          "ownerDispatchId": "ctx_3ee58b31e820",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_3ee58b31e820",
+          "dispatchId": "ctx_3ee58b31e820",
+          "taskId": "task_8deb9b0786dc",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T8",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_bdb11b29ebec",
+        "taskId": "task_705f036de4e2",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_cd8a4115-5ba4-4377-8b10-20d572f1f1f0",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_6fce4edb184e",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_cd8a4115-5ba4-4377-8b10-20d572f1f1f0",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C3",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C3@@5d13dbc4:8d8473a8-b579-47af-85c0-638cba897999",
+          "originDispatchId": "ctx_bdb11b29ebec",
+          "ownerDispatchId": "ctx_bdb11b29ebec",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_bdb11b29ebec",
+          "dispatchId": "ctx_bdb11b29ebec",
+          "taskId": "task_705f036de4e2",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C3",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_4d4af99c600e",
+        "taskId": "task_e52d8176b946",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_27bc8eb0-c37f-4b00-b1cc-b42ecc621a81",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_9b85c5554101",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_27bc8eb0-c37f-4b00-b1cc-b42ecc621a81",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S4",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S4@@5cb6e55a:3321dcba-b92d-4a18-9f96-e536505fb6c3",
+          "originDispatchId": "ctx_4d4af99c600e",
+          "ownerDispatchId": "ctx_4d4af99c600e",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_4d4af99c600e",
+          "dispatchId": "ctx_4d4af99c600e",
+          "taskId": "task_e52d8176b946",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S4",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_79b255710875",
+        "taskId": "task_0a4e283fdf32",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_924b99e6-64e2-48b3-bc42-d1bff093a10d",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_a63801874911",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_924b99e6-64e2-48b3-bc42-d1bff093a10d",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T7",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T7@@eede4c86:2d6bd2af-34b6-4741-b32e-5e9b941bb3a7",
+          "originDispatchId": "ctx_79b255710875",
+          "ownerDispatchId": "ctx_79b255710875",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_79b255710875",
+          "dispatchId": "ctx_79b255710875",
+          "taskId": "task_0a4e283fdf32",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T7",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_1dd2aabdc886",
+        "taskId": "task_7d0d490a3d5a",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_924b99e6-64e2-48b3-bc42-d1bff093a10d",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_61662fff70ca",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_924b99e6-64e2-48b3-bc42-d1bff093a10d",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T7",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T7@@eede4c86:2d6bd2af-34b6-4741-b32e-5e9b941bb3a7",
+          "originDispatchId": "ctx_1dd2aabdc886",
+          "ownerDispatchId": "ctx_1dd2aabdc886",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_1dd2aabdc886",
+          "dispatchId": "ctx_1dd2aabdc886",
+          "taskId": "task_7d0d490a3d5a",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T7",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_2c26b0a0ef10",
+        "taskId": "task_68a5b47bfc3d",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_4e9fdc06-536b-40a7-8668-684f0bbcf74f",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_704b738908d7",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_4e9fdc06-536b-40a7-8668-684f0bbcf74f",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T7",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T7@@f7bb4d37:bdd0b3e1-45bc-404b-8ad7-257672611c44",
+          "originDispatchId": "ctx_2c26b0a0ef10",
+          "ownerDispatchId": "ctx_2c26b0a0ef10",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_2c26b0a0ef10",
+          "dispatchId": "ctx_2c26b0a0ef10",
+          "taskId": "task_68a5b47bfc3d",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T7",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_7f5eb74c0636",
+        "taskId": "task_db6b05c8e089",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_8323105e-97ae-4458-b1a7-8187a39bad27",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_b8b33c597665",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_8323105e-97ae-4458-b1a7-8187a39bad27",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T6",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T6@@c7ea1d72:f80ba92f-c95b-4c8b-83b2-68e687953aaf",
+          "originDispatchId": "ctx_7f5eb74c0636",
+          "ownerDispatchId": "ctx_7f5eb74c0636",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_7f5eb74c0636",
+          "dispatchId": "ctx_7f5eb74c0636",
+          "taskId": "task_db6b05c8e089",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T6",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_29087dc8b141",
+        "taskId": "task_ccba0dd00499",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_8323105e-97ae-4458-b1a7-8187a39bad27",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_0c0f84fadd9d",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_8323105e-97ae-4458-b1a7-8187a39bad27",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T6",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T6@@c7ea1d72:f80ba92f-c95b-4c8b-83b2-68e687953aaf",
+          "originDispatchId": "ctx_29087dc8b141",
+          "ownerDispatchId": "ctx_29087dc8b141",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_29087dc8b141",
+          "dispatchId": "ctx_29087dc8b141",
+          "taskId": "task_ccba0dd00499",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T6",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_acd61b012904",
+        "taskId": "task_277d5923aaf4",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_e2b95286-9aeb-470f-9e51-07c9b586754c",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_ba74073e3e5d",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_e2b95286-9aeb-470f-9e51-07c9b586754c",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T6",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T6@@33447f22:84a21355-f678-4c67-8f7f-fea7958eb816",
+          "originDispatchId": "ctx_acd61b012904",
+          "ownerDispatchId": "ctx_acd61b012904",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_acd61b012904",
+          "dispatchId": "ctx_acd61b012904",
+          "taskId": "task_277d5923aaf4",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T6",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_6469ea4d0bd1",
+        "taskId": "task_d9bd15f04c17",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_0a0e20a9-3f68-4017-aa67-ef213e4e9200",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_3f1fd5cd5af1",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_0a0e20a9-3f68-4017-aa67-ef213e4e9200",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S3",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S3@@b50a72e8:f830effd-ffa4-4c5c-abf6-29fa009d6b0c",
+          "originDispatchId": "ctx_6469ea4d0bd1",
+          "ownerDispatchId": "ctx_6469ea4d0bd1",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_6469ea4d0bd1",
+          "dispatchId": "ctx_6469ea4d0bd1",
+          "taskId": "task_d9bd15f04c17",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S3",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_11dc676388df",
+        "taskId": "task_b6d5b36a5e73",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_7d36801d-933a-415f-80d9-a22e013e0db5",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_f6f13c25cd1a",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_7d36801d-933a-415f-80d9-a22e013e0db5",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C2",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C2@@d845fa38:f630bac5-5849-4b17-9e4d-f35f6b9bec8e",
+          "originDispatchId": "ctx_11dc676388df",
+          "ownerDispatchId": "ctx_11dc676388df",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_11dc676388df",
+          "dispatchId": "ctx_11dc676388df",
+          "taskId": "task_b6d5b36a5e73",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C2",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_83f9d87333b0",
+        "taskId": "task_dba9c96b3760",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_5f7d189a-1e73-48cc-9f36-5fd4157ce79c",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_312eeea02440",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_5f7d189a-1e73-48cc-9f36-5fd4157ce79c",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S2",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S2@@b6f82e6b:e5d4a09e-33a2-468e-8051-77e4a9da47a6",
+          "originDispatchId": "ctx_83f9d87333b0",
+          "ownerDispatchId": "ctx_83f9d87333b0",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_83f9d87333b0",
+          "dispatchId": "ctx_83f9d87333b0",
+          "taskId": "task_dba9c96b3760",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S2",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_0de04b10bb0d",
+        "taskId": "task_09f2c9471cd0",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_89984486-daa8-49e0-b2a6-fa89cd9f4bbf",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_04f373255f51",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_89984486-daa8-49e0-b2a6-fa89cd9f4bbf",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T5",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T5@@af44071d:2407d0a6-1d0c-4623-b4e3-bc18097f0e35",
+          "originDispatchId": "ctx_0de04b10bb0d",
+          "ownerDispatchId": "ctx_0de04b10bb0d",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_0de04b10bb0d",
+          "dispatchId": "ctx_0de04b10bb0d",
+          "taskId": "task_09f2c9471cd0",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T5",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_a888b258137a",
+        "taskId": "task_55065c380dd6",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_89984486-daa8-49e0-b2a6-fa89cd9f4bbf",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_8889b3cae117",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_89984486-daa8-49e0-b2a6-fa89cd9f4bbf",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T5",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T5@@af44071d:2407d0a6-1d0c-4623-b4e3-bc18097f0e35",
+          "originDispatchId": "ctx_a888b258137a",
+          "ownerDispatchId": "ctx_a888b258137a",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_a888b258137a",
+          "dispatchId": "ctx_a888b258137a",
+          "taskId": "task_55065c380dd6",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T5",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_2b7c47df556c",
+        "taskId": "task_c2bc59e51d1b",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_dd417b09-1f35-4b0a-847e-c24ae0183c4a",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_9ad60561c88f",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_dd417b09-1f35-4b0a-847e-c24ae0183c4a",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T5",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T5@@c5f63354:8270fd81-c26f-412a-97b8-da4f476ac6f8",
+          "originDispatchId": "ctx_2b7c47df556c",
+          "ownerDispatchId": "ctx_2b7c47df556c",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_2b7c47df556c",
+          "dispatchId": "ctx_2b7c47df556c",
+          "taskId": "task_c2bc59e51d1b",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T5",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_5368862ca65e",
+        "taskId": "task_1552c765bc88",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_f48d3695-4b47-4490-bd73-b5aef6f982ea",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_ef00f14b5092",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_f48d3695-4b47-4490-bd73-b5aef6f982ea",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T4",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T4@@ce0ae485:0af4cd18-cf55-4754-ab7c-30ffe961db36",
+          "originDispatchId": "ctx_5368862ca65e",
+          "ownerDispatchId": "ctx_5368862ca65e",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_5368862ca65e",
+          "dispatchId": "ctx_5368862ca65e",
+          "taskId": "task_1552c765bc88",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T4",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_d7d6a8631830",
+        "taskId": "task_e41fdaf41cf2",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_f48d3695-4b47-4490-bd73-b5aef6f982ea",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_57c7631e4e7e",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_f48d3695-4b47-4490-bd73-b5aef6f982ea",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T4",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T4@@ce0ae485:0af4cd18-cf55-4754-ab7c-30ffe961db36",
+          "originDispatchId": "ctx_d7d6a8631830",
+          "ownerDispatchId": "ctx_d7d6a8631830",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_d7d6a8631830",
+          "dispatchId": "ctx_d7d6a8631830",
+          "taskId": "task_e41fdaf41cf2",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T4",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_476dd18752ba",
+        "taskId": "task_75c24b548307",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_77a8112c-d1ec-485b-a0cb-cdf6e5400c43",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_85e414abe27e",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_77a8112c-d1ec-485b-a0cb-cdf6e5400c43",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T4",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T4@@9fd57ba3:d1f94e06-ef25-4526-b1d8-b9d4c9a05e03",
+          "originDispatchId": "ctx_476dd18752ba",
+          "ownerDispatchId": "ctx_476dd18752ba",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_476dd18752ba",
+          "dispatchId": "ctx_476dd18752ba",
+          "taskId": "task_75c24b548307",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T4",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_31c278d40f4d",
+        "taskId": "task_a297622b74a6",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_4ef5fe43-d57c-4b30-bd94-e57d76b159a6",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_e5d09ad3345e",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_4ef5fe43-d57c-4b30-bd94-e57d76b159a6",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T3",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T3@@8d2cd766:7410a5d5-3ff2-4269-99fc-6db2c8af1355",
+          "originDispatchId": "ctx_31c278d40f4d",
+          "ownerDispatchId": "ctx_31c278d40f4d",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_31c278d40f4d",
+          "dispatchId": "ctx_31c278d40f4d",
+          "taskId": "task_a297622b74a6",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T3",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_6ed3f39d2111",
+        "taskId": "task_31a52e901bfa",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_4ef5fe43-d57c-4b30-bd94-e57d76b159a6",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_5b39d8d0b30f",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_4ef5fe43-d57c-4b30-bd94-e57d76b159a6",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T3",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T3@@8d2cd766:7410a5d5-3ff2-4269-99fc-6db2c8af1355",
+          "originDispatchId": "ctx_6ed3f39d2111",
+          "ownerDispatchId": "ctx_6ed3f39d2111",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_6ed3f39d2111",
+          "dispatchId": "ctx_6ed3f39d2111",
+          "taskId": "task_31a52e901bfa",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T3",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_8a1494b12a3f",
+        "taskId": "task_6dae730d0070",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_441b0420-6bc0-40d6-adc1-8fc518698911",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_d82e2f3f8d6f",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_441b0420-6bc0-40d6-adc1-8fc518698911",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T3",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T3@@73876d3d:45070a33-46b1-4325-bf7f-643e7c45c3a5",
+          "originDispatchId": "ctx_8a1494b12a3f",
+          "ownerDispatchId": "ctx_8a1494b12a3f",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_8a1494b12a3f",
+          "dispatchId": "ctx_8a1494b12a3f",
+          "taskId": "task_6dae730d0070",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T3",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_0d15713d5778",
+        "taskId": "task_f01d1711fedc",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_b9812f7f-4871-4355-a3a0-779f1938ec6f",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_85a5c482d8ea",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_b9812f7f-4871-4355-a3a0-779f1938ec6f",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T2-2",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T2-2@@2cd124f3:196bbd5e-188b-4477-89d5-cdcf9258fe56",
+          "originDispatchId": "ctx_0d15713d5778",
+          "ownerDispatchId": "ctx_0d15713d5778",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_0d15713d5778",
+          "dispatchId": "ctx_0d15713d5778",
+          "taskId": "task_f01d1711fedc",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T2-2",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_99117ffb374e",
+        "taskId": "task_e10845b5fd8e",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_b9812f7f-4871-4355-a3a0-779f1938ec6f",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_aabd6b81e45b",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_b9812f7f-4871-4355-a3a0-779f1938ec6f",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T2-2",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T2-2@@2cd124f3:196bbd5e-188b-4477-89d5-cdcf9258fe56",
+          "originDispatchId": "ctx_99117ffb374e",
+          "ownerDispatchId": "ctx_99117ffb374e",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_99117ffb374e",
+          "dispatchId": "ctx_99117ffb374e",
+          "taskId": "task_e10845b5fd8e",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T2-2",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_7c2801936a2d",
+        "taskId": "task_a596a7e78abd",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_ba270000-5f72-437f-82a7-2be05e5035f2",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_3f1d7a8f0c16",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_ba270000-5f72-437f-82a7-2be05e5035f2",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T2",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T2@@1b94bf67:4190cc00-aaae-44f1-9ea8-4e1d8e78cb19",
+          "originDispatchId": "ctx_7c2801936a2d",
+          "ownerDispatchId": "ctx_7c2801936a2d",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_7c2801936a2d",
+          "dispatchId": "ctx_7c2801936a2d",
+          "taskId": "task_a596a7e78abd",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T2",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_848e854269fb",
+        "taskId": "task_4c2ae546da68",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_c98384d8-5681-4b37-9529-63b9c05e2e36",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_afa2c943fb6e",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_c98384d8-5681-4b37-9529-63b9c05e2e36",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C1",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C1@@65de554e:0dbe3ceb-2931-40dc-b7d4-b9cf0ee95ea8",
+          "originDispatchId": "ctx_848e854269fb",
+          "ownerDispatchId": "ctx_848e854269fb",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_848e854269fb",
+          "dispatchId": "ctx_848e854269fb",
+          "taskId": "task_4c2ae546da68",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-C1",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_ed6e49059308",
+        "taskId": "task_feefd9584a40",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_16f847c1-4b80-4a48-a6e9-d9c0b21c5d52",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_430d2e73a609",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_16f847c1-4b80-4a48-a6e9-d9c0b21c5d52",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S1",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S1@@e994ba13:a8606d2f-d40d-4421-82f9-7d5329c15528",
+          "originDispatchId": "ctx_ed6e49059308",
+          "ownerDispatchId": "ctx_ed6e49059308",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_ed6e49059308",
+          "dispatchId": "ctx_ed6e49059308",
+          "taskId": "task_feefd9584a40",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/calib-S1",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_1c64e9b775d2",
+        "taskId": "task_d4d939c3e3ed",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_f88a2df9-1476-49e0-886c-04d858cd946d",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_e137705e2289",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_f88a2df9-1476-49e0-886c-04d858cd946d",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T1-2",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T1-2@@d49b6f36:ce403740-a66a-4735-bdba-8dc9856e6237",
+          "originDispatchId": "ctx_1c64e9b775d2",
+          "ownerDispatchId": "ctx_1c64e9b775d2",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_1c64e9b775d2",
+          "dispatchId": "ctx_1c64e9b775d2",
+          "taskId": "task_d4d939c3e3ed",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T1-2",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_4280152a868f",
+        "taskId": "task_784b71e9ceb9",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_f88a2df9-1476-49e0-886c-04d858cd946d",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_2aa8836d9474",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_f88a2df9-1476-49e0-886c-04d858cd946d",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T1-2",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T1-2@@d49b6f36:ce403740-a66a-4735-bdba-8dc9856e6237",
+          "originDispatchId": "ctx_4280152a868f",
+          "ownerDispatchId": "ctx_4280152a868f",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_4280152a868f",
+          "dispatchId": "ctx_4280152a868f",
+          "taskId": "task_784b71e9ceb9",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T1-2",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      },
+      {
+        "dispatchId": "ctx_393a593356a3",
+        "taskId": "task_ea2d669fd902",
+        "runId": "run_a78be37eff9a",
+        "workerState": "succeeded",
+        "dispatchStatus": "completed",
+        "agentTerminalHandle": "term_891740c4-08eb-4026-80ae-4514b25d07bc",
+        "terminalState": "retained",
+        "resource": {
+          "id": "wtr_c0a6e5f38bd5",
+          "ownershipState": "external",
+          "releaseState": "not_requested",
+          "retainedReason": "external_terminal",
+          "terminalHandle": "term_891740c4-08eb-4026-80ae-4514b25d07bc",
+          "worktreeId": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T1",
+          "endpointId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be",
+          "endpointIncarnation": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T1@@0cda6d6a:58cbfb4a-b9c8-4f8f-b6ff-80f1359eefdb",
+          "originDispatchId": "ctx_393a593356a3",
+          "ownerDispatchId": "ctx_393a593356a3",
+          "releaseRequestedAt": null,
+          "releaseCompletedAt": null,
+          "releaseError": null,
+          "recoveryAttemptCount": 0,
+          "lastRecoveryAt": null,
+          "archive": {
+            "source": null,
+            "status": null
+          }
+        },
+        "projection": {
+          "id": "ctx_393a593356a3",
+          "dispatchId": "ctx_393a593356a3",
+          "taskId": "task_ea2d669fd902",
+          "runId": "run_a78be37eff9a",
+          "role": "worker",
+          "parent": null,
+          "provider": null,
+          "host": {
+            "kind": "local",
+            "id": "local"
+          },
+          "workspace": {
+            "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T1",
+            "kind": "folder_or_worktree"
+          },
+          "stage": {
+            "worker": "succeeded",
+            "dispatch": "completed",
+            "detail": "settled",
+            "activity": "unknown"
+          },
+          "outcome": "succeeded",
+          "liveness": {
+            "verdict": "unverifiable",
+            "reason": "missing_status"
+          },
+          "evidence": {
+            "durable": true,
+            "liveStatus": "unavailable",
+            "lastObservedAt": null
+          },
+          "resource": {
+            "state": "external"
+          },
+          "nextAction": {
+            "kind": "none",
+            "argv": []
+          },
+          "attention": {
+            "categories": [
+              "unverifiable",
+              "root_completion"
+            ],
+            "requiresAction": true
+          }
+        }
+      }
+    ],
+    "counts": {
+      "retained": 43
+    },
+    "page": {
+      "limit": 100,
+      "total": 43,
+      "hasMore": false,
+      "nextCursor": null
+    },
+    "scope": {
+      "run": "run_a78be37eff9a",
+      "source": "flag"
+    }
+  },
+  "_meta": {
+    "runtimeId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be"
+  }
+}

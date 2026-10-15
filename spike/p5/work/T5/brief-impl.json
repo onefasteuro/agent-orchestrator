@@ -1,0 +1,112 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_pilot_T5_a1",
+  "role": "implementer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "clamp(value, min, max) applies the upper bound: clamp(15, 0, 10) is 10.",
+  "ac_ids": [
+   "AC-5",
+   "AC-11"
+  ],
+  "exclusions": [
+   "Do not edit any test file.",
+   "Do not change any other function."
+  ],
+  "expected_result": "A handoff where clamp tests: pass 2, fail 0."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/pilot/spec.md",
+   "baseline": "approved",
+   "revision": "174858dbc3d651358c767dc4b15ef72ab29f6970",
+   "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+  },
+  "feature_plan": {
+   "path": "specs/pilot/plan.md",
+   "baseline": "approved",
+   "revision": "174858dbc3d651358c767dc4b15ef72ab29f6970",
+   "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+  },
+  "role_pack_hash": "aebaa5a81edb0069dd3f8fa0ae4daaf206925f3950bc55dba356e9d6a9a27c32",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "specs/pilot/spec.md (shared rules R-1 to R-5, acceptance criteria)",
+   "src/math.mjs (mean shows the validation shape)"
+  ],
+  "predecessor_conclusions": [
+   "Edit ONLY the clamp function in src/math.mjs: add the upper-bound branch and remove the comment that says the defect is deliberate. Do not touch tests; the existing test 'clamp respects upper bound' must pass unchanged.",
+   "This change removes one line (the deliberate-defect comment) and adds one; that is allowed for this task.",
+   "The existing test 'clamp respects upper bound' has been fixed; the full suite must have 0 failures.",
+   "src/generated.mjs is written by the pre-commit hook during the coordinator's commit; never create or edit it."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/pilot-T5",
+  "base_sha": "174858dbc3d651358c767dc4b15ef72ab29f6970",
+  "candidate_sha": null,
+  "dirty_state": null,
+  "assigned_paths": [
+   "src/math.mjs"
+  ],
+  "new_paths": [],
+  "protected_paths": [
+   "scripts/",
+   "package.json"
+  ]
+ },
+ "execution": {
+  "runtime": "pi",
+  "model": "ollama-cloud/deepseek-v4.1-flash",
+  "effort": "high",
+  "permission_recipe": "pi-terminal-attach",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 90,
+   "attempts": 3,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "clamp tests",
+    "command": "node --test --test-name-pattern=\"^clamp\" test/",
+    "expected": "pass 2, fail 0"
+   }
+  ],
+  "estimate": {
+   "files": 1,
+   "lines": 4
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "changed paths as git status shows them",
+   "each required check with its result line",
+   "questions asked and answers received, with any timeout",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble",
+  "usage_source": "pi-status-bar",
+  "budget_ref": "pilot-T5",
+  "escalation_rule": "ask before any decision the brief does not settle, after two failed attempts at the same problem, or if a required path is outside your allowlist",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl"
+ }
+}

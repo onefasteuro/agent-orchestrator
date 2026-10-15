@@ -1,0 +1,118 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_pilot_T6_review_p2",
+  "role": "reviewer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "Pass-2 review reconciling your persisted pass-1 findings with the supplied evidence of candidate e6c17439eff7 for task T6 (variance(values) returns the population variance (divide by n): variance([2, 4, 4, 4, 5, 5, 7, 9]) is 4 and variance([5]) is 0.) against specs/pilot/spec.md AC-6, AC-11 and shared rules R-1 to R-5.",
+  "ac_ids": [
+   "AC-6",
+   "AC-11"
+  ],
+  "exclusions": [
+   "No edits.",
+   "Do not retract a pass-1 finding because the implementer says it is fine."
+  ],
+  "expected_result": "VERDICT line first, then per-criterion verdicts with file and line, findings with severity and verification step, checks run with result lines."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/pilot/spec.md",
+   "baseline": "approved",
+   "revision": "4fbe1e0f9742839cf3263aaf482650366ec88c7e",
+   "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+  },
+  "feature_plan": {
+   "path": "specs/pilot/plan.md",
+   "baseline": "approved",
+   "revision": "4fbe1e0f9742839cf3263aaf482650366ec88c7e",
+   "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+  },
+  "role_pack_hash": "035328ae9c95590fad94a904c279b9326fae54b019c29cb00b14f28f898096f1",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "git diff 4fbe1e0f9742..e6c17439eff7 (run it yourself; read-only git commands are permitted)",
+   "Your own pass-1 report (persisted as review_pass_one_recorded): VERDICT: ACCEPT\nI completed independent pass 1 at verified candidate e6c17439eff73702d3ca17cbdcd10ee15f584a13 against base 4fbe1e0f9742839cf3263aaf482650366ec88c7e, reviewing the complete diff, touched files and tests without edits or withheld narratives.\nPer-criterion verdicts: AC-6 satisfied (src/math.mjs:55\u201359, test/math.test.mjs:197\u2013215: population divisor, singleton zero and required validation); AC-11 satisfied (package.json:7, executed full suite: pass 34, fail 0); R-1 satisfied (src/math.mjs:55\u201357 matches mean validation); R-2 satisfied (src/math.mjs:58\u201359 only reads input, frozen-input assertion passed); R-3 satisfied (complete diff preserves all other existing functions and existing test cases, with only the permitted existing import edit at test/math.test.mjs:3); R-4 satisfied (no dependency changes, src/generated.mjs:1 is the declared generated timestamp); R-5 satisfied (test/math.test.mjs:197,201,205 all use the variance prefix); findings: none.\nChecks run: git rev-parse HEAD matched the candidate; node --test --test-name-pattern=\"^variance\" test/ exited 0 with result lines \u201c\u2139 tests 3\u201d, \u201c\u2139 pass 3\u201d, \u201c\u2139 fail 0\u201d; npm test exited 0 with \u201c\u2139 tests 34\u201d, \u201c\u2139 pass 34\u201d, \u201c\u2139 fail 0\u201d and both clamp tests passing; supplementary node -e assertions exited 0 with \u201cR-2 frozen-input check: PASS\u201d (the initial here-document invocation was blocked by the read-only sandbox before execution and was rerun without temporary files); git status --short was empty; remaining uncertainty: none for the specified criteria, with acceptance left to the coordinator."
+  ],
+  "predecessor_conclusions": [
+   "Clamp: fixed in T5; the full suite must have 0 failures.",
+   "src/generated.mjs is hook-generated and declared; not an implementer change.",
+   "Your worker_done body MUST start with exactly one of these lines: 'VERDICT: ACCEPT' (no findings, or only low findings the coordinator may accept) or 'VERDICT: REPAIR' (at least one medium or higher finding). Then the per-criterion verdicts, findings, checks run, uncertainty.",
+   "Implementer self-report: Changed paths: M src/math.mjs, M test/math.test.mjs. Fixed variance() to divide by values.length (population variance) and removed the seeded-bug comment, then appended exactly three 'variance' tests and extended the import on line 3. Required check 'variance tests' -> node --test --test-name-pattern=\"^variance\" test/ -> pass 3, fail 0; full npm test is pass 34, fail 0. No questions asked, no timeouts; remaining uncertainty: none \u2014 src/generated.mjs is intentionally untouched (hook-generated). (filesModified payload: ['test/math.test.mjs']; the Git-computed receipt is authoritative)",
+   "Gate receipt on the candidate: changed [[\"M\", \"src/generated.mjs\", [\"generated\"]], [\"M\", \"src/math.mjs\", [\"assigned\"]], [\"M\", \"test/math.test.mjs\", [\"assigned\"]]]; size {\"files\": 2, \"lines\": 25, \"within\": true}; clean after commit; pinned document hashes match.",
+   "Coordinator checks on the candidate: task tests pass 3 fail 0; full suite pass 34 fail 0."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T6",
+  "base_sha": "4fbe1e0f9742839cf3263aaf482650366ec88c7e",
+  "candidate_sha": "e6c17439eff73702d3ca17cbdcd10ee15f584a13",
+  "dirty_state": null,
+  "assigned_paths": [],
+  "new_paths": [],
+  "protected_paths": []
+ },
+ "execution": {
+  "runtime": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "permission_recipe": "codex-read-only",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 30,
+   "attempts": 1,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "variance tests",
+    "command": "node --test --test-name-pattern=\"^variance\" test/",
+    "expected": "pass 3, fail 0"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "pass 34 fail 0"
+   }
+  ],
+  "estimate": {
+   "files": 0,
+   "lines": 0
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "VERDICT line",
+   "candidate SHA inspected",
+   "pass number",
+   "per-criterion verdicts",
+   "findings",
+   "checks run",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (worker_done once)",
+  "usage_source": "codex-session-rollout",
+  "budget_ref": "pilot-T6-review",
+  "escalation_rule": "BLOCKED_CONTEXT if HEAD is not the candidate SHA",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl",
+  "pass": 2
+ }
+}

@@ -1,0 +1,118 @@
+{
+ "schema_version": "1",
+ "identity": {
+  "brief_id": "brief_pilot_T7_review_p2",
+  "role": "reviewer",
+  "mode": "M-2"
+ },
+ "objective": {
+  "outcome": "Pass-2 review reconciling your persisted pass-1 findings with the supplied evidence of candidate 04b48980749a for task T7 (stddev(values) returns the square root of the population variance: stddev([2, 4, 4, 4, 5, 5, 7, 9]) is 2 and stddev([5]) is 0.) against specs/pilot/spec.md AC-7, AC-11 and shared rules R-1 to R-5.",
+  "ac_ids": [
+   "AC-7",
+   "AC-11"
+  ],
+  "exclusions": [
+   "No edits.",
+   "Do not retract a pass-1 finding because the implementer says it is fine."
+  ],
+  "expected_result": "VERDICT line first, then per-criterion verdicts with file and line, findings with severity and verification step, checks run with result lines."
+ },
+ "context": {
+  "feature_spec": {
+   "path": "specs/pilot/spec.md",
+   "baseline": "approved",
+   "revision": "e6c17439eff73702d3ca17cbdcd10ee15f584a13",
+   "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+  },
+  "feature_plan": {
+   "path": "specs/pilot/plan.md",
+   "baseline": "approved",
+   "revision": "e6c17439eff73702d3ca17cbdcd10ee15f584a13",
+   "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+  },
+  "role_pack_hash": "ed495127c651e9db04ca685f6b6f85e29d807d070d757f23bdb6d1db86774a2f",
+  "instructions": [
+   "AGENTS.md"
+  ],
+  "evidence": [
+   "git diff e6c17439eff7..04b48980749a (run it yourself; read-only git commands are permitted)",
+   "Your own pass-1 report (persisted as review_pass_one_recorded): VERDICT: ACCEPT\nPass 1 independently reviewed candidate 04b48980749af3c596dbe1b630a7d82eb5d0e6d5, confirmed HEAD matches, and read the complete base-to-candidate diff, touched files, specification and tests without accessing withheld material; AC-7: satisfied \u2014 src/math.mjs:65 takes the square root of population variance computed at src/math.mjs:59, with the required results asserted at test/math.test.mjs:218 and :222; AC-11: satisfied \u2014 package.json:7 runs the full test suite, which produced exactly 36 passes and 0 failures, including unchanged clamp tests at test/math.test.mjs:9 and :13.\nR-1: satisfied \u2014 src/math.mjs:65 delegates to the array, empty-array and finite-number validation at :55\u201357; R-2: satisfied \u2014 src/math.mjs:58\u201359 and :65 only read input, also confirmed by a frozen-input probe; R-3: satisfied \u2014 the complete diff preserves every existing function body and existing test case, changes only the permitted import at test/math.test.mjs:3, adds tests at :217\u2013223, and updates the stddev comment at src/math.mjs:62\u201363; R-4: satisfied \u2014 no dependency changes, package.json:1\u201310 unchanged, and src/generated.mjs:1 is the declared generated timestamp change; R-5: satisfied \u2014 both added test names at test/math.test.mjs:217 and :221 start with stddev; findings: none.\nChecks run: node --test --test-name-pattern=\"^stddev\" test/ exited 0 with result lines \"\u2139 pass 2\" and \"\u2139 fail 0\"; npm test exited 0 with \"\u2139 pass 36\" and \"\u2139 fail 0\"; git diff --check exited 0 with no output; supplemental in-memory validation and nonmutation assertions exited 0 with \"R-1 validation and R-2 frozen-input probes: PASS\" after the initial here-document invocation was blocked by the read-only sandbox and rerun using node -e; git status --short was empty; remaining uncertainty: no unresolved in-scope issue, validation and nonmutation are confirmed by source review and supplemental probes rather than dedicated committed stddev test cases, and no files were changed."
+  ],
+  "predecessor_conclusions": [
+   "Clamp: fixed in T5; the full suite must have 0 failures.",
+   "src/generated.mjs is hook-generated and declared; not an implementer change.",
+   "Your worker_done body MUST start with exactly one of these lines: 'VERDICT: ACCEPT' (no findings, or only low findings the coordinator may accept) or 'VERDICT: REPAIR' (at least one medium or higher finding). Then the per-criterion verdicts, findings, checks run, uncertainty.",
+   "Implementer self-report: Implemented T7 as directed: appended exactly two stddev-prefixed tests (eight-value example equals 2, single element equals 0) at the end of test/math.test.mjs, extended the line-3 import with stddev, and replaced the stale seeded-bug comment above stddev in src/math.mjs while keeping stddev() reusing variance(). Changed paths exactly as git status --porcelain shows: ' M src/math.mjs' and ' M test/math.test.mjs'. Required checks: node --test --test-name-pattern=\"^stddev\" test/ -> pass 2, fail 0; npm test -> pass 36, fail 0 (AC-11); I asked the one required blocking question ('Should stddev() reuse variance() or compute the variance itself?'), the first ask timed out after 60000ms (msg_f9e0ea17a9cd) and I resumed it, receiving the answer 'Reuse variance(); remove the seeded-bug comment', with no remaining uncertainty beyond stddev correctness now depending on variance staying divide-by-n. (filesModified payload: ['test/math.test.mjs']; the Git-computed receipt is authoritative)",
+   "Gate receipt on the candidate: changed [[\"M\", \"src/generated.mjs\", [\"generated\"]], [\"M\", \"src/math.mjs\", [\"assigned\"]], [\"M\", \"test/math.test.mjs\", [\"assigned\"]]]; size {\"files\": 2, \"lines\": 13, \"within\": true}; clean after commit; pinned document hashes match.",
+   "Coordinator checks on the candidate: task tests pass 2 fail 0; full suite pass 36 fail 0."
+  ]
+ },
+ "workspace": {
+  "repository": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "integration_checkout": "/Users/oliverharoun/Sites/orca-sdd-fixture",
+  "worker_checkout": "/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T7",
+  "base_sha": "e6c17439eff73702d3ca17cbdcd10ee15f584a13",
+  "candidate_sha": "04b48980749af3c596dbe1b630a7d82eb5d0e6d5",
+  "dirty_state": null,
+  "assigned_paths": [],
+  "new_paths": [],
+  "protected_paths": []
+ },
+ "execution": {
+  "runtime": "codex",
+  "model": "gpt-6-astra",
+  "effort": "high",
+  "permission_recipe": "codex-read-only",
+  "readiness": {
+   "setup_complete": true
+  },
+  "limits": {
+   "session_minutes": 30,
+   "attempts": 1,
+   "max_files": 5,
+   "max_lines": 300
+  },
+  "retrieval": []
+ },
+ "validation": {
+  "checks": [
+   {
+    "name": "stddev tests",
+    "command": "node --test --test-name-pattern=\"^stddev\" test/",
+    "expected": "pass 2, fail 0"
+   },
+   {
+    "name": "full suite",
+    "command": "npm test",
+    "expected": "pass 36 fail 0"
+   }
+  ],
+  "estimate": {
+   "files": 0,
+   "lines": 0
+  },
+  "generated_paths": [
+   "src/generated.mjs"
+  ],
+  "scratch_paths": [],
+  "fixture_only": true
+ },
+ "delivery": {
+  "result_fields": [
+   "VERDICT line",
+   "candidate SHA inspected",
+   "pass number",
+   "per-criterion verdicts",
+   "findings",
+   "checks run",
+   "remaining uncertainty"
+  ],
+  "reply_route": "Orca run inbox via the injected preamble (worker_done once)",
+  "usage_source": "codex-session-rollout",
+  "budget_ref": "pilot-T7-review",
+  "escalation_rule": "BLOCKED_CONTEXT if HEAD is not the candidate SHA",
+  "recovery_ref": ".agent-task.md (coordinator only)",
+  "audit_ref": "/Users/oliverharoun/Sites/orca-sdd-fixture/.agents/orca-sdd/runs/mean/events.jsonl",
+  "pass": 2
+ }
+}

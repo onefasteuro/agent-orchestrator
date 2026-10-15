@@ -1,0 +1,37 @@
+{
+ "id": "T9",
+ "outcome": "A new test file test/regression.test.mjs pins the median overflow fix and clamp bounds.",
+ "ac_ids": [
+  "AC-9",
+  "AC-11"
+ ],
+ "assigned": [],
+ "new": [
+  "test/regression.test.mjs"
+ ],
+ "prefix": "regression",
+ "checks": [
+  {
+   "name": "regression tests",
+   "command": "node --test --test-name-pattern=\"^regression\" test/",
+   "expected": "pass 2, fail 0"
+  }
+ ],
+ "full_expect": "pass 41 fail 0",
+ "ask": false,
+ "ask_question": "",
+ "ask_answer": "",
+ "conclusions": [
+  "Create ONLY the new file test/regression.test.mjs with EXACTLY two tests whose names start with 'regression': (1) median([Number.MAX_VALUE, Number.MAX_VALUE]) equals Number.MAX_VALUE and the negative pair equals -Number.MAX_VALUE; (2) clamp(15, 0, 10) is 10 and clamp(-5, 0, 10) is 0.",
+  "Do not edit any existing file.",
+  "The full suite must have 0 failures."
+ ],
+ "estimate": {
+  "files": 1,
+  "lines": 25
+ },
+ "clamp_fixed": true,
+ "exclusions": [
+  "Do not edit src/ or existing tests."
+ ]
+}

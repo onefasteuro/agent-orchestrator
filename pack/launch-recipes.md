@@ -75,3 +75,11 @@ ORCA orchestration worker-start --retry-of <id> --task <task_id> --terminal <new
 ```
 
 `--retry-of` is refused until the dispatch is settled. A pending question on the old dispatch is replied to or cancelled first. Observed on 14 October 2026: closing the attached terminal settles the dispatch itself as `failed` with `terminationReason: operator_close`, after which `worker-abandon` is refused as already settled. So the order is `worker-stop` (fence), `terminal close` (verify `ptyKilled`), then `worker-abandon` only if `worker-show` still reports the dispatch unsettled.
+
+## Shell hazards observed while scripting the coordinator
+
+- zsh applies history modifiers to `$VAR:` expansions: `"$BASE:specs/x.md"` becomes garbage. Always write `"${BASE}:specs/x.md"`. This single bug produced the identical wrong document hashes seen in P3.
+- A command stored in a variable (`G="git -c ..."`) is not word-split by zsh; use a function.
+- `git revert` has no `-q`; a failed revert inside a script that does not check status leaves the bad integration in place.
+- Parse every CLI result with its `ok` field before using any id from it; an error envelope also carries an `id` (the request id).
+- Orca terminal handles and the Run's coordinator binding do not survive an Orca restart; `task-create` then fails with `stable_pane_required`. Re-create the coordinator terminal, create a new Run, and record both in the recovery index before continuing.

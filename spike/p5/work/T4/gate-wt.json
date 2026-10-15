@@ -1,0 +1,79 @@
+{
+  "ok": true,
+  "violations": [],
+  "receipt": {
+    "base_sha": "9a03465ff5595546d1b261a7494b4c82651370cd",
+    "candidate_sha": null,
+    "inspected": "working_tree",
+    "feature_spec": {
+      "revision": "9a03465ff5595546d1b261a7494b4c82651370cd",
+      "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+    },
+    "feature_plan": {
+      "revision": "9a03465ff5595546d1b261a7494b4c82651370cd",
+      "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+    },
+    "brief_hash": "ebbd36d2a4e55ff15f3433089f6809e58203e6d46c2f73cfc82a6cef10a9c34a",
+    "allowed_path_digest": "e048f882b123285de57e88fb5290cf8cd093d0ee88e6c98054472128174cae92",
+    "changed_paths": [
+      {
+        "status": "M",
+        "path": "src/math.mjs",
+        "oldPath": null,
+        "classes": [
+          {
+            "path": "src/math.mjs",
+            "cls": "assigned",
+            "ok": true
+          }
+        ]
+      },
+      {
+        "status": "M",
+        "path": "test/math.test.mjs",
+        "oldPath": null,
+        "classes": [
+          {
+            "path": "test/math.test.mjs",
+            "cls": "assigned",
+            "ok": true
+          }
+        ]
+      }
+    ],
+    "cleanliness": {
+      "staged": [],
+      "unstaged": [
+        "src/math.mjs",
+        "test/math.test.mjs"
+      ],
+      "untracked": [],
+      "ignored_unexpected": [],
+      "clean": null
+    },
+    "size": {
+      "files": 2,
+      "lines": 46,
+      "generated_files": 0,
+      "limits": {
+        "max_files": 5,
+        "max_lines": 300
+      },
+      "within": true
+    },
+    "protected_hashes": {
+      "feature_spec": {
+        "path": "specs/pilot/spec.md",
+        "expected": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa",
+        "actual": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa",
+        "match": true
+      },
+      "feature_plan": {
+        "path": "specs/pilot/plan.md",
+        "expected": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07",
+        "actual": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07",
+        "match": true
+      }
+    }
+  }
+}

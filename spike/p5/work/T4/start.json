@@ -1,0 +1,85 @@
+{
+  "id": "797012fa-e027-4cdf-8bee-94bcc2b530f4",
+  "ok": true,
+  "result": {
+    "runId": "run_a78be37eff9a",
+    "taskId": "task_1552c765bc88",
+    "dispatchId": "ctx_5368862ca65e",
+    "state": "ready",
+    "stage": "input_accepted",
+    "turnStart": "observed",
+    "setup": {
+      "requested": "not_applicable",
+      "effective": "not_applicable",
+      "source": "existing_worktree",
+      "hookFound": false,
+      "startupPolicy": "start-immediately",
+      "state": "not_applicable"
+    },
+    "launch": {
+      "requested": {
+        "agent": null,
+        "model": null,
+        "effort": null
+      },
+      "effective": {
+        "agent": null,
+        "model": null,
+        "effort": null
+      }
+    },
+    "mode": {
+      "mode": "terminal",
+      "preferred": "terminal",
+      "reason": "user_default",
+      "detail": "Started a terminal agent worker, the default for new agent tabs in your settings."
+    },
+    "timeoutMs": 60000,
+    "effects": [
+      {
+        "kind": "worktree",
+        "action": "reused",
+        "id": "e39c9174-87d1-44c6-9cb0-fa6488a7a3c4::/Users/oliverharoun/orca/workspaces/orca-sdd-fixture/review-T4"
+      },
+      {
+        "kind": "setup",
+        "action": "not_applicable",
+        "state": "not_applicable"
+      },
+      {
+        "kind": "terminal",
+        "role": "agent",
+        "action": "reused",
+        "id": "term_f48d3695-4b47-4490-bd73-b5aef6f982ea"
+      },
+      {
+        "kind": "dispatch_input",
+        "role": "agent",
+        "id": "term_f48d3695-4b47-4490-bd73-b5aef6f982ea",
+        "state": "accepted"
+      }
+    ],
+    "prompt": {
+      "requestId": "e9cc4ec4-7d2b-407d-b06c-7d6067b94b2c",
+      "stages": [
+        "input_accepted",
+        "turn_started"
+      ],
+      "provider": "codex",
+      "observation": "supported",
+      "processIncarnation": "0af4cd18-cf55-4754-ab7c-30ffe961db36",
+      "generation": 48,
+      "baselineWorkingSequence": 2,
+      "baselineExplicitWorkingStartedAt": null,
+      "baselinePermissionSequence": 2
+    },
+    "residualResources": [],
+    "mutation": {
+      "requestId": "e9cc4ec4-7d2b-407d-b06c-7d6067b94b2c",
+      "replayed": false
+    }
+  },
+  "_meta": {
+    "runtimeId": "19b8788a-9f5e-4bba-90c1-5a94b068d0be"
+  }
+}

@@ -1,0 +1,35 @@
+{
+ "id": "T6",
+ "outcome": "variance(values) returns the population variance (divide by n): variance([2, 4, 4, 4, 5, 5, 7, 9]) is 4 and variance([5]) is 0.",
+ "ac_ids": [
+  "AC-6",
+  "AC-11"
+ ],
+ "assigned": [
+  "src/math.mjs",
+  "test/math.test.mjs"
+ ],
+ "new": [],
+ "prefix": "variance",
+ "checks": [
+  {
+   "name": "variance tests",
+   "command": "node --test --test-name-pattern=\"^variance\" test/",
+   "expected": "pass 3, fail 0"
+  }
+ ],
+ "full_expect": "pass 34 fail 0",
+ "ask": false,
+ "ask_question": "",
+ "ask_answer": "",
+ "conclusions": [
+  "Bug fix: the existing variance() divides by values.length - 1; the spec requires division by values.length. Change that one expression and remove the seeded-bug comment above the function. Keep validation unchanged.",
+  "Write EXACTLY three tests named with the prefix 'variance': the eight-value example equals 4, a single element equals 0, invalid input throws; append them at the end of test/math.test.mjs; extend the import on line 3.",
+  "The full suite must have 0 failures (clamp was fixed in T5)."
+ ],
+ "estimate": {
+  "files": 2,
+  "lines": 30
+ },
+ "clamp_fixed": true
+}

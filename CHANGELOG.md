@@ -26,6 +26,10 @@ P0 closed by the user on P0b spike evidence (D-14). All eight spike rows passed 
 
 **14 to 15 October 2026:** P4 authorized (D-19) and delivered. Seven drills pass; the blind review caught a real overflow defect and the repair loop ran end to end. Tools gained `spec-drift`, `reconcile`, a stall rule for finished-but-unreported agent turns, exact-match acceptance citation, a required metadata baseline, append refusal on corrupt logs, and a test that every documented CLI command exists; 42 tests. Recipes record three Orca behaviours: `terminal close` settles an attached dispatch as `failed/operator_close`, every worktree creation writes `branch.<name>.base` into the shared config, and `check --wait` emits keepalive lines before its result. Four coordinator glue mistakes across P3 and P4 are recorded with their corrections.
 
+**15 October 2026, later:** D-21 calibration adjudication; reviewer prompt gains a rule-level MEDIUM severity floor for untested spec-required behaviour (a first, stricter wording was tested and withdrawn); calibration rerun twice, final block 5 of 5 seeds and 0 of 5 false positives.
+
+**15 October 2026:** P5 authorized (D-20) and delivered. Ten pilot tasks accepted through the full workflow on the fixture (12:17Z to 13:52Z), three restart drills, two ask timeouts, thirteen calibration reviews (5 of 5 seeds caught, 0 false positives on the final controls, three controls replaced with disclosure), zero interventions, usage on every dispatch. Tools: `sdd integrate` with `--cites`. Runners under `spike/p5/`. Shell hazards recorded in the launch recipes.
+
 ## v0.4, 14 October 2026
 
 Restructure for brevity. Guarantees preserved; mechanisms moved to a tiered controls table. Package reduced from six documents to four plus archive.

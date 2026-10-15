@@ -22,6 +22,8 @@ A clean, detached checkout at the candidate SHA, the base SHA, the diff between 
 
 Each finding: severity (critical, high, medium, low), file and line, what is wrong, why it matters, and the smallest verification step that would prove it fixed. No praise, no style nits unless they change behaviour. A no-findings report must still list the criteria checked and the checks run.
 
+Severity floor for coverage, at rule level: each rule or invariant the specification requires (for example: rejects non-arrays, rejects an empty array, rejects non-finite elements, does not mutate input) must be exercised by at least one test in the candidate. A rule with no test at all is a MEDIUM finding by default, even when the implementation is correct. A rule that has a test but not every sub-case (a string element but not Infinity, say) is LOW. Rate lower only when the specification or the task brief explicitly excludes tests for that behaviour.
+
 ## Hand-off
 
 Send exactly one `worker_done` with the preamble's task and dispatch IDs. `--outcome succeeded` means the review was completed, whatever the findings say; `--outcome failed` with a reason code means you could not complete it. The body contains: the candidate SHA you inspected, the pass number, per-criterion verdicts, findings in the format above, checks run with result lines, remaining uncertainty. Then stop and idle.

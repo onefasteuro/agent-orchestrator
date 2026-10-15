@@ -1,0 +1,37 @@
+{
+ "id": "T8",
+ "outcome": "A new test file test/stats.integration.test.mjs exercises at least four functions together.",
+ "ac_ids": [
+  "AC-8",
+  "AC-11"
+ ],
+ "assigned": [],
+ "new": [
+  "test/stats.integration.test.mjs"
+ ],
+ "prefix": "integration",
+ "checks": [
+  {
+   "name": "integration tests",
+   "command": "node --test --test-name-pattern=\"^integration\" test/",
+   "expected": "pass 3, fail 0"
+  }
+ ],
+ "full_expect": "pass 39 fail 0",
+ "ask": false,
+ "ask_question": "",
+ "ask_answer": "",
+ "conclusions": [
+  "Create ONLY the new file test/stats.integration.test.mjs with EXACTLY three tests whose names start with 'integration', importing from '../src/math.mjs'. Examples: mean of [min, max] equals the midpoint; median of a skewed set differs from its mean; range equals max minus min on a random-looking fixed array; stddev squared equals variance.",
+  "Do not edit any existing file.",
+  "The full suite must have 0 failures."
+ ],
+ "estimate": {
+  "files": 1,
+  "lines": 40
+ },
+ "clamp_fixed": true,
+ "exclusions": [
+  "Do not edit src/ or existing tests."
+ ]
+}

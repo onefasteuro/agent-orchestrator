@@ -1,0 +1,80 @@
+{
+  "ok": true,
+  "violations": [],
+  "receipt": {
+    "base_sha": "174858dbc3d651358c767dc4b15ef72ab29f6970",
+    "candidate_sha": "4fbe1e0f9742839cf3263aaf482650366ec88c7e",
+    "inspected": "candidate",
+    "feature_spec": {
+      "revision": "174858dbc3d651358c767dc4b15ef72ab29f6970",
+      "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+    },
+    "feature_plan": {
+      "revision": "174858dbc3d651358c767dc4b15ef72ab29f6970",
+      "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+    },
+    "brief_hash": "6a16c3c4878f23bf7fcfdd98c867a992140f0cc5c77f53b17a50ad044ca9be2a",
+    "allowed_path_digest": "03c13e37779fe55f491f2f178bbcc6e512d1b62bdef88b3a8fbf3b6425eed2cb",
+    "changed_paths": [
+      {
+        "status": "M",
+        "path": "src/generated.mjs",
+        "oldPath": null,
+        "classes": [
+          {
+            "path": "src/generated.mjs",
+            "cls": "generated",
+            "ok": true
+          }
+        ],
+        "oldMode": "100644",
+        "newMode": "100644"
+      },
+      {
+        "status": "M",
+        "path": "src/math.mjs",
+        "oldPath": null,
+        "classes": [
+          {
+            "path": "src/math.mjs",
+            "cls": "assigned",
+            "ok": true
+          }
+        ],
+        "oldMode": "100644",
+        "newMode": "100644"
+      }
+    ],
+    "cleanliness": {
+      "staged": [],
+      "unstaged": [],
+      "untracked": [],
+      "ignored_unexpected": [],
+      "clean": true
+    },
+    "size": {
+      "files": 1,
+      "lines": 2,
+      "generated_files": 1,
+      "limits": {
+        "max_files": 5,
+        "max_lines": 300
+      },
+      "within": true
+    },
+    "protected_hashes": {
+      "feature_spec": {
+        "path": "specs/pilot/spec.md",
+        "expected": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa",
+        "actual": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa",
+        "match": true
+      },
+      "feature_plan": {
+        "path": "specs/pilot/plan.md",
+        "expected": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07",
+        "actual": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07",
+        "match": true
+      }
+    }
+  }
+}

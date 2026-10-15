@@ -1,0 +1,34 @@
+{
+ "id": "T7",
+ "outcome": "stddev(values) returns the square root of the population variance: stddev([2, 4, 4, 4, 5, 5, 7, 9]) is 2 and stddev([5]) is 0.",
+ "ac_ids": [
+  "AC-7",
+  "AC-11"
+ ],
+ "assigned": [
+  "src/math.mjs",
+  "test/math.test.mjs"
+ ],
+ "new": [],
+ "prefix": "stddev",
+ "checks": [
+  {
+   "name": "stddev tests",
+   "command": "node --test --test-name-pattern=\"^stddev\" test/",
+   "expected": "pass 2, fail 0"
+  }
+ ],
+ "full_expect": "pass 36 fail 0",
+ "ask": true,
+ "ask_question": "Should stddev() reuse variance() or compute the variance itself?",
+ "ask_answer": "Reuse variance() (plan: stddev is the square root of variance; after T6 variance is correct). Remove the seeded-bug comment above stddev. If stddev([5]) is already 0 after T6, your task is to add the two tests and remove the comment.",
+ "conclusions": [
+  "Write EXACTLY two tests named with the prefix 'stddev': the eight-value example equals 2, a single element equals 0; append them at the end of test/math.test.mjs; extend the import on line 3 if needed.",
+  "The full suite must have 0 failures."
+ ],
+ "estimate": {
+  "files": 2,
+  "lines": 20
+ },
+ "clamp_fixed": true
+}

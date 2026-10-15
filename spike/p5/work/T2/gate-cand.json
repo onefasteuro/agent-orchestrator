@@ -1,0 +1,94 @@
+{
+  "ok": true,
+  "violations": [],
+  "receipt": {
+    "base_sha": "1a76f44ba4d1296d03cc29e405eb29b16615ec2e",
+    "candidate_sha": "7188ca07150f971c73392d0a00d656676acf854a",
+    "inspected": "candidate",
+    "feature_spec": {
+      "revision": "1a76f44ba4d1296d03cc29e405eb29b16615ec2e",
+      "sha256": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa"
+    },
+    "feature_plan": {
+      "revision": "1a76f44ba4d1296d03cc29e405eb29b16615ec2e",
+      "sha256": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07"
+    },
+    "brief_hash": "27e8b946f865a7667d7f55afc2aeb3a8cf4d7b922d249c8ad8a55aa679206ad4",
+    "allowed_path_digest": "e048f882b123285de57e88fb5290cf8cd093d0ee88e6c98054472128174cae92",
+    "changed_paths": [
+      {
+        "status": "M",
+        "path": "src/generated.mjs",
+        "oldPath": null,
+        "classes": [
+          {
+            "path": "src/generated.mjs",
+            "cls": "generated",
+            "ok": true
+          }
+        ],
+        "oldMode": "100644",
+        "newMode": "100644"
+      },
+      {
+        "status": "M",
+        "path": "src/math.mjs",
+        "oldPath": null,
+        "classes": [
+          {
+            "path": "src/math.mjs",
+            "cls": "assigned",
+            "ok": true
+          }
+        ],
+        "oldMode": "100644",
+        "newMode": "100644"
+      },
+      {
+        "status": "M",
+        "path": "test/math.test.mjs",
+        "oldPath": null,
+        "classes": [
+          {
+            "path": "test/math.test.mjs",
+            "cls": "assigned",
+            "ok": true
+          }
+        ],
+        "oldMode": "100644",
+        "newMode": "100644"
+      }
+    ],
+    "cleanliness": {
+      "staged": [],
+      "unstaged": [],
+      "untracked": [],
+      "ignored_unexpected": [],
+      "clean": true
+    },
+    "size": {
+      "files": 2,
+      "lines": 46,
+      "generated_files": 1,
+      "limits": {
+        "max_files": 5,
+        "max_lines": 300
+      },
+      "within": true
+    },
+    "protected_hashes": {
+      "feature_spec": {
+        "path": "specs/pilot/spec.md",
+        "expected": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa",
+        "actual": "81ae408326fe4338b33c01d9673dbdd52da44f3c28178b3e0b7a82f2b1aa78aa",
+        "match": true
+      },
+      "feature_plan": {
+        "path": "specs/pilot/plan.md",
+        "expected": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07",
+        "actual": "48e33c264ad69efa9aa8231f3656ef3e83fae35e06da79added1f0deebf2de07",
+        "match": true
+      }
+    }
+  }
+}

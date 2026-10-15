@@ -1,0 +1,40 @@
+{
+ "id": "T10",
+ "outcome": "src/index.mjs re-exports every public function of src/math.mjs and a test proves the barrel exposes them all.",
+ "ac_ids": [
+  "AC-10",
+  "AC-11"
+ ],
+ "assigned": [
+  "test/math.test.mjs"
+ ],
+ "new": [
+  "src/index.mjs"
+ ],
+ "prefix": "index",
+ "checks": [
+  {
+   "name": "index tests",
+   "command": "node --test --test-name-pattern=\"^index\" test/",
+   "expected": "pass 1, fail 0"
+  }
+ ],
+ "full_expect": "pass 42 fail 0",
+ "ask": false,
+ "ask_question": "",
+ "ask_answer": "",
+ "conclusions": [
+  "Create src/index.mjs containing exactly: export * from './math.mjs';",
+  "Append EXACTLY one test named with the prefix 'index' at the end of test/math.test.mjs that imports * as stats from '../src/index.mjs' and asserts typeof is 'function' for add, clamp, mean, median, sum, min, max, range, product, variance, stddev. Do not change the existing import line unless needed.",
+  "Do not edit src/math.mjs.",
+  "The full suite must have 0 failures."
+ ],
+ "estimate": {
+  "files": 2,
+  "lines": 20
+ },
+ "clamp_fixed": true,
+ "exclusions": [
+  "Do not edit src/math.mjs."
+ ]
+}
