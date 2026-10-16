@@ -33,6 +33,7 @@ case "$SCOPE" in
   global) AGENTS="$HOME/.claude/agents"; PACK="$HOME/.agents/orca-sdd" ;;
   project)
     [ -n "$REPO" ] || REPO=$(git rev-parse --show-toplevel 2>/dev/null) || { echo "not inside a Git repository; pass --repo" >&2; exit 2; }
+    REPO=$(cd "$REPO" 2>/dev/null && pwd -P) || { echo "--repo path does not exist" >&2; exit 2; }
     AGENTS="$REPO/.claude/agents"; PACK="$REPO/.agents/orca-sdd" ;;
   *) sed -n '2,12p' "$0" >&2; exit 2 ;;
 esac
@@ -40,7 +41,8 @@ esac
 blocked=0
 nolink() { # refuse to write through a symlink anywhere on the managed path
   p=$1
-  while [ "$p" != "/" ] && [ "$p" != "." ] && [ -n "$p" ]; do
+  case "$p" in /*) ;; *) echo "internal: non-absolute path $p" >&2; exit 2 ;; esac
+  while [ "$p" != "/" ]; do
     if [ -L "$p" ]; then echo "REFUSED  $p is a symlink; the installer only writes to real files and directories" >&2; exit 1; fi
     case "$p" in "$HOME"|"$REPO") return ;; esac
     p=$(dirname "$p")
@@ -53,11 +55,16 @@ put() { # put <source> <destination>
     if cmp -s "$s" "$d"; then echo "same     $d"; return; fi
     if [ "$FORCE" -eq 0 ]; then echo "DIFFERS  $d (use --force to replace, old copy kept as .bak)"; blocked=1; return; fi
     echo "replace  $d (backup $d.bak)"
-    [ "$DRY" -eq 1 ] || { cp -p "$d" "$d.bak"; cp "$s" "$d"; }
+    [ "$DRY" -eq 1 ] || { nolink "$d.bak"; mv -f "$d" "$d.bak"; write "$s" "$d"; }
     return
   fi
   echo "install  $d"
-  [ "$DRY" -eq 1 ] || { mkdir -p "$(dirname "$d")"; cp "$s" "$d"; }
+  [ "$DRY" -eq 1 ] || { mkdir -p "$(dirname "$d")"; write "$s" "$d"; }
+}
+write() { # copy to a temp file beside the target, then rename over it; rename replaces
+  # a symlink entry instead of following it, so a link swapped in after the check
+  # is replaced, never written through
+  t="$2.tmp.$$"; cp "$1" "$t" && mv -f "$t" "$2"
 }
 
 [ "$DRY" -eq 1 ] && echo "dry run: nothing will be written"
