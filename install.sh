@@ -10,8 +10,10 @@
 #
 # Idempotent. A managed file that differs from the source is reported and left
 # alone unless --force is given, in which case the old file is kept as <file>.bak.
-# Nothing else in the target directories is touched. Exit 0 when the install is
-# complete and identical to the source, 1 when a differing file blocked it, 2 on usage.
+# Nothing else in the target directories is touched, and nothing is written through
+# a symlink (a linked file or directory on the managed path aborts the install).
+# Exit 0 when the install is complete and identical to the source, 1 when a
+# differing file or a symlink blocked it, 2 on usage.
 set -eu
 
 SRC=$(cd "$(dirname "$0")/pack" && pwd)
@@ -36,8 +38,17 @@ case "$SCOPE" in
 esac
 
 blocked=0
+nolink() { # refuse to write through a symlink anywhere on the managed path
+  p=$1
+  while [ "$p" != "/" ] && [ "$p" != "." ] && [ -n "$p" ]; do
+    if [ -L "$p" ]; then echo "REFUSED  $p is a symlink; the installer only writes to real files and directories" >&2; exit 1; fi
+    case "$p" in "$HOME"|"$REPO") return ;; esac
+    p=$(dirname "$p")
+  done
+}
 put() { # put <source> <destination>
   s=$1; d=$2
+  nolink "$d"
   if [ -f "$d" ]; then
     if cmp -s "$s" "$d"; then echo "same     $d"; return; fi
     if [ "$FORCE" -eq 0 ]; then echo "DIFFERS  $d (use --force to replace, old copy kept as .bak)"; blocked=1; return; fi
