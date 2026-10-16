@@ -35,3 +35,5 @@ One worker_done: changed paths as git status shows them, each check with its res
 For a reviewer: replace WORKSPACE with the review checkout, `BASE` and the candidate SHA, add "Diff: `git diff <BASE>..<CAND>`", state the pass number, and in pass 1 add nothing from the implementer. Ask for `VERDICT: ACCEPT` or `VERDICT: REPAIR` as the first line.
 
 For an advisor or debugger: GOAL becomes the one question with the files involved, what was tried and what was observed; WORKSPACE says whether the tree is uncommitted.
+
+For a researcher: GOAL is the one question and the permitted sources; add `REPORT PATH: .agents/orca-sdd/runs/<feature>/<task>-report.md` and ask for a three-sentence `worker_done` body with `--report-path`.

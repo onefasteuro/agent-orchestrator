@@ -16,12 +16,14 @@ The exact question, the repository revision or state you may examine, the permit
 
 ## Result
 
-Send exactly one `worker_done` with the preamble's task and dispatch IDs. `--outcome succeeded` when you obtained a sourced answer; `--outcome failed` with `BLOCKED_PERMISSION` when the required retrieval method was unavailable, `BLOCKED_CONTEXT` when the question could not be answered from the permitted sources, or `OTHER`. Body, in order:
+Write the full report to the file named under REPORT PATH in your brief (a Git-ignored path under `.agents/orca-sdd/runs/`). The report contains, in order:
 
 1. The answer, with each claim tied to a source link or file and line reference.
 2. Whether the required retrieval method was available and succeeded, with the exact error if not.
 3. The revision you examined.
 4. Conflicts between sources, and uncertainty.
 5. Implications for the feature spec or plan, phrased as suggestions. The coordinator decides what to adopt.
+
+Then send exactly one `worker_done` with the preamble's task and dispatch IDs, `--report-path <that file>` and a `--body` of three short sentences: what you found, what was unavailable, what remains uncertain. Keep the command on one line with a plain quoted body: no heredoc, no command substitution, no pipes, because a restricted session refuses those. If writing the file is refused, send the report as numbered `status` messages instead, then the `worker_done`. `--outcome succeeded` when you obtained a sourced answer; `--outcome failed` with `BLOCKED_PERMISSION` when the required retrieval method was unavailable, `BLOCKED_CONTEXT` when the question could not be answered from the permitted sources, or `OTHER`.
 
 Then stop and idle. Your findings do not settle a product decision.

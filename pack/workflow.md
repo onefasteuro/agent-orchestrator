@@ -32,7 +32,7 @@ You run inside an Orca terminal in the integration checkout. Run `orca skills ge
 
 ## 3. Read-only specialists
 
-Researcher, advisor and debugger follow the same pattern as a review: a fresh read-only terminal (Codex recipe, or the Claude researcher recipe) in the right checkout, `worker-start --spec "<role prompt followed by a brief with the one question>"`, `check --wait`, read the body, ack, release, close. The advisor runs in the paused implementer's worktree and the brief says the tree is uncommitted. The researcher runs in the current checkout. Their results are findings for you to act on, never acceptance.
+Researcher, advisor and debugger follow the same pattern as a review: a fresh read-only terminal (Codex recipe, or the Claude researcher recipe) in the right checkout, `worker-start --spec "<role prompt followed by a brief with the one question>"`, `check --wait`, read the body and the file named by `report_path` in the payload, ack, release, close. A researcher brief names its report path: `.agents/orca-sdd/runs/<feature>/<task>-report.md`. The advisor runs in the paused implementer's worktree and the brief says the tree is uncommitted. The researcher runs in the current checkout. Their results are findings for you to act on, never acceptance.
 
 ## 4. Restart, cancel, Orca restart
 
