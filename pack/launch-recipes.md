@@ -23,7 +23,7 @@ Reviewer `high`; advisor and debugger `max`. The status line must read the model
 ## Claude researcher (alternative)
 
 ```sh
-orca terminal create --worktree path:<checkout> --title researcher --command 'claude --model claude-sonnet-5-5 --effort high --permission-mode dontAsk --allowedTools "Read,Grep,Glob,Write(.agents/orca-sdd/runs/**),Bash(orca status:*),Bash(orca orchestration send:*),Bash(orca orchestration ask:*),Bash(orca orchestration check:*),mcp__context7__*" --disallowedTools "Edit,Write,NotebookEdit,Bash(git:*),Bash(orca terminal:*),Bash(orca worktree:*),Bash(orca orchestration worker-start:*),Bash(orca orchestration dispatch:*),Bash(orca orchestration run-create:*),Bash(orca orchestration task-create:*)"' --json
+orca terminal create --worktree path:<checkout> --title researcher --command 'claude --model claude-sonnet-5-5 --effort high --permission-mode dontAsk --allowedTools "Read,Grep,Glob,WebSearch,WebFetch,Write(.agents/orca-sdd/runs/**),Bash(orca status:*),Bash(orca orchestration send:*),Bash(orca orchestration ask:*),Bash(orca orchestration check:*),mcp__context7__*" --disallowedTools "Edit,Write,NotebookEdit,Bash(git:*),Bash(orca terminal:*),Bash(orca worktree:*),Bash(orca orchestration worker-start:*),Bash(orca orchestration dispatch:*),Bash(orca orchestration run-create:*),Bash(orca orchestration task-create:*)"' --json
 ```
 
 The trust dialog defaults to "No, exit": send Up then Enter, or pre-trust the repository.
@@ -32,7 +32,8 @@ Lessons from the first real-repository run (16 October 2026):
 
 - Use the recipe as written. Do not add deny rules of your own: a broad pattern added to block one flag denied every Bash call, including the reporting commands, and the researcher could not send `worker_done`.
 - `dontAsk` refuses a multi-line `--body`, a heredoc, `$(...)` and pipes even when the command prefix is allowed. Long reports go to a file under `.agents/orca-sdd/runs/` (allowed by `Write(...)` above) and travel as `--report-path`; the body stays three sentences on one line.
-- Add `WebFetch(domain:<host>)` to `--allowedTools` when the question needs one external site; prefer it over a general-purpose search CLI whose output flags cannot be restricted.
+- Web access is native: `WebSearch` and `WebFetch` are Claude Code tools, need no shell, and are in the recipe above. Narrow with `WebFetch(domain:<host>)` when one site is enough.
+- When the project instructions name a search CLI (the-kb asks for Tavily), add `Bash(tvly search:*),Bash(tvly extract:*)` to `--allowedTools`. An allow rule cannot block a flag such as `tvly -o <file>`; the role prompt forbids writing and the coordinator runs `git status --porcelain` after every researcher, so a stray file is caught, not prevented. Tavily's MCP server is an alternative only when its connector shows as connected in `claude mcp list`.
 
 ## Stopping
 
