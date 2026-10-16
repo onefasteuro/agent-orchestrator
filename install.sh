@@ -11,7 +11,11 @@
 # Idempotent. A managed file that differs from the source is reported and left
 # alone unless --force is given, in which case the old file is kept as <file>.bak.
 # Nothing else in the target directories is touched, and nothing is written through
-# a symlink (a linked file or directory on the managed path aborts the install).
+# a symlink: a linked file or directory on the managed path aborts the install, and
+# every write goes to an exclusively created temp file that is renamed over the
+# target. Threat model: hostile content committed into a repository before a
+# project install. A local process racing the installer on the same machine is
+# out of scope.
 # Exit 0 when the install is complete and identical to the source, 1 when a
 # differing file or a symlink blocked it, 2 on usage.
 set -eu
@@ -61,10 +65,12 @@ put() { # put <source> <destination>
   echo "install  $d"
   [ "$DRY" -eq 1 ] || { mkdir -p "$(dirname "$d")"; write "$s" "$d"; }
 }
-write() { # copy to a temp file beside the target, then rename over it; rename replaces
-  # a symlink entry instead of following it, so a link swapped in after the check
-  # is replaced, never written through
-  t="$2.tmp.$$"; cp "$1" "$t" && mv -f "$t" "$2"
+write() { # copy into a fresh mktemp file beside the target (created exclusively, so no
+  # pre-planted name can be followed), then rename over the target; rename replaces a
+  # symlink entry instead of following it
+  dir=$(dirname "$2"); nolink "$dir"
+  t=$(mktemp "$dir/.sdd-install.XXXXXX") || exit 1
+  cp "$1" "$t" && chmod 644 "$t" && mv -f "$t" "$2"
 }
 
 [ "$DRY" -eq 1 ] && echo "dry run: nothing will be written"
