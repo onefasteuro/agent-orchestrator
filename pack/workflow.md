@@ -1,82 +1,46 @@
 # Coordinator workflow
 
-This is the procedure the `sdd-orchestrator` entrypoint follows. The specification (`orchestration-spec.md`) states the rules; the controls document (`orchestration-controls.md`) states the mechanisms; this file is the order of operations with the exact commands. `sdd` below means `node <pack>/../tools/sdd.mjs` until P6 installs it on the path.
+You run inside an Orca terminal in the integration checkout. Run `orca skills get orchestration --full` once and follow its supervised loop; this file adds only what spec-driven development needs. Every `orca orchestration` command carries your own identity: `--terminal <handle>` on `check`, `--from <handle>` on the others. Your handle is `$ORCA_TERMINAL_HANDLE`, set in every Orca terminal (it is also the handle `terminal create` returned). `orca status --json` does not report it for a Claude session.
 
-## 0. Identity and mode
+## 0. Start
 
-1. Check whether you are inside an Orca terminal: `ORCA status --json` shows `caller.orcaSessionId`. Without it you may still read, research by yourself and draft documents, but you must not run any `ORCA orchestration` command; before the first dispatch of any kind, stop and tell the user to start the coordinator inside an Orca terminal in the integration checkout (K-20).
-2. Load the live Orca contract: `ORCA skills get orchestration --full` and `ORCA skills get orca-cli`. Use that executable for the whole run.
-3. Classify the request. **Planning-only** (the user asks for a plan, spec, design, or says planning-only): mode M-1, no implementation, no installation, no dependency setup, no implementation dispatch. **Delivery** (the user asks to build, deliver, implement): mode M-2, which still begins with planning and pauses once for approval. A request to build does not skip planning (M-0).
-4. Read the recovery index if it exists (`sdd recovery-read --checkout <integration>`). If it names a Run, reconcile before anything else (section 8).
+1. `echo $ORCA_TERMINAL_HANDLE` must print a `term_...` handle and `orca status --json` must report `ok: true`. Otherwise stop and tell the user to start you inside an Orca terminal.
+2. Read `AGENTS.md` and `CLAUDE.md` if present, `git status` (must be clean) and `git log -5`. Note the branch and HEAD; HEAD is the accepted SHA until integration moves it.
+3. Classify the request. Planning-only: documents and open decisions, then stop. Delivery: plan, pause once for approval, then execute. A request to build never skips planning.
+4. `orca orchestration run-create --from <you> --objective "<goal>" --json`. Create `.agents/orca-sdd/runs/<feature>.md` (ignored by Git) with the date, run id, base SHA and your handle. Append one line to it at every step that changes state; it is your memory after a restart.
 
-## 1. Discover
+## 1. Plan
 
-1. Read the project instructions (`AGENTS.md`, `CLAUDE.md`), the existing feature documents if any, and the repository state (`git status`, `git log -5`).
-2. List material unknowns. For each that needs documentation or codebase evidence, dispatch a researcher (section 4) with a bounded question. Research runs in the existing checkout; it never creates a task worktree.
-3. Before the first research dispatch, write draft feature spec and plan snapshots under `<integration>/.agents/orca-sdd/runs/<feature-id>/snapshots/` containing the goal, constraints and open questions, so research briefs can pin a hash (K-3).
+1. For each material unknown that needs documentation or codebase evidence, dispatch a researcher (section 3) with one bounded question. Research runs in the current checkout.
+2. Write `specs/<feature>/spec.md`: behaviour, non-goals, constraints, numbered acceptance criteria `AC-n`, each observable by a command. Write `specs/<feature>/plan.md`: tasks in order, each with one outcome, the files it may edit, the files it may create, the checks with exact commands and expected output lines. A task fits in at most five files, 300 changed lines and one sitting; say so in the plan when it does not.
+3. Planning-only: present both documents and the open decisions, then stop.
+4. Delivery: commit both documents, present them, and wait for one explicit approval. Record the approval and the commit SHA in the runs file. From here on, do not ask the user about routine steps.
 
-## 2. Specify and plan
+## 2. Per task
 
-1. Draft or validate `specs/<feature>/spec.md` from `templates/feature-spec.md`: behaviour, non-goals, constraints, numbered acceptance criteria `AC-n`, each observable.
-2. Draft or validate `specs/<feature>/plan.md` from `templates/feature-plan.md`: interfaces, bounded tasks with assigned paths, dependencies, named checks. Each task fits K-4 (one outcome, five files, 300 lines, one 30 to 90 minute session) or names an exception.
-3. Review both documents for gaps against the acceptance criteria. Record open decisions for the user.
-4. **M-1 stops here.** Return the documents, the acceptance matrix and the open decisions. Do not create task worktrees, do not dispatch implementers, do not install anything.
-5. **M-2 pauses here.** Commit the feature documents, present them, and wait for one explicit approval (D-1). Record `approval_recorded` with both document revisions and hashes, the authorization scope and the user's words. Execute only within that scope afterwards.
+1. **Worktree.** `orca worktree create --repo id:<repoId> --name task-<n> --no-parent --base-branch <integration branch> --setup skip --json`. Verify `git -C <path> rev-parse HEAD` equals the accepted SHA; that is `BASE`.
+2. **Brief.** Fill `task-brief.md` in prose for this task. Paste the acceptance criteria and rules into it; the worker sees nothing else. Name the spec commit SHA, `BASE`, the files it may edit and create, the checks with expected lines, and how to report. Keep it under about 80 lines.
+3. **Launch and dispatch.** Start Pi in the task worktree per `launch-recipes.md`, wait for idle, confirm the status line, then one call: `orca orchestration worker-start --from <you> --run <run> --task-title "task-<n>: <outcome>" --spec "<roles/implementer.md followed by the brief>" --worktree path:<task worktree> --terminal <handle> --timeout-ms 60000 --json`. Record task id, dispatch id and handle in the runs file. If the call fails, read `worker-show` before any retry.
+4. **Supervise.** `orca orchestration check --terminal <you> --run <run> --wait --types "worker_done,escalation,question" --timeout-ms 900000 --json`. Parse the last JSON object; keepalive lines come first. A question the brief already answers: `reply --from <you> --id <message id> --body "<answer>"`, then ack. A question it does not: dispatch an advisor (section 3) in the task worktree, reply with its answer, then ack. A `worker_done`: confirm the dispatch id is the one you started, read the body, ack, then `worker-release --dispatch <id>` and `orca terminal close --terminal <handle>`. A timeout is a checkpoint: after three, `worker-list --run <run> --json` and act on `projection.nextAction`.
+5. **Ownership check.** In the task worktree: `git status --porcelain` and `git diff --name-only`. Every path must be in the brief's may-edit or may-create list, or a declared generated path. Anything else: do not commit, keep the files, and send a bounded repair as a new dispatch (fresh Pi terminal, same worktree, the violation named) or escalate to the user if the extra path looks necessary. Never delete or reset the worker's files to pass the check.
+6. **Candidate.** `git add <the listed paths>`, `git commit -m "task-<n> <orca task id>"`, `CAND=$(git rev-parse HEAD)`. Re-run the ownership check on `git diff --name-only BASE..CAND` because hooks can add files. Run the task's checks and the full suite in the worktree and keep the result lines.
+7. **Review, pass 1 (blind).** `orca worktree create --repo id:<repoId> --name review-<n> --no-parent --base-branch task-<n> --setup skip --json`, then `git -C <review path> checkout --detach CAND`; verify HEAD and a clean tree. Start Codex read-only per `launch-recipes.md`, wait for idle, then `worker-start --spec "<roles/reviewer.md followed by a review brief>"`. The review brief names `BASE`, `CAND`, the spec text with its criteria, the rules, the checks to run, and nothing from the implementer: no report, no claimed results, no plan rationale. Its body must begin `VERDICT: ACCEPT` or `VERDICT: REPAIR`. Record the verdict and findings in the runs file before anything else.
+8. **Review, pass 2 (conditional).** Only when pass 1 has a finding or names a check it could not run: a second `worker-start` on the same Codex terminal with the implementer's report and your check lines added. The final verdict is pass 2's. Otherwise pass 1 is final. Release and close the review terminal.
+9. **Repair.** On `REPAIR`: a new Pi dispatch in the task worktree with the findings quoted, then steps 4 to 7 again; the repair produces a new `CAND`. After two failed repairs, dispatch a debugger (section 3) before a third.
+10. **Integrate.** In the integration checkout, clean tree: `BEFORE=$(git rev-parse HEAD)`, `git merge --ff-only CAND` (or `git merge --no-ff CAND` when fast-forward is impossible). Run the full suite and the task's checks on the result. Pass: append task, `CAND`, integrated SHA, verdict and check lines to the runs file; this is the new accepted SHA. Fail: `git reset --hard BEFORE` after a fast-forward, else `git revert -m 1 --no-edit HEAD`; record it; return to step 9 with the failing output, and the repair starts from the current accepted SHA, never by re-merging the old branch head.
+11. **Clean up.** `orca worktree rm --worktree id:<repoId>::<path> --force --json` for the review and task worktrees once integrated (Orca deletes the worktree's own branch with it), then `git branch -d review-<n>` and any other branch the task left behind; `-d` refuses unmerged work, which is the point. Then the next task starts from the new accepted SHA.
 
-## 3. Per task: dispatch an implementer
+## 3. Read-only specialists
 
-1. Pick a ready task whose predecessors are accepted. Start it from the accepted integrated SHA.
-2. Create the task worktree from that SHA (`ORCA worktree create --repo <id> --name task-<n> --base-branch <ref> --json`), confirm `git rev-parse HEAD` equals the recorded base, run setup with fixtures only (K-16). Never copy `.env` or credentials.
-3. Build the brief from `templates/brief.example.json`: pin the feature spec and plan revisions and SHA-256 hashes (compute them with `sdd doc-identity`, never with ad hoc shell), the role-pack hash, the base SHA, assigned and new paths, limits, checks, delivery fields. Render the worker prompt as `roles/implementer.md` followed by the TASK block from `templates/task-brief.md`.
-4. Preflight: `sdd brief-validate <brief.json>`. Branch on the exit status, not on parsed output: non-zero means append `brief_rejected`, fix the brief, and never launch. Every later command in the dispatch sequence (`task-create`, `terminal create`, `worker-start`) is checked the same way; an empty identifier is a failure, never something to log.
-5. Append `dispatch_intent` with the brief hash. Create the task: `ORCA orchestration task-create --from <coord> --run <run> --task-title ... --spec "<rendered prompt>" --json`.
-6. Launch per `launch-recipes.md`, wait for idle, verify the status line, then `worker-start --terminal`. Append `dispatch_started` with the receipt's task and dispatch IDs. If the start command times out or errors, inspect `worker-show` before any retry; never resend blindly.
-7. Record the dispatch, worktree and handle in the recovery index (`sdd recovery-write`).
+Researcher, advisor and debugger follow the same pattern as a review: a fresh read-only terminal (Codex recipe, or the Claude researcher recipe) in the right checkout, `worker-start --spec "<role prompt followed by a brief with the one question>"`, `check --wait`, read the body, ack, release, close. The advisor runs in the paused implementer's worktree and the brief says the tree is uncommitted. The researcher runs in the current checkout. Their results are findings for you to act on, never acceptance.
 
-## 4. Supervise
+## 4. Restart, cancel, Orca restart
 
-Loop: `ORCA orchestration check --terminal <coord> --run <run> --wait --types "worker_done,escalation,question" --timeout-ms 900000 --json`. On waits longer than about 15 s Orca prints keepalive lines (`{"_keepalive":true,...}`) before the final JSON object, and message bodies may contain raw control characters: parse the last complete object with a lenient JSON parser, never the first line.
+- **Restart.** Read the runs file, `orca orchestration worker-list --run <run> --json`, `git log` on the integration branch and every `task-*` branch. Live dispatch: keep waiting on it. Settled dispatch without an integration line: `worker-read --dispatch <id>` and continue from the step the runs file shows. Never start a second implementer for a task whose dispatch is still live.
+- **Cancel.** Stop new dispatches. For each live dispatch: `worker-stop --dispatch <id>`, then `orca terminal close --terminal <handle>` and confirm `ptyKilled`; if the dispatch is still unsettled, `worker-abandon`. Keep every worktree. Record what was stopped and what is uncertain.
+- **Orca restart.** Handles and the run binding die. Make a new coordinator terminal, a new run, record both, then reconcile as for a restart.
+- **Spec change.** A change to `spec.md` or `plan.md` after approval: commit it, compare with every task not yet integrated, rebrief or cancel each, and ask for a fresh approval when the change is material.
 
-- A `question`: handle it per section 5 before acknowledging anything. A held unacknowledged delivery is replayed by every `check`, so do not wait on the inbox for anything else while holding it.
-- A `worker_done`: classify first: `sdd audit-classify --log <events> --run --task --dispatch --result-hash <sha256 of the message body and payload>`. `ignored` means an identical replay: append `result_ignored`, ack, continue. `conflict` or `stale`: append `error`, ack, investigate; never accept. `new`: append `result_received`, then handle by role (sections 6 and 7). Ack only after the record is appended.
-- An `escalation`: append `escalation`, act on the reason code, reply or cancel.
-- A timeout: a checkpoint, not a failure. After three empty waits run `worker-list --run <run> --json` and feed each row's `projection` to `sdd liveness --projection ... --role ... --last-progress ...`. `inspect` means `worker-read --dispatch <id>`; `stop` means the verified stop in `launch-recipes.md`, then `worker_stalled` and one failed attempt against the task budget.
+## 5. Report
 
-Researchers and advisors are handled the same way; their results are findings, not acceptance.
-
-## 5. Advice (Q-1 to Q-4, K-10)
-
-1. Record the question ID and `created_at`. The implementer is now paused; its liveness clock is paused (K-14).
-2. Build an advisor brief pinned to the same documents, with the question, the files named, attempts and observations, and `workspace.dirty_state` describing the paused worktree. Dispatch the advisor in that worktree with the Codex read-only recipe. The advisor has no dependency on the implementation task.
-3. While holding the question, inspect the advisor with `worker-show --dispatch` and `worker-read --dispatch`, not with another consuming `check`.
-4. When the advisor's `worker_done` arrives it is also an inbox delivery behind the held question. Read it with `worker-read`, decide the answer, confirm the implementer dispatch is still current (`worker-show`), then `reply --from <coord> --id <question id> --body "<answer>" --json`, then ack the question delivery, then process and ack the advisor delivery.
-5. Advisor failure or timeout becomes an explicit escalation to the user; the question is never left silently pending. The implementer resumes with `ask --resume` on its side; the coordinator does nothing for that.
-6. If the answer requires a path outside the implementer's allowlist, amend the brief (K-8): new brief hash, `brief_amended`, verified stop of the current attempt, new dispatch under the same budget.
-
-## 6. Candidate and review (K-6, K-7, K-9)
-
-1. On the implementer's handoff run the gate against the working tree: `sdd gate --brief <brief> --repo <task worktree> --base <base>`. Any violation: append `candidate_rejected`, preserve the work, decide: amend the brief, send the implementer a bounded repair, or escalate. Never reset or delete the violating files to make the gate pass.
-2. Stage only the validated assigned and declared paths, commit on the task branch with a neutral message (`<task_id> brief:<hash>`), record the SHA.
-3. Re-run the gate on the commit: `sdd gate --brief <brief> --repo <task worktree> --base <base> --candidate <sha>`. Hooks may have re-staged files; if the second gate fails, treat it as step 1. Append `candidate_created` with the receipt.
-4. Create the review checkout through Orca (`ORCA worktree create --repo <id> --name review-<task> --no-parent --base-branch <task branch> --setup skip --json`), then detach it at the candidate: `git -C <path> checkout --detach <candidate SHA>`. Confirm `git rev-parse HEAD` equals the candidate and the tree is clean. A checkout made with plain `git worktree add` is invisible to Orca, and `terminal create` times out on it.
-5. Pass 1: reviewer brief with `delivery.pass = 1`, `pass_one_exclusions` listing the withheld material (implementer report, claimed checks, advisor output, prior verdicts, plan rationale, recovery and audit files). Dispatch with the Codex read-only recipe. On `worker_done`, append `review_pass_one_recorded` with the full findings before anything else.
-6. Pass 2: a second dispatch (same session may resume) with the withheld material added. The final report is the terminal review result. Keep both.
-7. Findings go to the implementer as a bounded repair in its task worktree. A repair is a new dispatch and produces a new candidate SHA; affected review evidence is invalidated. After two failed repairs, dispatch the debugger before a third.
-
-## 7. Integrate and accept (W-4, K-8)
-
-1. Integrate the accepted candidate into the integration branch serially (fast-forward or a single merge), run the required checks on the integrated SHA, map results to every acceptance criterion the task claims.
-2. A failed integration check: revert the integration commit, append `integration_reverted`, hold downstream, return the task to repair. The repair candidate is a new SHA based on the current accepted integrated SHA and carrying the complete corrected change. Never re-merge the old task-branch head.
-3. Append `acceptance_recorded` with the full identity tuple and usage record, then release the terminal (`worker-release --dispatch`), keep the task worktree until the feature is accepted, update the recovery index, and only then start dependent work from the new accepted SHA.
-4. Usage: for every dispatch, failed or cancelled included, append `usage_recorded` from the native source (`sdd usage-codex --file`, `sdd usage-pi --text`) or with `measurement_status: unavailable`. Missing is never zero.
-
-## 8. Change, recovery, cancellation
-
-- **Feature document change (K-5):** new revisions and hashes; compare with every queued and in-flight brief; hold dependents; mark each compatible, rebrief or cancel; append `spec_changed`. A material change invalidates the approval: present the change and wait for a new `approval_recorded`.
-- **Restart (R-2):** read the recovery index and `sdd audit-verify --log`. If the log ends in a partial line, start a linked segment (`sdd audit-segment`). Reconcile every `dispatch_intent` without receipt and every receipt without acceptance against `worker-list --run` and Git before any new dispatch. Stale results from replaced dispatches cannot satisfy the current assignment.
-- **Cancellation (R-3):** stop new dispatch, then for each active dispatch do the verified stop, append `worker_stopped` or report an uncertain state explicitly, resolve or cancel pending questions, keep every worktree and the evidence.
-- **Human takeover (K-15):** append `human_takeover`, verified stop, the human edits, hand-back declares paths, `human_handback`, new dispatch under the same budget, then the normal candidate path.
-
-## 9. Report
-
-End every run or pause with: what was achieved against each acceptance criterion, the checks actually run with result lines, unavailable checks as explicit gaps, usage coverage (`sdd usage-coverage --log`), open decisions and limitations. Never present an accepted limitation as a passing check (L-3).
+At every pause and at the end: each acceptance criterion with its evidence or its gap, every check actually run with its result line, unavailable checks named as gaps, open decisions. Pi's status bar and Codex's session files carry token counts; record them in the runs file when asked for usage.

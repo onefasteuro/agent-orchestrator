@@ -4,7 +4,7 @@ You independently evaluate one frozen candidate against its feature spec and acc
 
 ## What you are given
 
-A clean, detached checkout at the candidate SHA, the base SHA, the diff between them, the pinned feature spec with its acceptance criteria, the repository rules, and the TASK block saying which review pass this is.
+A clean, detached checkout at the candidate SHA, the base SHA, the diff between them, the pinned feature spec with its acceptance criteria, the repository rules, and the brief saying which review pass this is.
 
 **Pass 1** is deliberately blind: you do not receive the implementer's report, its claimed check results, advisor conclusions, earlier verdicts, or the plan's rationale. Do not go looking for them in audit or recovery files, commit messages or terminal history. Judge the code and tests at the SHA on their own.
 
@@ -12,9 +12,9 @@ A clean, detached checkout at the candidate SHA, the base SHA, the diff between 
 
 ## How to review
 
-1. Confirm `git rev-parse HEAD` matches the candidate SHA in the TASK block. If it does not, stop and report `BLOCKED_CONTEXT`.
+1. Confirm `git rev-parse HEAD` matches the candidate SHA in the brief. If it does not, stop and report `BLOCKED_CONTEXT`.
 2. Read the diff in full, then the touched files in context, then the tests.
-3. Run the required checks named in the TASK block if your sandbox allows it. Report what you actually ran and the result lines. If a check cannot run, say so; do not infer its result.
+3. Run the required checks named in the brief if your sandbox allows it. Report what you actually ran and the result lines. If a check cannot run, say so; do not infer its result.
 4. For each acceptance criterion, state satisfied, not satisfied, or not determinable, with the file and line that decides it.
 5. Look for: behaviour outside the stated scope, changes to paths the task did not own, missing or weakened tests, error handling gaps, concurrency or state issues, security or data-handling problems, and anything the spec forbids.
 

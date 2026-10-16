@@ -1,85 +1,37 @@
-# Launch recipes (K-21)
+# Launch recipes
 
-Verified on Orca 1.4.224, Codex 0.161.0, Pi 1.0.4, Claude Code 2.1.300 on 14 October 2026 unless marked unverified. A version change re-runs the affected spike rows (K-17). Replace `ORCA` with the executable `orca skills get` was run with. Every orchestration command carries the coordinator's own terminal identity (K-20): `--terminal <handle>` on `check`, `--from <handle>` on everything else.
+Verified on Orca 1.4.224, Codex 0.161.0, Pi 1.0.4, Claude Code 2.1.300. Orca's `--agent` launcher is not used for workers: `--agent pi` ignores the model, and `--agent codex` or `--agent claude` pre-fills a permission-bypass flag. Start the process yourself, wait for idle, then attach with `worker-start --terminal`.
 
-## Coordinator
-
-Start Claude inside an Orca terminal in the integration checkout:
+## Pi implementer
 
 ```sh
-claude --agent sdd-orchestrator
+orca terminal create --worktree path:<task worktree> --title implementer --command 'pi --model ollama-cloud/deepseek-v4.1-flash --thinking high' --json
+orca terminal wait --terminal <handle> --for tui-idle --timeout-ms 60000 --json
 ```
 
-The coordinator records its handle (`ORCA status --json`, field `caller.orcaSessionId`, or the handle returned when the terminal was created) in the recovery index. Orchestration state is bound to one Run created with `ORCA orchestration run-create --from <handle> --objective "..." --json`.
+`orca terminal read` must show `(ollama-cloud) deepseek-v4.1-flash • high` before dispatch. Pi has no filesystem sandbox; the ownership check in `workflow.md` is the control. A `401 Unauthorized` on the first model call means a stale provider credential: fix it, close the terminal, start a fresh one.
 
-## Codex read-only (advisor, reviewer, debugger, alternate researcher)
-
-Never `worker-start --agent codex` for these roles unless Orca Settings > Agents > Agent Permissions is confirmed Manual: Orca pre-fills `--dangerously-bypass-approvals-and-sandbox`. Use an explicit launch:
+## Codex read-only (reviewer, advisor, debugger, researcher)
 
 ```sh
-ORCA terminal create --worktree path:<abs-checkout> --title <role> \
-  --command 'codex --sandbox read-only --model gpt-6-astra -c model_reasoning_effort="<high|max>"' --json
-ORCA terminal wait --terminal <handle> --for tui-idle --timeout-ms 60000 --json
-ORCA orchestration worker-start --from <coord> --run <run_id> --task <task_id> \
-  --worktree path:<abs-checkout> --terminal <handle> --timeout-ms 60000 --json
+orca terminal create --worktree path:<checkout> --title <role> --command 'codex --sandbox read-only --model gpt-6-astra -c model_reasoning_effort="<high|max>"' --json
+orca terminal wait --terminal <handle> --for tui-idle --timeout-ms 60000 --json
 ```
 
-`terminal wait` can return `satisfied: false` with `blockedReason`:
+Reviewer `high`; advisor and debugger `max`. The status line must read the model, the effort and `Read Only`. If `terminal wait` returns `satisfied: false` with `blockedReason`: `agent-update-prompt`, send `2` (skip); `agent-trust-workspace`, send Enter. Trust is saved per repository root, so this happens once.
 
-- `agent-update-prompt`: send `2` (Skip) with `terminal send --text 2`; the pinned version stays.
-- `agent-trust-workspace`: send Enter with `terminal send --text "" --enter`. Trust is saved per repository root in the user's Codex config, so pre-trust the pilot repository once.
-
-Verify the status line reads the intended model, effort and `Read Only` before dispatch. The start receipt's `launch.effective` is null for attached terminals; the screen capture is the evidence. MCP servers (Context7) run outside the sandbox and work in read-only mode.
-
-Levels (D-15): advisor and debugger `max`; reviewer `high`, escalation to `max` recorded as an event.
-
-## Pi implementer (terminal attach)
-
-Orca's `--model` and `--effort` do not apply to Pi, and `--agent pi` would use Pi's default model. Launch Pi with the user's tested command, verbatim, then attach:
+## Claude researcher (alternative)
 
 ```sh
-ORCA terminal create --worktree path:<abs-task-worktree> --title implementer \
-  --command 'pi --model ollama-cloud/deepseek-v4.1-flash --thinking high' --json
-ORCA terminal wait --terminal <handle> --for tui-idle --timeout-ms 60000 --json
-ORCA orchestration worker-start --from <coord> --run <run_id> --task <task_id> \
-  --worktree path:<abs-task-worktree> --terminal <handle> --timeout-ms 60000 --json
+orca terminal create --worktree path:<checkout> --title researcher --command 'claude --model claude-sonnet-5-5 --effort high --permission-mode dontAsk --allowedTools "Read,Grep,Glob,Bash(orca status:*),Bash(orca orchestration send:*),Bash(orca orchestration ask:*),Bash(orca orchestration check:*),mcp__context7__*" --disallowedTools "Edit,Write,NotebookEdit,Bash(git:*),Bash(orca terminal:*),Bash(orca worktree:*),Bash(orca orchestration worker-start:*),Bash(orca orchestration dispatch:*),Bash(orca orchestration run-create:*),Bash(orca orchestration task-create:*)"' --json
 ```
 
-Check the status line shows `(ollama-cloud) deepseek-v4.1-flash • high`. `turnStart` is `unsupported` for Pi; confirm delivery by reading the terminal. Pi loads Orca's `orca-agent-status` extension, which feeds `projection.liveness`. Pi enforces no filesystem restriction in this launch; the ownership gate (K-7) is the control. Pi's status bar carries usage: `↑<in> ↓<out> R<reasoning> CH<cache%> $<estimate>`.
+The trust dialog defaults to "No, exit": send Up then Enter, or pre-trust the repository.
 
-Pi's first model call fails with `401 Unauthorized` when the provider credential is stale; the same failure reproduces with `pi -p` outside Orca. Fix the credential, close the terminal, launch a fresh one; a running Pi does not pick up a changed environment.
+## Stopping
 
-## Claude researcher (verified 14 October 2026, AC-10)
+`worker-stop` fences but does not kill an attached terminal. Verified stop: `orca terminal close --terminal <handle> --json` and confirm `ptyKilled: true`; closing settles the dispatch as failed. If `worker-show` still says unsettled, `worker-abandon --dispatch <id>`.
 
-The trust dialog on a new directory defaults to "No, exit": send Up then Enter (`terminal send --text $'\e[A'`, then `--text "" --enter`), or pre-trust the repository once. Orca reports it as `agent-trust-workspace`.
+## Shell notes
 
-```sh
-ORCA terminal create --worktree path:<abs-checkout> --title researcher \
-  --command 'claude --model claude-sonnet-5-5 --effort high --permission-mode dontAsk --allowedTools "Read,Grep,Glob,Bash(orca status:*),Bash(orca orchestration send:*),Bash(orca orchestration ask:*),Bash(orca orchestration check:*),mcp__context7__*" --disallowedTools "Edit,Write,NotebookEdit,Bash(git:*),Bash(orca terminal:*),Bash(orca worktree:*),Bash(orca orchestration worker-start:*),Bash(orca orchestration dispatch:*),Bash(orca orchestration run-create:*),Bash(orca orchestration task-create:*)"' --json
-```
-
-`dontAsk` denies every call that is not pre-approved, so only reads, Context7 and the three reporting commands (`send`, `ask`, `check`) run. Never allow `Bash(orca *)` or `Bash(orca orchestration *)`: `orca terminal create --command` is arbitrary command execution and `worker-start` would let a leaf spawn agents (A-2). Rule syntax is `Bash(prefix:*)`. `Edit` in the deny list covers all built-in file writers. Without `--effort` the session ran at medium. Verified: the status line shows the model and effort, Context7 resolved and queried documentation inside the restriction, and `worker_done` was delivered with the right task and dispatch IDs (`turnStart` is `unsupported` for Claude, as for Pi). Orca's `worker-start --agent claude` pre-fills `--dangerously-skip-permissions` and is not acceptable for this role.
-
-## Review checkouts
-
-Orca only attaches terminals to worktrees it created (the repository setting `externalWorktreeVisibility` defaults to hide). Every Orca worktree creation also writes a `[branch "<name>"] base = ...` entry into the shared `.git/config`, which the gate's metadata baseline (K-7, `sdd metadata-baseline`) will flag as drift. Record the baseline after the task's worktrees (task and review) exist, or re-baseline with the config diff archived and a `recovery_reconciled` event. Create the review worktree through Orca from the task branch, then `git checkout --detach <candidate SHA>` inside it. Verify HEAD and cleanliness before dispatch.
-
-## Stopping and retrying (K-8, K-15)
-
-For attached terminals `worker-stop` returns `stop_unknown` and takes no process action. Verified stop is:
-
-```sh
-ORCA terminal close --terminal <handle> --json        # expect "ptyKilled": true
-ORCA orchestration worker-abandon --dispatch <id> --json   # settles the dispatch
-ORCA orchestration worker-start --retry-of <id> --task <task_id> --terminal <new handle> --worktree path:<...> --from <coord> --json
-```
-
-`--retry-of` is refused until the dispatch is settled. A pending question on the old dispatch is replied to or cancelled first. Observed on 14 October 2026: closing the attached terminal settles the dispatch itself as `failed` with `terminationReason: operator_close`, after which `worker-abandon` is refused as already settled. So the order is `worker-stop` (fence), `terminal close` (verify `ptyKilled`), then `worker-abandon` only if `worker-show` still reports the dispatch unsettled.
-
-## Shell hazards observed while scripting the coordinator
-
-- zsh applies history modifiers to `$VAR:` expansions: `"$BASE:specs/x.md"` becomes garbage. Always write `"${BASE}:specs/x.md"`. This single bug produced the identical wrong document hashes seen in P3.
-- A command stored in a variable (`G="git -c ..."`) is not word-split by zsh; use a function.
-- `git revert` has no `-q`; a failed revert inside a script that does not check status leaves the bad integration in place.
-- Parse every CLI result with its `ok` field before using any id from it; an error envelope also carries an `id` (the request id).
-- Orca terminal handles and the Run's coordinator binding do not survive an Orca restart; `task-create` then fails with `stable_pane_required`. Re-create the coordinator terminal, create a new Run, and record both in the recovery index before continuing.
+Write `"${VAR}:path"`, never `"$VAR:path"`, in zsh. Parse every Orca result's `ok` field before using an id. `check --wait` prints keepalive lines before the final object.

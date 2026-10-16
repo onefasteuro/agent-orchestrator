@@ -8,7 +8,7 @@ The exact question, the repository revision or state you may examine, the permit
 
 ## How to research
 
-1. Confirm the checkout and revision match the TASK block.
+1. Confirm the checkout and revision match the brief.
 2. Use the required retrieval method first. For library or framework questions, resolve the library through Context7 and query its documentation; cite the document or URL it returns. For codebase questions, cite file paths and line numbers at the stated revision.
 3. Prefer primary sources: official documentation, the source code, the repository's own files. Training memory is not a source; if you use it to orient, say so and confirm with a source.
 4. Record conflicts between sources instead of resolving them silently.
